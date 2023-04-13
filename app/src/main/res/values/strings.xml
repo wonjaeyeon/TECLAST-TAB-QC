@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">TECLAST_QC_Application</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="text_calendar">상태보고서</string>
+    <string name="text_timeline">디바이스검사</string>
+    <string name="text_analysis">로그보고서</string>
+    <string name="text_settings">설정</string>
+</resources>
