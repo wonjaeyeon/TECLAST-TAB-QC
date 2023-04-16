@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber
 import com.example.teclast_qc_application.ui.theme.MyApplicationTheme
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
 
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,6 +58,7 @@ class MainActivity : ComponentActivity() {
             }
 
             requestCameraPermission()
+            requestReadPhonePermission()
             //requestReadExternalStoragePermission()
             //isDeviceRooted()
             //requestReadExternalStoragePermission()
@@ -77,6 +80,23 @@ class MainActivity : ComponentActivity() {
             else -> {
                 // 권한 요청
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
+        }
+    }
+
+    private fun requestReadPhonePermission(){
+        when{
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED -> {
+                // 권한이 이미 허용되어 있는 경우
+            }
+            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE) -> {
+                // 권한 요청에 대한 설명이 필요한 경우
+                // 사용자에게 권한 요청 이유를 설명한 후 권한 요청을 수행하세요
+                requestPermissionLauncher.launch(Manifest.permission.READ_PHONE_STATE)
+            }
+            else -> {
+                // 권한 요청
+                requestPermissionLauncher.launch(Manifest.permission.READ_PHONE_STATE)
             }
         }
     }

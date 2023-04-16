@@ -22,10 +22,9 @@ import androidx.navigation.NavController
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun TouchPanelTestScreen(context: Context,navController: NavController ) {
-    // Create a mutable state for battery health result
-    val batteryHealthResult = remember { mutableStateOf<String>("") }
-    val batteryStateofdevice = remember { mutableStateOf<String>("") }
-    val cpuStateofdevice = remember { mutableStateOf<String>("") }
+    // make a mutable state for touch panel test result
+    // make this variable to get the result from the test function
+    val touchPanelTest1Result = remember { mutableStateOf<String>("") }
 
     Scaffold(
         topBar = {
@@ -56,38 +55,27 @@ fun TouchPanelTestScreen(context: Context,navController: NavController ) {
                 modifier = Modifier.padding(16.dp)
             ) {
 
-
-                //make a button for battery test
                 //make a button for battery test
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t1_screen")
+                    navController.navigate("touch_panel_test_t1_screen"){
+//                        popUpTo("touch_panel_test_screen"){
+//                            inclusive = true
+//
+//                        }
+                    }
                 }) {
                     Text(text = "Touch Test T1")
 
                 }
 
                 Text(
-                    text = batteryStateofdevice.value,
+                    text = touchPanelTest1Result.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
-                //make a button for cpu test
-                Button(onClick = {
-                    //cpuStateofdevice.value = getCurrentCpuUsage().toString()
-                }) {
-                    Text(text = "CPU Test")
-
-                }
-                Text(
-                    text = cpuStateofdevice.value,
-                    style = MaterialTheme.typography.body1,
-                    textAlign = TextAlign.Center,
-                    color = Color.White,
-                    modifier = Modifier.padding(top = 16.dp)
-                )
             }
         }
     }

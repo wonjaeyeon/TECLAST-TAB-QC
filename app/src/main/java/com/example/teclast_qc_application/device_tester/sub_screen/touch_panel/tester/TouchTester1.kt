@@ -18,9 +18,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.addTestResult
 
 
 data class TouchPoint(val x: Float, val y: Float, val color: Color)
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -29,6 +31,7 @@ fun touchPanelT1(context: Context, navController: NavController) {
     val colors = listOf(Color.Red, Color.Green, Color.Blue, Color.Yellow, Color.Magenta)
     val touchCount = remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
+    val testResult = remember { mutableStateOf("") }
 
     val onTouchThresholdReached: () -> Unit = {
         touchCount.value++
@@ -36,8 +39,12 @@ fun touchPanelT1(context: Context, navController: NavController) {
             //erase touch_panel_test_t1_screen form navicontroller
             navController.popBackStack()
             //navController.navigate("touch_panel_test_screen")
+            testResult.value = "Touch Test T1: Pass"
+            addTestResult("Touch Test T1", "Pass")
         }
         else {
+            testResult.value = "Touch Test T1: Fail"
+            addTestResult("Touch Test T1", "Fail")
 
         }
     }

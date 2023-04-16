@@ -1,8 +1,11 @@
 package com.example.teclast_qc_application.device_tester.sub_screen.battery
 
 //make a screen for cpu test
+
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -17,18 +20,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.checkBatteryHealth
-
+import com.example.teclast_qc_application.device_tester.sub_screen.battery.tester.checkDeviceThermalStatus
 import com.example.teclast_qc_application.getBatteryState
-import com.example.teclast_qc_application.getDeviceTemperature
 
 
+@RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun BatteryTestScreen(context: Context,navController: NavController, ) {
     // Create a mutable state for battery health result
     val batteryHealthResult = remember { mutableStateOf<String>("") }
     val batteryStateofdevice = remember { mutableStateOf<String>("") }
-    val cpuStateofdevice = remember { mutableStateOf<String>("") }
+    val deviceThermalStateAfterTest = remember { mutableStateOf<String>("") }
 
     Scaffold(
         topBar = {
@@ -80,7 +83,6 @@ fun BatteryTestScreen(context: Context,navController: NavController, ) {
                 )
 
                 //make a button for battery test
-                //make a button for battery test
                 Button(onClick = {
                     batteryStateofdevice.value = getBatteryState(context)
                 }) {
@@ -98,13 +100,13 @@ fun BatteryTestScreen(context: Context,navController: NavController, ) {
 
                 //make a button for cpu test
                 Button(onClick = {
-                    cpuStateofdevice.value = getDeviceTemperature(context).toString()
+                    deviceThermalStateAfterTest.value = checkDeviceThermalStatus(context = context)
                 }) {
-                    Text(text = "battey temperature Test")
+                    Text(text = "Device Thermal Test")
 
                 }
                 Text(
-                    text = cpuStateofdevice.value,
+                    text = deviceThermalStateAfterTest.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,

@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber
 
 
 @Composable
@@ -40,17 +41,18 @@ fun CalendarScreen2(context: Context) {
 
 
 
-            ShowDeviceSpecs()
+            ShowDeviceSpecs(context)
         }
     }
 }
 
 @Composable
-fun ShowDeviceSpecs() {
+fun ShowDeviceSpecs(context: Context) {
     Column(modifier = Modifier.padding(16.dp)) {
         Text(text = "Device Specs")
         //get serial number
 
+        Text(text = "Serial: ${getDeviceSerialNumber(context)}")
         Text(text = "MODEL: ${Build.MODEL}")
         Text(text = "ID: ${Build.ID}")
         Text(text = "Manufacturer: ${Build.MANUFACTURER}")

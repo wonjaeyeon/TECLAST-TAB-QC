@@ -1,9 +1,8 @@
-package com.example.teclast_qc_application.device_tester.sub_screen.ram
+package com.example.teclast_qc_application.device_tester.sub_screen.device_thermal
 
-//make a screen for cpu test
-//import com.example.teclast_qc_application.device_tester.testFunction.cpu.tester.getCurrentCpuUsage
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -17,19 +16,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.device_tester.sub_screen.ram.tester.ramTest1
+import com.example.teclast_qc_application.device_tester.sub_screen.device_thermal.tester.checkDeviceThermalStatus
 
 
+@RequiresApi(34)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ramTestScreen(context: Context, navController: NavController, ) {
-    // Create a mutable state for battery health result
-    val ramTestResult = remember { mutableStateOf<String>("") }
+fun DeviceThermalTestScreen(context: Context,navController: NavController, ){
+
+    val deviceThermalState = remember { mutableStateOf<String>("") }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "RAM Test") },
+                title = { Text(text = "Device Thermal Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = Color.White,
                 navigationIcon = {
@@ -54,16 +54,15 @@ fun ramTestScreen(context: Context, navController: NavController, ) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(16.dp)
             ) {
-                // Battery Test Button
-                Button(onClick = {
-                    ramTestResult.value = ramTest1()
-                }) {
-                    Text(text = "RAM Test 1")
-                }
 
-                // Display battery health result
+
+                Button(onClick = {
+                    deviceThermalState.value = checkDeviceThermalStatus(context = context)
+                }) {
+                    Text(text = "Device Thermal Test")
+                }
                 Text(
-                    text = ramTestResult.value,
+                    text = deviceThermalState.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,
@@ -73,4 +72,5 @@ fun ramTestScreen(context: Context, navController: NavController, ) {
             }
         }
     }
+
 }

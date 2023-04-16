@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -28,9 +29,8 @@
     <uses-feature android:name="android.hardware.usb.host" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-
-    <uses-permission android:name="android.permission.READ_LOGS" tools:ignore="ProtectedPermissions"/>
+<!--    <uses-permission android:name="android.permission.DEVICE_POWER" tools:ignore="ProtectedPermissions"/>-->
+<!--    <uses-permission android:name="android.permission.READ_LOGS" tools:ignore="ProtectedPermissions"/>-->
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
 
@@ -42,6 +42,7 @@
             android:label="@string/app_name"
             android:supportsRtl="true"
             android:theme="@style/Theme.TECLAST_QC_Application"
+            android:requestLegacyExternalStorage="true"
 
             tools:targetApi="31">
         <activity

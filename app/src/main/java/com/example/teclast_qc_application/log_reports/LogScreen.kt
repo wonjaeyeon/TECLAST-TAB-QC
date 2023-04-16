@@ -78,7 +78,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.teclast_qc_application.ui.theme.bounceEffect
+
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -93,7 +93,7 @@ fun LogScreen() {
 
         Row {
             Button(
-                modifier = Modifier.bounceEffect(),
+                //modifier = Modifier.bounceEffect(),
                 interactionSource = remember { MutableInteractionSource() },
                     onClick = { logText.value = fetchAndHighlightErrorLogs() }) {
 
@@ -110,7 +110,7 @@ fun LogScreen() {
             }
 
             Button(
-                modifier = Modifier.bounceEffect(),
+                //modifier = Modifier.bounceEffect(),
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = {
                     }

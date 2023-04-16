@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.device_tester.sub_screen.wifi.tester.getWifiConnectionStatus
+import com.example.teclast_qc_application.device_tester.sub_screen.wifi.tester.getWifiDataUsage
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -23,6 +24,7 @@ import com.example.teclast_qc_application.device_tester.sub_screen.wifi.tester.g
 fun WifiTestScreen(context: Context,navController: NavController, ) {
     // Create a mutable state for battery health result
     val connectionStateResult = remember { mutableStateOf<String>("") }
+    val wifiDataUsageResult = remember { mutableStateOf<String>("") }
 
     Scaffold(
         topBar = {
@@ -62,6 +64,20 @@ fun WifiTestScreen(context: Context,navController: NavController, ) {
                 // Display battery health result
                 Text(
                     text = connectionStateResult.value,
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+
+                Button(onClick = {
+                    wifiDataUsageResult.value = getWifiDataUsage(context).toString()
+                }) {
+                    Text(text = "Data Usage Test")
+                }
+
+                Text(
+                    text = wifiDataUsageResult.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,

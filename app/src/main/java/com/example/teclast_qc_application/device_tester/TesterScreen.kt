@@ -23,6 +23,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.teclast_qc_application.ui.theme.bounceClick
 
 
 @RequiresApi(34)
@@ -46,10 +47,12 @@ fun TesterScreen(context: Context, navController: NavHostController ) {
 
         ) {
             Button(
+
                 modifier = Modifier
                     .fillMaxWidth().
                     height(140.dp). // Adjust the padding as needed
                     padding(16.dp), // Adjust the padding as needed
+                    
 
                 onClick = {
                     navController.navigate("cpu_test_screen")
@@ -57,7 +60,10 @@ fun TesterScreen(context: Context, navController: NavHostController ) {
             }) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Start,
+                            modifier = Modifier
+//                            .fillMaxWidth()
+//                                .padding(horizontal = 20.dp)
                 ) {
                     Icon(
                         //system chipset icon
@@ -66,29 +72,30 @@ fun TesterScreen(context: Context, navController: NavHostController ) {
                         tint = Color.White,
                         modifier = Modifier.size(40.dp)
                     )
-                    Spacer(modifier = Modifier.width(8.dp)) // Add space between the icon and the text
+                    //Spacer(modifier = Modifier.width(8.dp)) // Add space between the icon and the text
                     Text(
                         text = "CPU Test",
                         style = TextStyle(fontSize = 40.sp, color = Color.White)
                     )
-                    Spacer(modifier = Modifier.width(30.dp)) // Add space between the icon and the text
-                    if (cpuTestResult.value) {
-                        Icon(
-                            //system chipset icon
-                            imageVector = Icons.Filled.CheckCircle,
-                            contentDescription = "CPU Test",
-                            tint = Color.Green,
-                            modifier = Modifier.size(40.dp)
-                        )
-                    } else {
-                        Icon(
-                            //system chipset icon
-                            imageVector = Icons.Filled.Cancel,
-                            contentDescription = "CPU Test",
-                            tint = Color.Red,
-                            modifier = Modifier.size(40.dp)
-                        )
-                    }
+                    //Spacer(modifier = Modifier.width(30.dp)) // Add space between the icon and the text
+//                    if (cpuTestResult.value) {
+//
+//                        Icon(
+//                            //system chipset icon
+//                            imageVector = Icons.Filled.CheckCircle,
+//                            contentDescription = "CPU Test",
+//                            tint = Color.Green,
+//                            modifier = Modifier.size(40.dp)
+//                        )
+//                    } else {
+//                        Icon(
+//                            //system chipset icon
+//                            imageVector = Icons.Filled.Cancel,
+//                            contentDescription = "CPU Test",
+//                            tint = Color.Red,
+//                            modifier = Modifier.size(40.dp)
+//                        )
+//                    }
                 }
             }
 
@@ -96,7 +103,8 @@ fun TesterScreen(context: Context, navController: NavHostController ) {
                 modifier = Modifier
                     .fillMaxWidth().
                     height(140.dp). // Adjust the padding as needed
-                    padding(16.dp), // Adjust the padding as needed
+                    padding(16.dp)
+                        .bounceClick(), // Adjust the padding as needed
 
                 onClick = {
                     navController.navigate("gpu_test_screen")
@@ -269,7 +277,36 @@ fun TesterScreen(context: Context, navController: NavHostController ) {
                         style = TextStyle(fontSize = 40.sp, color = Color.White)
                     )
                 }
+
+
             }
+            //make a button for touch pannel test
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth().
+                    height(140.dp). // Adjust the padding as needed
+                    padding(16.dp), // Adjust the padding as needed
+
+                onClick = {
+                    navController.navigate("device_thermal_test_screen")
+
+                }) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Thermostat,
+                        contentDescription = "Device Thermal Test",
+                        tint = Color.White,
+                        modifier = Modifier.size(40.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp)) // Add space between the icon and the text
+                    Text(
+                        text = "Device Thermal Test",
+                        style = TextStyle(fontSize = 40.sp, color = Color.White)
+                    )
+                }
 
 
 //
@@ -326,8 +363,14 @@ fun TesterScreen(context: Context, navController: NavHostController ) {
 //                modifier = Modifier.padding(top = 16.dp)
 //            )
         }
+
+            //AnimatedButton()
+
+//            PulsatingButton(text = "aaa", onClick = {
+//                navController.navigate("cpu_test_screen")
+//            })
     }
-}
+}}
 
 //sealed class Screen(val route: String) {
 //    object TesterScreen : Screen("TesterScreen")
