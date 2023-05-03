@@ -34,8 +34,7 @@ import com.example.teclast_qc_application.ui.theme.MyApplicationTheme
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-//check if the branch is pushed well
-//check if the branch is pushed well
+//check if the branch is jy_may_03
 
 class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher =
