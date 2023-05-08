@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.teclast_qc_application.device_tester.TesterScreen
+import com.example.teclast_qc_application.device_tester.TesterScreen2
 import com.example.teclast_qc_application.device_tester.sub_screen.battery.BatteryTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.cpu.CpuTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.device_thermal.DeviceThermalTestScreen
@@ -40,7 +40,8 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
             CalendarScreen2(context = context)
         }
         composable(BottomNavItem.Test.screenRoute) {
-            TesterScreen(context = context, navController = navController)
+            //TesterScreen2(context = context, navController = navController)
+            TesterScreen2(context = context, navController = navController)
 
         }
         composable(BottomNavItem.Analysis.screenRoute) {

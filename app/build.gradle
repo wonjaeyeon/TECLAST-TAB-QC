@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+//    signingConfigs {
+//        debug {
+//            storeFile file(compose_version)
+//            storePassword compose_version
+//            keyAlias compose_version
+//            keyPassword compose_version
+//        }
+//    }
     namespace 'com.example.teclast_qc_application'
     compileSdk 33
 
@@ -76,5 +84,11 @@ dependencies {
     implementation 'androidx.compose.material:material-icons-core:1.2.0-alpha03' // Replace with the latest version
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
+
+    //lazygrid
+    //volume up recevier
+    implementation "androidx.activity:activity-ktx:1.4.0"
+
+
 
 }
