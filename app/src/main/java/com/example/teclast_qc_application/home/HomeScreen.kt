@@ -17,6 +17,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber
+import com.example.teclast_qc_application.home.device_spec.getMac
+import com.example.teclast_qc_application.test_result.CreateReportButton
+import com.example.teclast_qc_application.test_result.DeleteReportButton
 
 
 @Composable
@@ -42,6 +45,9 @@ fun CalendarScreen2(context: Context) {
 
 
             ShowDeviceSpecs(context)
+
+            CreateReportButton()
+            DeleteReportButton()
         }
     }
 }
@@ -53,6 +59,7 @@ fun ShowDeviceSpecs(context: Context) {
         //get serial number
 
         Text(text = "Serial: ${getDeviceSerialNumber(context)}")
+        Text(text = "MAC Address: ${getMac(context)}")
         Text(text = "MODEL: ${Build.MODEL}")
         Text(text = "ID: ${Build.ID}")
         Text(text = "Manufacturer: ${Build.MANUFACTURER}")

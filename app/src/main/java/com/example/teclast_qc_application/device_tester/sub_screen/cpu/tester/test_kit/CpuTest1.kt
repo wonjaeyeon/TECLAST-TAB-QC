@@ -5,7 +5,7 @@ import android.os.Build
 import android.os.PowerManager
 import androidx.annotation.RequiresApi
 import kotlin.system.measureTimeMillis
-fun cpuTest1(limit: Int = 100000): String {
+fun cpuTest1(limit: Int = 50000): String {
     return try {
         val elapsedTime = measureTimeMillis {
             findPrimesUpTo(limit)

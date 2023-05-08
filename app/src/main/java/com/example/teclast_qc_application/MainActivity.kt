@@ -1,7 +1,10 @@
 package com.example.teclast_qc_application
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -33,6 +36,8 @@ import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSer
 import com.example.teclast_qc_application.ui.theme.MyApplicationTheme
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import android.view.KeyEvent
+import androidx.activity.viewModels
 
 //check if the branch is jy_may_03 again
 
@@ -52,6 +57,12 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        val intent = Intent(this, VolumeButtonService::class.java)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startForegroundService(intent)
+//        } else {
+//            startService(intent)
+//        }
 
         setContent {
             MyApplicationTheme {
@@ -65,9 +76,24 @@ class MainActivity : ComponentActivity() {
             //requestReadExternalStoragePermission()
             //requestReadLogsPermission()
         }
+//        viewModel.triplePressTriggered.observe(this) { triggered ->
+//            if (triggered) {
+//                // Launch the desired activity or perform any desired action.
+//                viewModel.resetTriplePressTriggered()
+//            }
+//        }
 
 
     }
+
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+//            viewModel.onVolumeUpPressed()
+//            return true
+//        }
+//        return super.onKeyDown(keyCode, event)
+//    }
+
     private fun requestCameraPermission() {
         when {
             ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
