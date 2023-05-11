@@ -49,7 +49,7 @@ import androidx.core.app.NotificationManagerCompat
 //
 class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action == Intent.ACTION_BOOT_COMPLETED) {
+        if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == Intent.ACTION_LOCKED_BOOT_COMPLETED) {
             val channelId = "boot_completed_notification_channel"
             createNotificationChannel(context, channelId)
             showNotification(context, channelId)
@@ -115,7 +115,8 @@ class BootCompletedReceiver : BroadcastReceiver() {
         val pendingIntent = PendingIntent.getActivity(context, 0, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         // Full-screen intent 생성
-        val fullScreenPendingIntent = PendingIntent.getActivity(context, 0, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val fullScreenPendingIntent =
+            PendingIntent.getActivity(context, 0, launchIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         // 알림에 PendingIntent 설정
         val notification = NotificationCompat.Builder(context, channelId)

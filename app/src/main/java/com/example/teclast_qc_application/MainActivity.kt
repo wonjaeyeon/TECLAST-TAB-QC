@@ -53,8 +53,6 @@ class MainActivity : ComponentActivity() {
         }
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        val intent = Intent(this, VolumeButtonService::class.java)
@@ -261,7 +259,7 @@ sealed class BottomNavItem(
 @Composable
 fun DefaultPreview(context: MainActivity) {
     MyApplicationTheme {
-        CalendarScreen2(context = context)
+        HomeScreen2(context = context)
     }
 }
 

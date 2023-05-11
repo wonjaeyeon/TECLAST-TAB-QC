@@ -27,7 +27,9 @@ fun TesterScreen2(context: Context, navController: NavHostController) {
         Pair("USB Test", Icons.Filled.Usb),
         Pair("Wifi Test", Icons.Filled.Wifi),
         Pair("Touch Panel Test", Icons.Filled.TouchApp),
-        Pair("Device Thermal Test", Icons.Filled.Thermostat)
+        Pair("Device Thermal Test", Icons.Filled.Thermostat),
+        Pair("LCD Screen Test", Icons.Filled.Tv),
+        Pair("Camera Test", Icons.Filled.Camera),
     )
 
     Column(
