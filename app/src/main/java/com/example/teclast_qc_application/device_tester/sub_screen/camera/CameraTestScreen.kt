@@ -48,7 +48,7 @@ fun CameraTestScreen(context: Context, navController: NavController, ) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(16.dp)
             ) {
-                // LCD Screen Test t1 Button
+                // Camera Test t1 Button
                 Button(onClick = {
                     navController.navigate("camera_test_t1_screen"){
 //                        popUpTo("touch_panel_test_screen"){
@@ -57,7 +57,19 @@ fun CameraTestScreen(context: Context, navController: NavController, ) {
 //                        }
                     }
                 }) {
-                    Text(text = "Camera Test 1")
+                    Text(text = "Back Camera Test")
+                }
+
+                // Camera Test t1 Button
+                Button(onClick = {
+                    navController.navigate("camera_test_t2_screen"){
+//                        popUpTo("touch_panel_test_screen"){
+//                            inclusive = true
+//
+//                        }
+                    }
+                }) {
+                    Text(text = "Front Camera Test")
                 }
 
             }
