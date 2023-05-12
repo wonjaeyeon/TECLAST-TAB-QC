@@ -23,7 +23,7 @@ import com.example.teclast_qc_application.test_result.DeleteReportButton
 
 
 @Composable
-fun CalendarScreen2(context: Context) {
+fun HomeScreen2(context: Context) {
 
     Box(
         modifier = Modifier

@@ -39,7 +39,7 @@ import java.io.InputStreamReader
 import android.view.KeyEvent
 import androidx.activity.viewModels
 
-//check if the branch is jy_may_03 again
+//check if the branch is jy_may_08 again
 
 class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher =
@@ -51,8 +51,6 @@ class MainActivity : ComponentActivity() {
                 throw Error("Permission denied")
             }
         }
-
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -261,7 +259,7 @@ sealed class BottomNavItem(
 @Composable
 fun DefaultPreview(context: MainActivity) {
     MyApplicationTheme {
-        CalendarScreen2(context = context)
+        HomeScreen2(context = context)
     }
 }
 

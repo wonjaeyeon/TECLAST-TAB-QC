@@ -6,14 +6,24 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.teclast_qc_application.device_tester.TesterScreen2
+import com.example.teclast_qc_application.device_tester.sub_screen.audio.AudioTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.auido.tester.AudioTestT1
+import com.example.teclast_qc_application.device_tester.sub_screen.auido.tester.VibrationTestT1
 import com.example.teclast_qc_application.device_tester.sub_screen.battery.BatteryTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.camera.CameraTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.camera.tester.CameraTest1
+import com.example.teclast_qc_application.device_tester.sub_screen.camera.tester.CameraTest2
 import com.example.teclast_qc_application.device_tester.sub_screen.cpu.CpuTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.device_thermal.DeviceThermalTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.gpu.gpuTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.lcd_screen_test.LcdScreenTest
+import com.example.teclast_qc_application.device_tester.sub_screen.lcd_screen_test.tester.LcdTest1
+import com.example.teclast_qc_application.device_tester.sub_screen.lcd_screen_test.tester.LcdTest2
 import com.example.teclast_qc_application.device_tester.sub_screen.ram.ramTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.TouchPanelTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.touchPanelT1
 import com.example.teclast_qc_application.device_tester.sub_screen.usb.usbTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.vibration.VibrationTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.wifi.WifiTestScreen
 import com.example.teclast_qc_application.settings.SettingsScreen
 
@@ -37,7 +47,7 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
 
     NavHost(navController = navController, startDestination = BottomNavItem.Home.screenRoute) {
         composable(BottomNavItem.Home.screenRoute) {
-            CalendarScreen2(context = context)
+            HomeScreen2(context = context)
         }
         composable(BottomNavItem.Test.screenRoute) {
             //TesterScreen2(context = context, navController = navController)
@@ -89,6 +99,46 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
 
         composable("device_thermal_test_screen") {
             DeviceThermalTestScreen(context = context, navController = navController)
+        }
+
+        composable("lcd_screen_test_screen") {
+            LcdScreenTest(context = context, navController = navController)
+        }
+
+        composable("lcd_screen_test_t1_screen") {
+            LcdTest1(context = context, navController = navController)
+        }
+
+        composable("lcd_screen_test_t2_screen") {
+            LcdTest2(context = context, navController = navController)
+        }
+
+        composable("camera_test_screen") {
+            CameraTestScreen(context = context, navController = navController)
+        }
+
+        composable("camera_test_t1_screen") {
+            CameraTest1(context = context, navController = navController)
+        }
+
+        composable("camera_test_t2_screen") {
+            CameraTest2(context = context, navController = navController)
+        }
+
+        composable("audio_test_screen") {
+            AudioTestScreen(context = context, navController = navController)
+        }
+
+        composable("audio_test_t1_screen") {
+            AudioTestT1(context = context, navController = navController)
+        }
+
+        composable("vibration_test_screen") {
+            VibrationTestScreen(context = context, navController = navController)
+        }
+
+        composable("vibration_test_t1_screen") {
+            VibrationTestT1(context = context, navController = navController)
         }
 
 

@@ -1,6 +1,7 @@
 package com.example.teclast_qc_application.test_result
 
 import android.content.Context
+import android.provider.Settings
 import android.util.Log
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -30,13 +31,32 @@ fun DeleteReportButton() {
     }
 }
 
+//private fun createReportFile(context: Context) {
+//    val reportFile = File(context.getExternalFilesDir(null), "report.txt")
+//    if (!reportFile.exists()) {
+//        reportFile.createNewFile()
+//    }
+//}
+
 private fun createReportFile(context: Context) {
     val reportFile = File(context.getExternalFilesDir(null), "report.txt")
     if (!reportFile.exists()) {
         reportFile.createNewFile()
+
+        // Get Android ID
+        val androidId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+
+        // Generate a random 16-character alphanumeric string
+        val randomChars = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+        val randomString = List(16) { randomChars.random() }.joinToString("")
+
+        // Create the title
+        val title = "Android_ID: $androidId\nRandom string: $randomString\n"
+
+        // Write the title to the report.txt file
+        reportFile.appendText(title)
     }
 }
-
 
 fun deleteReportFile(context: Context) {
     val reportFile = File(context.getExternalFilesDir(null), "report.txt")
