@@ -39,7 +39,7 @@ import java.io.InputStreamReader
 import android.view.KeyEvent
 import androidx.activity.viewModels
 
-//check if the branch is jy_may_12 well made
+//check if the branch is jy_may_14 well made
 
 class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher =
