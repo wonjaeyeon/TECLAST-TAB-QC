@@ -26,7 +26,7 @@ data class TouchPoint(val x: Float, val y: Float, val color: Color)
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun touchPanelT1(context: Context, navController: NavController) {
+fun TouchPanelT1(context: Context, navController: NavController) {
     val touchPoints = remember { mutableStateListOf<TouchPoint>() }
     val colors = listOf(Color.Red, Color.Green, Color.Blue, Color.Yellow, Color.Magenta)
     val touchCount = remember { mutableStateOf(0) }

@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.sub_screen.auido.tester
+package com.example.teclast_qc_application.device_tester.sub_screen.audio.tester
 
 import android.annotation.SuppressLint
 import android.content.Context

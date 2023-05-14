@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun gpuTestScreen(context: Context, navController: NavController, ) {
+fun GpuTestScreen(context: Context, navController: NavController, ) {
     // Create a mutable state for battery health result
     val gpu2DCapacityTestResult = remember { mutableStateOf<String>("") }
     val gpu3DCapacityTestResult = remember { mutableStateOf<String>("") }

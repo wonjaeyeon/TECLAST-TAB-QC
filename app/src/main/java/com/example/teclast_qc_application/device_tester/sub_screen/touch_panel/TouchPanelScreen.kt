@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun TouchPanelTestScreen(context: Context,navController: NavController ) {
+fun TouchPanelTestScreen(context: Context, navController: NavController) {
     // make a mutable state for touch panel test result
     // make this variable to get the result from the test function
     val touchPanelTest1Result = remember { mutableStateOf<String>("") }
@@ -55,16 +55,16 @@ fun TouchPanelTestScreen(context: Context,navController: NavController ) {
                 modifier = Modifier.padding(16.dp)
             ) {
 
-                //make a button for battery test
+                //make a button for Touch test T1
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t1_screen"){
+                    navController.navigate("touch_panel_test_t1_screen") {
 //                        popUpTo("touch_panel_test_screen"){
 //                            inclusive = true
 //
 //                        }
                     }
                 }) {
-                    Text(text = "Touch Test T1")
+                    Text(text = "Touch Test T1(Just Touch)")
 
                 }
 
@@ -76,6 +76,62 @@ fun TouchPanelTestScreen(context: Context,navController: NavController ) {
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
+                //make a button for Touch test T2
+                Button(onClick = {
+                    navController.navigate("touch_panel_test_t2_screen") {
+//                        popUpTo("touch_panel_test_screen"){
+//                            inclusive = true
+//
+//                        }
+
+                    }
+                }) {
+                    Text(text = "Touch Test T2(Edge and Diagonal)")
+                }
+
+                Text(
+                    text = touchPanelTest1Result.value,
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+
+
+                //make a button for Touch test T3
+                Button(onClick = {
+                    navController.navigate("touch_panel_test_t3_screen") {
+//                        popUpTo("touch_panel_test_screen"){
+//                            inclusive = true
+//
+//                        }
+
+
+                    }
+                }) {
+                    Text(text = "Touch Test T3(Pinch and Zoom)")
+                }
+
+                Text(
+                    text = touchPanelTest1Result.value,
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+
+                // make a button for Touch test T4
+                Button(onClick = {
+                    navController.navigate("touch_panel_test_t4_screen") {
+//                        popUpTo("touch_panel_test_screen"){
+//                            inclusive = true
+//
+//                        }
+
+                    }
+                }) {
+                    Text(text = "Touch Test T4(Multi Touch Capability)")
+                }
             }
         }
     }
