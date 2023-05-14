@@ -60,6 +60,13 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.ar.sceneform:filament-android:1.17.1'
 
+    //GPS
+//    implementation 'com.google.android.gms:play-services-location:21.0.1'
+//    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
+    implementation 'com.google.maps.android:maps-compose:2.11.0'
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
+
 
     def nav_version = "2.4.2"
 
@@ -98,6 +105,9 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$camerax_version"
     // CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha30"
+
+    // ConstraintLayout
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
 
 
 }

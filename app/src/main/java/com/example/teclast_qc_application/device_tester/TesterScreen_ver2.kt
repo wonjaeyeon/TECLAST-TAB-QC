@@ -32,6 +32,9 @@ fun TesterScreen2(context: Context, navController: NavHostController) {
         Pair("Camera Test", Icons.Filled.Camera),
         Pair("Audio Test", Icons.Filled.VolumeUp),
         Pair("Vibration Test", Icons.Filled.Vibration),
+        Pair("Flash Light Test", Icons.Filled.BrightnessHigh),
+        Pair("GPS Test", Icons.Filled.GpsFixed),
+        Pair("G Sensor Test", Icons.Filled.EdgesensorHigh),
     )
 
     Column(

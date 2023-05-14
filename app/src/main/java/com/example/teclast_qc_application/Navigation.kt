@@ -7,23 +7,32 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.teclast_qc_application.device_tester.TesterScreen2
 import com.example.teclast_qc_application.device_tester.sub_screen.audio.AudioTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.auido.tester.AudioTestT1
-import com.example.teclast_qc_application.device_tester.sub_screen.auido.tester.VibrationTestT1
+import com.example.teclast_qc_application.device_tester.sub_screen.audio.tester.AudioTestT1
 import com.example.teclast_qc_application.device_tester.sub_screen.battery.BatteryTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.camera.CameraTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.camera.tester.CameraTest1
 import com.example.teclast_qc_application.device_tester.sub_screen.camera.tester.CameraTest2
 import com.example.teclast_qc_application.device_tester.sub_screen.cpu.CpuTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.device_thermal.DeviceThermalTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.gpu.gpuTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.flash_light.FlashLightTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.flash_light.tester.FlashLightTestT1
+import com.example.teclast_qc_application.device_tester.sub_screen.g_sensor.GSensorTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.g_sensor.tester.GSensorTestT1
+import com.example.teclast_qc_application.device_tester.sub_screen.gps.GPSTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.gps.tester.GPSTestT1
+import com.example.teclast_qc_application.device_tester.sub_screen.gpu.GpuTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.lcd_screen_test.LcdScreenTest
 import com.example.teclast_qc_application.device_tester.sub_screen.lcd_screen_test.tester.LcdTest1
 import com.example.teclast_qc_application.device_tester.sub_screen.lcd_screen_test.tester.LcdTest2
 import com.example.teclast_qc_application.device_tester.sub_screen.ram.ramTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.TouchPanelTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.touchPanelT1
+import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT1
+import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT2
+import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT3
+import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT4
 import com.example.teclast_qc_application.device_tester.sub_screen.usb.usbTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.vibration.VibrationTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.vibration.tester.VibrationTestT1
 import com.example.teclast_qc_application.device_tester.sub_screen.wifi.WifiTestScreen
 import com.example.teclast_qc_application.settings.SettingsScreen
 
@@ -66,7 +75,7 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
         }
 
         composable("gpu_test_screen") {
-            gpuTestScreen(context = context, navController = navController)
+            GpuTestScreen(context = context, navController = navController)
         }
 
         composable("battery_test_screen") {
@@ -90,11 +99,23 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
         }
 
         composable("touch_panel_test_t1_screen") {
-            touchPanelT1(context = context, navController = navController)
+            TouchPanelT1(context = context, navController = navController)
 //            { testResult ->
 //                // Update the touchPanelTest1Result.value in the TouchPanelTestScreen when navigating back
 //                navController.previousBackStackEntry?.savedStateHandle?.set("testResult", testResult)
 //            }
+        }
+
+        composable("touch_panel_test_t2_screen") {
+            TouchPanelT2(context = context, navController = navController)
+        }
+
+        composable("touch_panel_test_t3_screen") {
+            TouchPanelT3(context = context, navController = navController)
+        }
+
+        composable("touch_panel_test_t4_screen") {
+            TouchPanelT4(context = context, navController = navController)
         }
 
         composable("device_thermal_test_screen") {
@@ -139,6 +160,30 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
 
         composable("vibration_test_t1_screen") {
             VibrationTestT1(context = context, navController = navController)
+        }
+
+        composable("flash_light_test_screen") {
+            FlashLightTestScreen(context = context, navController = navController)
+        }
+
+        composable("flash_light_test_t1_screen") {
+            FlashLightTestT1(context = context, navController = navController)
+        }
+
+        composable("gps_test_screen") {
+            GPSTestScreen(context = context, navController = navController)
+        }
+
+        composable("gps_test_t1_screen") {
+            GPSTestT1(context = context, navController = navController)
+        }
+
+        composable("g_sensor_test_screen") {
+            GSensorTestScreen(context = context, navController = navController)
+        }
+
+        composable("g_sensor_test_t1_screen") {
+            GSensorTestT1(context = context, navController = navController)
         }
 
 
