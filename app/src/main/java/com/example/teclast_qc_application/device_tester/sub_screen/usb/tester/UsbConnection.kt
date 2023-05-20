@@ -18,6 +18,25 @@ fun getUsbConnectionState(context: Context): String {
 
 
 
+//fun checkUsbConnection(context: Context): String {
+//    val usbManager = context.getSystemService(Context.USB_SERVICE) as UsbManager
+//    val deviceList = usbManager.deviceList
+//
+//    if (deviceList.isEmpty()) {
+//        return "No USB devices connected."
+//    }
+//
+//    val result = StringBuilder("Connected USB devices:\n")
+//    for (device in deviceList.values) {
+//        val deviceId = device.deviceId
+//        val manufacturerName = device.manufacturerName
+//        val productName = device.productName
+//        result.append("Device ID: $deviceId, Manufacturer: $manufacturerName, Product: $productName\n")
+//    }
+//
+//    return result.toString()
+//}
+
 fun checkUsbConnection(context: Context): String {
     val usbManager = context.getSystemService(Context.USB_SERVICE) as UsbManager
     val deviceList = usbManager.deviceList
@@ -26,11 +45,12 @@ fun checkUsbConnection(context: Context): String {
         return "No USB devices connected."
     }
 
-    val result = StringBuilder("Connected USB devices:\n")
+    val result = StringBuilder()
+    result.append("Number of connected USB devices: ${deviceList.size}\n")
     for (device in deviceList.values) {
         val deviceId = device.deviceId
-        val manufacturerName = device.manufacturerName
-        val productName = device.productName
+        val manufacturerName = device.manufacturerName ?: "Unknown"
+        val productName = device.productName ?: "Unknown"
         result.append("Device ID: $deviceId, Manufacturer: $manufacturerName, Product: $productName\n")
     }
 

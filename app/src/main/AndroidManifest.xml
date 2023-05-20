@@ -2,6 +2,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.BODY_SENSORS"/>
@@ -30,14 +31,21 @@
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="android.permission.DEVICE_SENSORS" />
-    <uses-feature android:name="android.hardware.usb.host" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+    <uses-permission android:name="android.permission.USB_PERMISSION" />
 <!--    <uses-permission android:name="android.permission.DEVICE_POWER" tools:ignore="ProtectedPermissions"/>-->
 <!--    <uses-permission android:name="android.permission.READ_LOGS" tools:ignore="ProtectedPermissions"/>-->
 <!--    <uses-feature android:name="android.hardware.camera.any" android:required="true" />-->
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-feature android:name="android.hardware.camera.any" />
+    <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
+    <uses-feature android:name="android.hardware.usb.host" android:required="true"/>
+    <!--usb port별로 check -->
+<!--    <uses-feature android:name="android.hardware.usb.host" android:required="true" />-->
 
     <application
             android:allowBackup="true"

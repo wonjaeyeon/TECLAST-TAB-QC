@@ -56,7 +56,7 @@ class MultiTouchView(context: Context) : View(context) {
             // Draw something for each touch point.
             // For example, draw the pointer id:
             canvas.drawText("Pointer ID: ${pointerId+1}", position.x, position.y, Paint().apply {
-                color = Color.White.toArgb()
+                color = Color.LightGray.toArgb()
                 textSize = 50f
             })
         }
