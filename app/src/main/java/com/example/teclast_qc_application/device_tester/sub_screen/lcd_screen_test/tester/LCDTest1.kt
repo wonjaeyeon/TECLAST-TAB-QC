@@ -20,49 +20,52 @@ import java.util.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun LcdTest1(context: Context, navController: NavController) {
+fun LcdTest1(context: Context, navController: NavController, navigateToNextTest: Boolean=false, nextTestRoute: String="") {
     val colors = listOf(Color.Red, Color.Green, Color.Blue, Color.White, Color.Black)
     var colorIndex by remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
     Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "LCD Screen Test T1") },
-                backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                }
-            )
+            scaffoldState = scaffoldState,
+            topBar = {
+                TopAppBar(
+                        title = { Text(text = "LCD Screen Test T1") },
+                        backgroundColor = MaterialTheme.colors.primaryVariant,
+                        contentColor = Color.White,
+                        navigationIcon = {
+                            IconButton(onClick = { navController.popBackStack() }) {
+                                Icon(
+                                        imageVector = Icons.Filled.ArrowBack,
+                                        contentDescription = "Back"
+                                )
+                            }
+                        }
+                )
 
-        }
+            }
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(colors[colorIndex]),
-            contentAlignment = Alignment.Center
+                modifier = Modifier
+                        .fillMaxSize()
+                        .background(colors[colorIndex]),
+                contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "$colorIndex",
-                color = Color.Black,
-                fontSize = 40.sp
+                    text = "$colorIndex",
+                    color = Color.Black,
+                    fontSize = 40.sp
             )
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable {
-                        colorIndex = (colorIndex + 1) % colors.size
-                        if (colorIndex == 0) {  // if we've looped back to the beginning
-                            navController.popBackStack()
-                        }
-                    }
+                    modifier = Modifier
+                            .fillMaxSize()
+                            .clickable {
+                                colorIndex = (colorIndex + 1) % colors.size
+                                if (colorIndex == 0) {  // if we've looped back to the beginning
+                                    if (navigateToNextTest)
+                                        navController.navigate(nextTestRoute)
+                                    else
+                                        navController.popBackStack()
+                                }
+                            }
             )
         }
     }

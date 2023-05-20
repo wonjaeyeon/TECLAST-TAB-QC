@@ -8,7 +8,11 @@ import androidx.navigation.compose.composable
 import com.example.teclast_qc_application.device_tester.TesterScreen2
 import com.example.teclast_qc_application.device_tester.sub_screen.audio.AudioTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.audio.tester.AudioTestT1
+import com.example.teclast_qc_application.device_tester.sub_screen.auto_sleep.AutoSleepTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.auto_sleep.tester.AutoSleepTestT1
 import com.example.teclast_qc_application.device_tester.sub_screen.battery.BatteryTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.bluetooth.BluetoothTestScreen
+import com.example.teclast_qc_application.device_tester.sub_screen.bluetooth.tester.BluetoothTestT1
 import com.example.teclast_qc_application.device_tester.sub_screen.camera.CameraTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.camera.tester.CameraTest1
 import com.example.teclast_qc_application.device_tester.sub_screen.camera.tester.CameraTest2
@@ -30,6 +34,7 @@ import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.t
 import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT2
 import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT3
 import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT4
+import com.example.teclast_qc_application.device_tester.sub_screen.usb.tester.UsbTestEachPort
 import com.example.teclast_qc_application.device_tester.sub_screen.usb.usbTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.vibration.VibrationTestScreen
 import com.example.teclast_qc_application.device_tester.sub_screen.vibration.tester.VibrationTestT1
@@ -90,8 +95,20 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
             usbTestScreen(context = context, navController = navController)
         }
 
+        composable("usb_test_each_port_screen"){
+            UsbTestEachPort(context = context, navController = navController)
+        }
+
         composable("wifi_test_screen") {
             WifiTestScreen(context = context, navController = navController)
+        }
+
+        composable("bluetooth_test_screen") {
+            BluetoothTestScreen(context = context, navController = navController)
+        }
+
+        composable("bluetooth_test_t1_screen") {
+            BluetoothTestT1(context = context, navController = navController)
         }
 
         composable("touch_panel_test_screen") {
@@ -126,7 +143,9 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
             LcdScreenTest(context = context, navController = navController)
         }
 
+        // argument "navigateToNextTest" is used to navigate to next test screen work perfectly
         composable("lcd_screen_test_t1_screen") {
+//            LcdTest1(context = context, navController = navController, navigateToNextTest= true, nextTestRoute = "lcd_screen_test_t2_screen")
             LcdTest1(context = context, navController = navController)
         }
 
@@ -184,6 +203,14 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
 
         composable("g_sensor_test_t1_screen") {
             GSensorTestT1(context = context, navController = navController)
+        }
+
+        composable("auto_sleep_test_screen") {
+            AutoSleepTestScreen(context = context, navController = navController)
+        }
+
+        composable("auto_sleep_test_t1_screen") {
+            AutoSleepTestT1(context = context, navController = navController)
         }
 
 
