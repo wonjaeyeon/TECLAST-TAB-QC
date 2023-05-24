@@ -89,6 +89,14 @@ fun usbTestScreen(context: Context, navController: NavController, ) {
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
+                // Audio Screen Test t1 Button
+                Button(onClick = {
+                    navController.navigate("usb_test_each_port_screen"){
+                    }
+                }) {
+                    Text(text = "USB Each Port Test 1")
+                }
+
             }
         }
     }

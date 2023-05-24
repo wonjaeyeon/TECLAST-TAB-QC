@@ -26,6 +26,7 @@ fun TesterScreen2(context: Context, navController: NavHostController) {
         Pair("RAM Test", Icons.Filled.Memory),
         Pair("USB Test", Icons.Filled.Usb),
         Pair("Wifi Test", Icons.Filled.Wifi),
+        Pair("Bluetooth Test", Icons.Filled.Bluetooth),
         Pair("Touch Panel Test", Icons.Filled.TouchApp),
         Pair("Device Thermal Test", Icons.Filled.Thermostat),
         Pair("LCD Screen Test", Icons.Filled.Tv),
@@ -35,6 +36,7 @@ fun TesterScreen2(context: Context, navController: NavHostController) {
         Pair("Flash Light Test", Icons.Filled.BrightnessHigh),
         Pair("GPS Test", Icons.Filled.GpsFixed),
         Pair("G Sensor Test", Icons.Filled.EdgesensorHigh),
+        Pair("Auto Sleep Test", Icons.Filled.ScreenLockPortrait),
     )
 
     Column(

@@ -65,7 +65,7 @@ dependencies {
 //    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
     implementation 'com.google.maps.android:maps-compose:2.11.0'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
-
+    implementation 'com.google.android.gms:play-services-nearby:18.5.0'
 
 
     def nav_version = "2.4.2"
@@ -108,6 +108,9 @@ dependencies {
 
     // ConstraintLayout
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+
+    // bluetooth
+    // implementation 'androidx.compose.bluetooth:bluetooth:1.0.0-beta01'
 
 
 }
