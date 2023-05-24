@@ -39,8 +39,7 @@ import java.io.InputStreamReader
 import android.view.KeyEvent
 import androidx.activity.viewModels
 
-//check if the branch is jy_may_14 well made
-//commit rightly and push again 5/20
+//check before send it to main(~5/24)
 
 class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher =
