@@ -2,6 +2,8 @@ package com.example.teclast_qc_application.test_result.room_db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+// check if the branch is well made
+
 
 @Entity(tableName = "table_bookmark")
 data class ParkBookmarkEntity(
