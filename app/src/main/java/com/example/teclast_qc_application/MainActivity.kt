@@ -39,7 +39,7 @@ import java.io.InputStreamReader
 import android.view.KeyEvent
 import androidx.activity.viewModels
 
-//check before send it to main(~5/24)
+//check jy_may_24 branch is well made
 
 class MainActivity : ComponentActivity() {
     private val requestPermissionLauncher =
@@ -51,6 +51,24 @@ class MainActivity : ComponentActivity() {
                 throw Error("Permission denied")
             }
         }
+
+
+    // Inside your activity class
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        return when (keyCode) {
+            KeyEvent.KEYCODE_VOLUME_UP -> {
+                // Do something when the volume up button is pressed
+                true
+            }
+            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                // Do something when the volume down button is pressed
+                true
+            }
+            else -> {
+                super.onKeyDown(keyCode, event)
+            }
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

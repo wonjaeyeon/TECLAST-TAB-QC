@@ -6,39 +6,41 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.teclast_qc_application.device_tester.TesterScreen2
-import com.example.teclast_qc_application.device_tester.sub_screen.audio.AudioTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.audio.tester.AudioTestT1
-import com.example.teclast_qc_application.device_tester.sub_screen.auto_sleep.AutoSleepTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.auto_sleep.tester.AutoSleepTestT1
-import com.example.teclast_qc_application.device_tester.sub_screen.battery.BatteryTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.bluetooth.BluetoothTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.bluetooth.tester.BluetoothTestT1
-import com.example.teclast_qc_application.device_tester.sub_screen.camera.CameraTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.camera.tester.CameraTest1
-import com.example.teclast_qc_application.device_tester.sub_screen.camera.tester.CameraTest2
-import com.example.teclast_qc_application.device_tester.sub_screen.cpu.CpuTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.device_thermal.DeviceThermalTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.flash_light.FlashLightTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.flash_light.tester.FlashLightTestT1
-import com.example.teclast_qc_application.device_tester.sub_screen.g_sensor.GSensorTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.g_sensor.tester.GSensorTestT1
-import com.example.teclast_qc_application.device_tester.sub_screen.gps.GPSTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.gps.tester.GPSTestT1
-import com.example.teclast_qc_application.device_tester.sub_screen.gpu.GpuTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.lcd_screen_test.LcdScreenTest
-import com.example.teclast_qc_application.device_tester.sub_screen.lcd_screen_test.tester.LcdTest1
-import com.example.teclast_qc_application.device_tester.sub_screen.lcd_screen_test.tester.LcdTest2
-import com.example.teclast_qc_application.device_tester.sub_screen.ram.ramTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.TouchPanelTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT1
-import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT2
-import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT3
-import com.example.teclast_qc_application.device_tester.sub_screen.touch_panel.tester.TouchPanelT4
-import com.example.teclast_qc_application.device_tester.sub_screen.usb.tester.UsbTestEachPort
-import com.example.teclast_qc_application.device_tester.sub_screen.usb.usbTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.vibration.VibrationTestScreen
-import com.example.teclast_qc_application.device_tester.sub_screen.vibration.tester.VibrationTestT1
-import com.example.teclast_qc_application.device_tester.sub_screen.wifi.WifiTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.audio.AudioTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.audio.tester.AudioTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.auto_sleep.AutoSleepTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.auto_sleep.tester.AutoSleepTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.battery.BatteryTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.bluetooth.BluetoothTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.bluetooth.tester.BluetoothTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.camera.CameraTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.camera.tester.CameraTest1
+import com.example.teclast_qc_application.device_tester.specific_test.camera.tester.CameraTest2
+import com.example.teclast_qc_application.device_tester.specific_test.cpu.CpuTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.device_thermal.DeviceThermalTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.flash_light.FlashLightTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.flash_light.tester.FlashLightTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.g_sensor.GSensorTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.g_sensor.tester.GSensorTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.gps.GPSTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.gps.tester.GPSTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.gpu.GpuTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.lcd_screen_test.LcdScreenTest
+import com.example.teclast_qc_application.device_tester.specific_test.lcd_screen_test.tester.LcdTest1
+import com.example.teclast_qc_application.device_tester.specific_test.lcd_screen_test.tester.LcdTest2
+import com.example.teclast_qc_application.device_tester.specific_test.physical_button.PhysicalButtonTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.ram.ramTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.touch_panel.TouchPanelTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.touch_panel.tester.TouchPanelT1
+import com.example.teclast_qc_application.device_tester.specific_test.touch_panel.tester.TouchPanelT2
+import com.example.teclast_qc_application.device_tester.specific_test.touch_panel.tester.TouchPanelT3
+import com.example.teclast_qc_application.device_tester.specific_test.touch_panel.tester.TouchPanelT4
+import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.UsbTestEachPort
+import com.example.teclast_qc_application.device_tester.specific_test.usb.usbTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.vibration.VibrationTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.vibration.tester.VibrationTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.wifi.WifiTestScreen
+import com.example.teclast_qc_application.device_tester.standard_test.StandardModeScreen
 import com.example.teclast_qc_application.settings.SettingsScreen
 
 @RequiresApi(34)
@@ -135,6 +137,10 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
             TouchPanelT4(context = context, navController = navController)
         }
 
+        composable("physical_button_test_screen") {
+            PhysicalButtonTestScreen(context = context, navController = navController)
+        }
+
         composable("device_thermal_test_screen") {
             DeviceThermalTestScreen(context = context, navController = navController)
         }
@@ -214,8 +220,10 @@ fun navigationGraph(navController: NavHostController, context: MainActivity ) {
         }
 
 
-
-
+        //Standard Test
+        composable("standard_mode_screen") {
+            StandardModeScreen(context = context, navController = navController)
+        }
 
     }
 }
