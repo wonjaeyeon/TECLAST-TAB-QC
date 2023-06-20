@@ -31,14 +31,8 @@ fun DeleteReportButton() {
     }
 }
 
-//private fun createReportFile(context: Context) {
-//    val reportFile = File(context.getExternalFilesDir(null), "report.txt")
-//    if (!reportFile.exists()) {
-//        reportFile.createNewFile()
-//    }
-//}
 
-private fun createReportFile(context: Context) {
+fun createReportFile(context: Context) {
     val reportFile = File(context.getExternalFilesDir(null), "report.txt")
     if (!reportFile.exists()) {
         reportFile.createNewFile()

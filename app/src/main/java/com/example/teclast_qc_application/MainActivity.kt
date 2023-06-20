@@ -53,6 +53,24 @@ class MainActivity : ComponentActivity() {
         }
 
 
+    // Inside your activity class
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        return when (keyCode) {
+            KeyEvent.KEYCODE_VOLUME_UP -> {
+                // Do something when the volume up button is pressed
+                true
+            }
+            KeyEvent.KEYCODE_VOLUME_DOWN -> {
+                // Do something when the volume down button is pressed
+                true
+            }
+            else -> {
+                super.onKeyDown(keyCode, event)
+            }
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        val intent = Intent(this, VolumeButtonService::class.java)

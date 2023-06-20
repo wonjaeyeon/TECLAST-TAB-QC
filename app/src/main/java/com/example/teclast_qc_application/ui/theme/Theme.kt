@@ -9,25 +9,33 @@ import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
     primary = Color(0xFF363636),
-primaryVariant = Color(0xFF3700B3),
-secondary = Color(0xFF03DAC6),
-secondaryVariant = Color(0xFF03DAC6),
-background = Color(0xFF121212),
-surface = Color(0xFF121212),
-error = Color(0xFFCF6679),
-onPrimary = Color(0xFF000000),
-onSecondary = Color(0xFF000000),
-onBackground = Color(0xFFFFFFFF),
-onSurface = Color(0xFFFFFFFF),
-onError = Color(0xFFFFFFFF),
+    primaryVariant = Color(0xFF3700B3),
+    secondary = Color(0xFF03DAC6),
+    secondaryVariant = Color(0xFF03DAC6),
+    background = Color(0xFF121212),
+    surface = Color(0xFF121212),
+    error = Color(0xFFCF6679),
+    onPrimary = Color(0xFF000000),
+    onSecondary = Color(0xFF000000),
+    onBackground = Color(0xFFFFFFFF),
+    onSurface = Color(0xFFFFFFFF),
+    onError = Color(0xFFFFFFFF),
 
 )
 
 private val LightColorPalette = lightColors(
-    primary = One,
-    primaryVariant = Two,
-    secondary = Three,
-    secondaryVariant = Four,
+    primary = Color(0xFF363636),
+    primaryVariant = Color(0xFF3700B3),
+    secondary = Color(0xFF03DAC6),
+    secondaryVariant = Color(0xFF03DAC6),
+    background = Color(0xFF121212),
+    surface = Color(0xFF121212),
+    error = Color(0xFFCF6679),
+    onPrimary = Color(0xFF000000),
+    onSecondary = Color(0xFF000000),
+    onBackground = Color(0xFFFFFFFF),
+    onSurface = Color(0xFFFFFFFF),
+    onError = Color(0xFFFFFFFF),
 
 
     /* Other default colors to override
