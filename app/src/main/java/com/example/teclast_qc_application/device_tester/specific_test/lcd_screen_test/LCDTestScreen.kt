@@ -54,7 +54,7 @@ fun LcdScreenTest(context: Context, navController: NavController, ) {
             ) {
                 // LCD Screen Test t1 Button
                 Button(onClick = {
-                    navController.navigate("lcd_screen_test_t1_screen"){
+                    navController.navigate("lcd_screen_test_t1_screen/notNextTest"){
 //                        popUpTo("touch_panel_test_screen"){
 //                            inclusive = true
 //
@@ -64,9 +64,9 @@ fun LcdScreenTest(context: Context, navController: NavController, ) {
                     Text(text = "LCD Screen Test 1")
                 }
 
-                // LCD Screen Test t1 Button
+                // LCD Screen Test t2 Button
                 Button(onClick = {
-                    navController.navigate("lcd_screen_test_t2_screen"){
+                    navController.navigate("lcd_screen_test_t2_screen/notNextTest"){
 //                        popUpTo("touch_panel_test_screen"){
 //                            inclusive = true
 //

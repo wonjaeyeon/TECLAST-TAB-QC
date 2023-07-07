@@ -25,6 +25,10 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
     // make a mutable state for touch panel test result
     // make this variable to get the result from the test function
     val touchPanelTest1Result = remember { mutableStateOf<String>("") }
+    val touchPanelTest2Result = remember { mutableStateOf<String>("") }
+    val touchPanelTest3Result = remember { mutableStateOf<String>("") }
+    val touchPanelTest4Result = remember { mutableStateOf<String>("") }
+    val touchPanelTest5Result = remember { mutableStateOf<String>("") }
 
     Scaffold(
         topBar = {
@@ -90,7 +94,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                 }
 
                 Text(
-                    text = touchPanelTest1Result.value,
+                    text = touchPanelTest2Result.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,
@@ -113,7 +117,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                 }
 
                 Text(
-                    text = touchPanelTest1Result.value,
+                    text = touchPanelTest3Result.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,
@@ -132,6 +136,25 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                 }) {
                     Text(text = "Touch Test T4(Multi Touch Capability)")
                 }
+                Text(
+                    text = touchPanelTest4Result.value,
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+                Button(onClick = {
+                    navController.navigate("touch_panel_test_t5_screen")
+                }) {
+                    Text(text = "Touch Test T5(Copy and Paste)")
+                }
+                Text(
+                    text = touchPanelTest5Result.value,
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
             }
         }
     }

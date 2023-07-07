@@ -6,15 +6,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 // A data class to represent test results
-data class TestResult(val testName: String, val result: String, val timestamp: String)
+data class TestResult_old(val testName: String, val result: String, val timestamp: String)
 
 // Mutable list to store test results
-val testResults = mutableListOf<TestResult>()
+val testResults = mutableListOf<TestResult_old>()
 
 // Function to add test results to the list
 fun addTestResult(testName: String, result: String) {
     val timestamp = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
-    testResults.add(TestResult(testName, result, timestamp))
+    testResults.add(TestResult_old(testName, result, timestamp))
 }
 
 // Function to generate a text report from the test results

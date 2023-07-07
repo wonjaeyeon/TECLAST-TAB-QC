@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.checkBatteryHealth
+import com.example.teclast_qc_application.batteryTest1
 import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.checkDeviceThermalStatus
-import com.example.teclast_qc_application.getBatteryState
+import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.getBatteryState
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -63,14 +63,9 @@ fun BatteryTestScreen(context: Context,navController: NavController, ) {
             ) {
                 // Battery Test Button
                 Button(onClick = {
-                    val isBatteryHealthGood = checkBatteryHealth(context)
-                    batteryHealthResult.value = if (isBatteryHealthGood) {
-                        "Battery health is good."
-                    } else {
-                        "Battery health is below the threshold."
-                    }
+                    batteryHealthResult.value = batteryTest1(context)
                 }) {
-                    Text(text = "Battery Test")
+                    Text(text = "Battery Test 1(Charged Percentage)(n/100)")
                 }
 
                 // Display battery health result
@@ -98,7 +93,7 @@ fun BatteryTestScreen(context: Context,navController: NavController, ) {
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
-                //make a button for cpu test
+                //make a button for device thermal test after battery test
                 Button(onClick = {
                     deviceThermalStateAfterTest.value = checkDeviceThermalStatus(context = context)
                 }) {

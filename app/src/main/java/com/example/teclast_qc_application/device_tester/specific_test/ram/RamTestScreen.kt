@@ -22,7 +22,7 @@ import com.example.teclast_qc_application.device_tester.specific_test.ram.tester
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun ramTestScreen(context: Context, navController: NavController, ) {
+fun RamTestScreen(context: Context, navController: NavController, ) {
     // Create a mutable state for battery health result
     val ramTestResult = remember { mutableStateOf<String>("") }
 
