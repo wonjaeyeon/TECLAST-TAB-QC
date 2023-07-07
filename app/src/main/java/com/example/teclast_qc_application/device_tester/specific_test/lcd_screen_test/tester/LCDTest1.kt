@@ -2,6 +2,7 @@ package com.example.teclast_qc_application.device_tester.specific_test.lcd_scree
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,52 +21,79 @@ import java.util.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun LcdTest1(context: Context, navController: NavController, navigateToNextTest: Boolean=false, nextTestRoute: String="") {
+fun LcdTest1(
+    context: Context,
+    navController: NavController,
+    runningTestMode: Boolean = false,
+    testMode: String = "None",
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
+) {
     val colors = listOf(Color.Red, Color.Green, Color.Blue, Color.White, Color.Black)
     var colorIndex by remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
     Scaffold(
-            scaffoldState = scaffoldState,
-            topBar = {
-                TopAppBar(
-                        title = { Text(text = "LCD Screen Test T1") },
-                        backgroundColor = MaterialTheme.colors.primaryVariant,
-                        contentColor = Color.White,
-                        navigationIcon = {
-                            IconButton(onClick = { navController.popBackStack() }) {
-                                Icon(
-                                        imageVector = Icons.Filled.ArrowBack,
-                                        contentDescription = "Back"
-                                )
-                            }
-                        }
-                )
+        scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "LCD Screen Test T1") },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+                contentColor = Color.White,
+                navigationIcon = {
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
+                    }
+                }
+            )
 
-            }
+        }
     ) {
         Box(
-                modifier = Modifier
-                        .fillMaxSize()
-                        .background(colors[colorIndex]),
-                contentAlignment = Alignment.Center
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colors[colorIndex]),
+            contentAlignment = Alignment.Center
         ) {
             Text(
-                    text = "$colorIndex",
-                    color = Color.Black,
-                    fontSize = 40.sp
+                text = "$colorIndex",
+                color = Color.Black,
+                fontSize = 40.sp
             )
             Box(
-                    modifier = Modifier
-                            .fillMaxSize()
-                            .clickable {
-                                colorIndex = (colorIndex + 1) % colors.size
-                                if (colorIndex == 0) {  // if we've looped back to the beginning
-                                    if (navigateToNextTest)
-                                        navController.navigate(nextTestRoute)
-                                    else
-                                        navController.popBackStack()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        colorIndex = (colorIndex + 1) % colors.size
+                        if (colorIndex == 0) {  // if we've looped back to the beginning
+//
+                            if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                                val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+                                Log.i("MyTag:LCDTEST1", "pastRoute: $pastRoute")
+                                Log.i("MyTag:LCDTEST1", "nextTestRoute: $nextTestRoute")
+                                val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+                                val nextPath = nextTestRoute.drop(1)
+                                val nextPathString = nextPath.joinToString(separator = "/")
+                                Log.i("MyTag:LCDTEST1", "nextPath: $nextPath")
+                                Log.i("MyTag:LCDTEST1", "nextPathString: $nextPathString")
+
+                                var nextRouteWithArguments = "aaaa"
+                                if (nextPathString.isNotEmpty()) {
+                                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                                } else {
+                                    nextRouteWithArguments = "${nextTestRoute[0]}"
                                 }
-                            }
+
+                                navController.navigate(nextRouteWithArguments)
+                            } else if (runningTestMode)
+                                onTestComplete()
+                            else
+                                navController.popBackStack()
+                        }
+                    }
             )
         }
     }

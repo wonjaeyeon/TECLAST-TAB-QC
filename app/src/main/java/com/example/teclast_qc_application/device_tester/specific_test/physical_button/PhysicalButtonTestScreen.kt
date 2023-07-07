@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun PhysicalButtonTestScreen(context: Context, navController: NavController, ) {
+fun PhysicalButtonTestScreen(context: Context, navController: NavController) {
 
     val ramTestResult = remember { mutableStateOf<String>("") }
 
@@ -51,23 +51,15 @@ fun PhysicalButtonTestScreen(context: Context, navController: NavController, ) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(16.dp)
             ) {
-                // LCD Screen Test t1 Button
+                // Volume Up/Down Button
                 Button(onClick = {
-                    navController.navigate("lcd_screen_test_t1_screen"){
-
+                    navController.navigate("physical_button_test_t1_screen"){
                     }
                 }) {
-                    Text(text = "Volume UP Down Test")
+                    Text(text = "Volume UP/Down Test")
                 }
 
-                // LCD Screen Test t1 Button
-                Button(onClick = {
-                    navController.navigate("lcd_screen_test_t2_screen"){
 
-                    }
-                }) {
-                    Text(text = "LCD Screen Test 2")
-                }
 
                 // Display battery health result
                 Text(

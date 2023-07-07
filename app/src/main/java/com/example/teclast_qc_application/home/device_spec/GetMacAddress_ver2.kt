@@ -25,3 +25,4 @@ fun getMacAddress2(): String {
     return ""
 }
 
+

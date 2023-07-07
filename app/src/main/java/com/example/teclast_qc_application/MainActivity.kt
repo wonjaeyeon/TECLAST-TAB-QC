@@ -1,15 +1,16 @@
 package com.example.teclast_qc_application
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
+import android.view.KeyEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -19,8 +20,7 @@ import androidx.compose.material.icons.filled.Assignment
 import androidx.compose.material.icons.filled.ChecklistRtl
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
@@ -29,19 +29,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber
+import androidx.room.Room
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultDatabase
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultViewModel
 import com.example.teclast_qc_application.ui.theme.MyApplicationTheme
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import android.view.KeyEvent
-import androidx.activity.viewModels
+import kotlin.reflect.KFunction1
 
 //check jy_may_24 branch is well made
 
 class MainActivity : ComponentActivity() {
+    val VolumeUpPressed = mutableStateOf(false)
+    val VolumeDownPressed = mutableStateOf(false)
+
+
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
@@ -53,15 +62,39 @@ class MainActivity : ComponentActivity() {
         }
 
 
+
+    private val db by lazy {
+        Room.databaseBuilder(
+            applicationContext,
+            TestResultDatabase::class.java,
+            "testResults.db"
+        ).build()
+    }
+    private val viewModel by viewModels<TestResultViewModel>(
+        factoryProducer = {
+            object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return TestResultViewModel(db.dao) as T
+                }
+            }
+        }
+    )
+
+
     // Inside your activity class
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         return when (keyCode) {
             KeyEvent.KEYCODE_VOLUME_UP -> {
                 // Do something when the volume up button is pressed
+                Log.i("MainActivity", "Volume up pressed")
+                VolumeUpPressed.value = true
                 true
             }
             KeyEvent.KEYCODE_VOLUME_DOWN -> {
                 // Do something when the volume down button is pressed
+                Log.i("MainActivity", "Volume down pressed")
+                VolumeDownPressed.value = true
                 true
             }
             else -> {
@@ -70,9 +103,18 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun openSettings() {
+        val intent = Intent(Settings.ACTION_SETTINGS)
+        startActivity(intent)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // when deleting Database, uncomment below
+        //deleteDatabase("testResults_v3.db")
+
+
 //        val intent = Intent(this, VolumeButtonService::class.java)
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //            startForegroundService(intent)
@@ -82,7 +124,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MyApplicationTheme {
-                MainScreenView(context = this)
+                val state by viewModel.state.collectAsState()
+                MainScreenView(context = this,state = state, onEvent = viewModel::onEvent, volumeUpPressed = VolumeUpPressed, volumeDownPressed = VolumeDownPressed, openSettings = this::openSettings)
             }
 
             requestCameraPermission()
@@ -98,6 +141,7 @@ class MainActivity : ComponentActivity() {
 //                viewModel.resetTriplePressTriggered()
 //            }
 //        }
+
 
 
     }
@@ -186,13 +230,13 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(34)
 @Composable
-fun MainScreenView(context: MainActivity) {
+fun MainScreenView(context: MainActivity, state: TestResultState, onEvent: KFunction1<TestResultEvent, Unit>, volumeUpPressed : MutableState<Boolean>, volumeDownPressed : MutableState<Boolean>, openSettings: () -> Unit ) {
     val navController = rememberNavController()
     Scaffold(
         bottomBar = { BottomNavigation(navController = navController) }
     ) {
         Box(Modifier.padding(it)){
-            navigationGraph(context = context,navController = navController)
+            navigationGraph(context = context,navController = navController, state = state, onEvent = onEvent, volumeUpPressed = volumeUpPressed, volumeDownPressed = volumeDownPressed, openSettings = openSettings)
         }
     }
 }

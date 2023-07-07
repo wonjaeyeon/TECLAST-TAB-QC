@@ -25,9 +25,11 @@ fun StandardTest(context: Context, navController: NavHostController) {
     val buttons = listOf(
         Pair("Standard Mode", Icons.Filled.Assignment),
         Pair("Fast Mode", Icons.Filled.ElectricBolt),
-        Pair("T-Order Mode",Icons.Filled.SmartDisplay),
-        Pair("SCSPRO Mode",Icons.Filled.SmartDisplay)
+        Pair("T-Order Mode", Icons.Filled.SmartDisplay),
+        Pair("SCSPRO Mode", Icons.Filled.SmartDisplay)
     )
+
+
 
     LazyVerticalGrid(
         columns = GridCells.Adaptive(200.dp),
@@ -35,9 +37,13 @@ fun StandardTest(context: Context, navController: NavHostController) {
     ) {
         items(buttons.size) { index ->
             val button = buttons[index]
-            ButtonWithJYEffect(onClick = {
-                navController.navigate("${button.first.lowercase().replace(" ", "_")}_screen")
-            },
+            ButtonWithJYEffect(
+
+                onClick = {
+
+                    navController.navigate("${button.first.lowercase().replace(" ", "_")}_screen")
+
+                },
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth()
