@@ -19,9 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.batteryTest1
+import com.example.teclast_qc_application.batteryTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.batteryTestT2
 import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.checkDeviceThermalStatus
-import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.getBatteryState
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -63,7 +63,7 @@ fun BatteryTestScreen(context: Context,navController: NavController, ) {
             ) {
                 // Battery Test Button
                 Button(onClick = {
-                    batteryHealthResult.value = batteryTest1(context)
+                    batteryHealthResult.value = batteryTestT1(context)
                 }) {
                     Text(text = "Battery Test 1(Charged Percentage)(n/100)")
                 }
@@ -79,7 +79,7 @@ fun BatteryTestScreen(context: Context,navController: NavController, ) {
 
                 //make a button for battery test
                 Button(onClick = {
-                    batteryStateofdevice.value = getBatteryState(context)
+                    batteryStateofdevice.value = batteryTestT2(context)
                 }) {
                     Text(text = "Charing State Test")
 

@@ -3,7 +3,7 @@ package com.example.teclast_qc_application
 import android.content.Context
 import android.os.BatteryManager
 
-fun batteryTest1(context: Context): String {
+fun batteryTestT1(context: Context): String {
     val batteryManager = context.getSystemService(Context.BATTERY_SERVICE) as BatteryManager
     val batteryHealth = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
     val threshold = 80

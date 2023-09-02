@@ -3,13 +3,14 @@ package com.example.teclast_qc_application.device_tester.specific_test.usb.teste
 import android.content.Context
 import android.content.pm.PackageManager
 
-fun checkUsbHostModeAvailability(context: Context): String {
+// checkUsbHostModeAvailability test
+fun usbTest2(context: Context): String {
     return if (context.packageManager.hasSystemFeature(PackageManager.FEATURE_USB_HOST)) {
-        "USB Host Mode on : Card reader is available to use."
+        "Usb TEST : Success : USB Host Mode on : Card reader is available to use."
 
 
     } else {
-        "USB Host Mode off : Card reader is not available to use."
+        "Usb TEST : Success : USB Host Mode off : Card reader is not available to use."
     }
 }
 

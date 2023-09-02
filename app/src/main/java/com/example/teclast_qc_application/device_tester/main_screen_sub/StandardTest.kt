@@ -1,6 +1,7 @@
 package com.example.teclast_qc_application.device_tester.main_screen_sub
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -40,8 +41,14 @@ fun StandardTest(context: Context, navController: NavHostController) {
             ButtonWithJYEffect(
 
                 onClick = {
+                    try {
+                        navController.navigate("${button.first.lowercase().replace(" ", "_")}_screen")
+                    }
+                    catch (e: Exception){
 
-                    navController.navigate("${button.first.lowercase().replace(" ", "_")}_screen")
+                        Toast.makeText(context, "Please try again", Toast.LENGTH_SHORT).show()
+                    }
+
 
                 },
                 modifier = Modifier

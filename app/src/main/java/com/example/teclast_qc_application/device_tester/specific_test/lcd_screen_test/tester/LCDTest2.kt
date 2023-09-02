@@ -59,7 +59,14 @@ import java.util.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun LcdTest2(context: Context, navController: NavController, runningTestMode : Boolean=false, onTestComplete: () -> Unit= {},navigateToNextTest: Boolean=false, nextTestRoute: MutableList<String> = mutableListOf<String>()) {
+fun LcdTest2(
+    context: Context,
+    navController: NavController,
+    runningTestMode: Boolean = false,
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
+) {
     // 밝기 범위를 지정하고, 이를 흑백 색상으로 변환합니다.
     val brightnessLevels = listOf(0f, 0.25f, 0.5f, 0.75f, 1f)
     val colors = brightnessLevels.map { Color(1f, 1f, 1f, it) }
@@ -95,8 +102,8 @@ fun LcdTest2(context: Context, navController: NavController, runningTestMode : B
                 modifier = Modifier
                     .fillMaxSize()
                     .clickable {
-                        colorIndex = (colorIndex+1) % colors.size
-                        if (colorIndex == colors.size-1) {
+                        colorIndex = (colorIndex + 1) % colors.size
+                        if (colorIndex == colors.size - 1) {
 //                            if (runningTestMode)
 //                                onTestComplete()
 //
@@ -106,30 +113,25 @@ fun LcdTest2(context: Context, navController: NavController, runningTestMode : B
 //                            else
 //                                navController.popBackStack()
                             if (nextTestRoute.isNotEmpty()) {
-//                                val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest2
-//                                Log.i("MyTag", "pastRoute(Current : LOC : LCD2): $pastRoute")
-//                                Log.i("MyTag","nextTestRoute: $nextTestRoute")
 //
-//                                navController.navigate(nextTestRoute[0])
                                 val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                                 Log.i("MyTag:LCDTEST2", "pastRoute: $pastRoute")
-                                Log.i("MyTag:LCDTEST2","nextTestRoute: $nextTestRoute")
+                                Log.i("MyTag:LCDTEST2", "nextTestRoute: $nextTestRoute")
                                 val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
                                 val nextPath = nextTestRoute.drop(1)
-                                val nextPathString = nextPath.joinToString(separator = "/")
+                                val nextPathString = nextPath.joinToString(separator = "->")
 
-                                Log.i("MyTag","nextPath: $nextPath")
-                                Log.i("MyTag","nextPathString: $nextPathString")
+                                Log.i("MyTag", "nextPath: $nextPath")
+                                Log.i("MyTag", "nextPathString: $nextPathString")
                                 var nextRouteWithArguments = "aaaa"
-                                if (nextPathString.isNotEmpty()){
-                                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"}
-                                else{
+                                if (nextPathString.isNotEmpty()) {
+                                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                                } else {
                                     nextRouteWithArguments = "${nextTestRoute[0]}"
                                 }
 
                                 navController.navigate(nextRouteWithArguments)
-                            }
-                            else if (runningTestMode)
+                            } else if (runningTestMode)
                                 onTestComplete()
                             else
                                 navController.popBackStack()

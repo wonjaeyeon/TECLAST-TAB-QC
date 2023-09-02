@@ -76,7 +76,7 @@ fun LcdTest1(
                                 Log.i("MyTag:LCDTEST1", "nextTestRoute: $nextTestRoute")
                                 val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
                                 val nextPath = nextTestRoute.drop(1)
-                                val nextPathString = nextPath.joinToString(separator = "/")
+                                val nextPathString = nextPath.joinToString(separator = "->")
                                 Log.i("MyTag:LCDTEST1", "nextPath: $nextPath")
                                 Log.i("MyTag:LCDTEST1", "nextPathString: $nextPathString")
 

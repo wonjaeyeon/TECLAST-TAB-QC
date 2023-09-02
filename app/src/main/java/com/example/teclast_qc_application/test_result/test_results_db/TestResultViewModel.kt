@@ -23,9 +23,9 @@ class TestResultViewModel(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     private val _state = MutableStateFlow(TestResultState())
-    val state = combine(_state, _sortType, _contacts) { state, sortType, contacts ->
+    val state = combine(_state, _sortType, _contacts) { state, sortType, testResults ->
         state.copy(
-            testResults = contacts,
+            testResults = testResults,
             sortType = sortType
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TestResultState())
@@ -86,6 +86,18 @@ class TestResultViewModel(
                     isAddingContact = true
                 ) }
             }
+
+            TestResultEvent.StartTest -> {
+                _state.update { it.copy(
+                    isAddingContact = true
+                ) }
+            }
+            TestResultEvent.EndTest -> {
+                _state.update { it.copy(
+                    isAddingContact = false
+                ) }
+            }
+
             is TestResultEvent.SortContacts -> {
                 _sortType.value = event.sortType
             }

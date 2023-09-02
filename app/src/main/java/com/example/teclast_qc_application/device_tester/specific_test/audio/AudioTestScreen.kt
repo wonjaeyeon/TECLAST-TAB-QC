@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AudioTestScreen(context: Context, navController: NavController, ) {
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -50,7 +49,7 @@ fun AudioTestScreen(context: Context, navController: NavController, ) {
             ) {
                 // Audio Screen Test t1 Button
                 Button(onClick = {
-                    navController.navigate("audio_test_t1_screen"){
+                    navController.navigate("audio_test_t1_screen/notNextTest"){
 //                        popUpTo("touch_panel_test_screen"){
 //                            inclusive = true
 //

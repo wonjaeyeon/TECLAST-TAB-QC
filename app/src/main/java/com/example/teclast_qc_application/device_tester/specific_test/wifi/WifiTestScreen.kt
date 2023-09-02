@@ -2,10 +2,14 @@ package com.example.teclast_qc_application.device_tester.specific_test.wifi
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +25,7 @@ import androidx.navigation.NavController
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.fetchIpGeolocation
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.getWifiConnectionStatus
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.getWifiDataUsage
+import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.getWifiSignalStrength
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -30,7 +35,7 @@ import java.net.DatagramSocket
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun WifiTestScreen(context: Context,navController: NavController,viewModel: YourViewModel = viewModel() ) {
+fun WifiTestScreen(context: Context, navController: NavController, viewModel: YourViewModel = viewModel()) {
     // Create a mutable state for battery health result
     val connectionStateResult = remember { mutableStateOf<String>("") }
     val wifiDataUsageResult = remember { mutableStateOf<String>("") }
@@ -38,6 +43,8 @@ fun WifiTestScreen(context: Context,navController: NavController,viewModel: Your
     val receivedMessage = remember { mutableStateOf("") }
     // val for HTTP Test
     val httpTestResult = remember { mutableStateOf("") }
+
+    val wifiSignalStrength = remember { mutableStateOf(0) }
 
     // get reference to the coroutine scope
     val coroutineScope = rememberCoroutineScope()
@@ -51,7 +58,7 @@ fun WifiTestScreen(context: Context,navController: NavController,viewModel: Your
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Filled.ArrowBack,
+                            imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
@@ -70,6 +77,28 @@ fun WifiTestScreen(context: Context,navController: NavController,viewModel: Your
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(16.dp)
             ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Settings,
+                        //tint = MaterialTheme.colors.primary,
+                        contentDescription = "Back"
+                    )
+
+                    Spacer(modifier = Modifier.padding(6.dp))
+
+                    Button(onClick = {
+                    val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+                    context.startActivity(intent)
+                }) {
+                    Text("Go to WI-FI settings")
+                }
+                }
+
+
+                Spacer(modifier = Modifier.padding(top = 40.dp))
                 // Battery Test Button
                 Button(onClick = {
                     connectionStateResult.value = getWifiConnectionStatus(context)
@@ -132,11 +161,13 @@ fun WifiTestScreen(context: Context,navController: NavController,viewModel: Your
                     Text("Receive Data(BROADCAST SERVER TEST)")
                 }
 
-                Text(text ="Received Message: ${receivedMessage.value}",
+                Text(
+                    text = "Received Message: ${receivedMessage.value}",
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 16.dp))
+                    modifier = Modifier.padding(top = 16.dp)
+                )
 
 
                 Button(onClick = {
@@ -148,13 +179,28 @@ fun WifiTestScreen(context: Context,navController: NavController,viewModel: Your
                     Text("Receive Data(HTTP TEST)")
                 }
 
-                Text(text ="Received Message: ${httpTestResult.value}",
+                Text(
+                    text = "Received Message: ${httpTestResult.value}",
+                    style = MaterialTheme.typography.body1,
+                    textAlign = TextAlign.Center,
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 16.dp)
+                )
+
+               Button(onClick = {
+                    coroutineScope.launch {
+                        wifiSignalStrength.value = getWifiSignalStrength(context)
+                    }
+                }) {
+                    Text("Signal Strength Test")
+                }
+
+                Text(
+                    text = "Signal Strength: ${wifiSignalStrength.value}/100",
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,
                     modifier = Modifier.padding(top = 16.dp))
-
-
 
 
             }

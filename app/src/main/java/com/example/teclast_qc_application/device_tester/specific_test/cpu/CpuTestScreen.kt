@@ -21,13 +21,16 @@ import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.CpuBurningTest
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.cpuBufferTest
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.cpuTest1
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.runBlocking
 
 
 @RequiresApi(34)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun CpuTestScreen(context: Context,navController: NavController, ){
+fun CpuTestScreen(state: TestResultState,
+                  onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavController, ){
 
     // Create a mutable state for battery health result
     val cpuBurningTest1Result = remember { mutableStateOf<String>("") }
@@ -104,7 +107,7 @@ fun CpuTestScreen(context: Context,navController: NavController, ){
                 //make a button for battery test
                 //make a button for battery test
                 Button(onClick = {
-                    cpuTest2Result.value = cpuBufferTest()
+                    cpuTest2Result.value = cpuBufferTest(state = state, onEvent = onEvent)
                 }) {
                     Text(text = "CPU Test2 : Buffer")
 

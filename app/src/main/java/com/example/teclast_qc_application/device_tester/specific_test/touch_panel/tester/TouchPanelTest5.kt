@@ -97,7 +97,7 @@ class TouchPanelViewModel : ViewModel() {
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun TouchPanelT5(context: Context, navController: NavController) {
+fun TouchPanelTest5(context: Context, navController: NavController) {
     val viewModel: TouchPanelViewModel = viewModel()  // Access ViewModel
     val scaffoldState = rememberScaffoldState()
 

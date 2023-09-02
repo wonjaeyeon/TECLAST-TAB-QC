@@ -2,6 +2,7 @@ package com.example.teclast_qc_application.device_tester.specific_test.touch_pan
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.*
@@ -416,7 +417,11 @@ import kotlin.math.roundToInt
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun TouchPanelT2(context: Context, navController: NavController) {
+fun TouchPanelTest2(context: Context, navController: NavController,runningTestMode: Boolean = false,
+                    testMode: String = "None",
+                    onTestComplete: () -> Unit = {},
+                    navigateToNextTest: Boolean = false,
+                    nextTestRoute: MutableList<String> = mutableListOf<String>()) {
     val trail = remember { mutableStateListOf<Offset>() }
     val touchCount = remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
@@ -451,7 +456,29 @@ fun TouchPanelT2(context: Context, navController: NavController) {
         // Check if all checkpoints are true
         if (checkpoints.values.all { it } && !isFinished) {
             // All checkpoints are true, so we can navigate to the next screen
-            navController.popBackStack()
+            // navController.popBackStack()
+            if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+                Log.i("MyTag:TOUCHPANELTEST2", "pastRoute: $pastRoute")
+                Log.i("MyTag:TOUCHPANELTEST2", "nextTestRoute: $nextTestRoute")
+                val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+                val nextPath = nextTestRoute.drop(1)
+                val nextPathString = nextPath.joinToString(separator = "->")
+                Log.i("MyTag:TOUCHPANELTEST2", "nextPath: $nextPath")
+                Log.i("MyTag:TOUCHPANELTEST2", "nextPathString: $nextPathString")
+
+                var nextRouteWithArguments = "aaaa"
+                if (nextPathString.isNotEmpty()) {
+                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                } else {
+                    nextRouteWithArguments = "${nextTestRoute[0]}"
+                }
+
+                navController.navigate(nextRouteWithArguments)
+            } else if (runningTestMode)
+                onTestComplete()
+            else
+                navController.popBackStack()
             isFinished = true
 
         }
@@ -553,10 +580,4 @@ fun TouchPanelT2(context: Context, navController: NavController) {
             )
         }
     }
-}
-
-
-
-fun addTestResult(testName: String, testResult: String) {
-    // add your logic to save the test results
 }

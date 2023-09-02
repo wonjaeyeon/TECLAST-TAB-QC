@@ -34,7 +34,7 @@ fun TestScreenScaffold(navController: NavHostController, progress: Float, done: 
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp).fillMaxSize()
         ) {
             LinearProgressIndicator(
                 progress,

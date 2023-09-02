@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber
+import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber_v2
 import com.example.teclast_qc_application.home.device_spec.*
 import com.example.teclast_qc_application.test_result.createReportFile
 import com.example.teclast_qc_application.test_result.deleteReportFile
@@ -62,7 +62,7 @@ fun ShowDeviceSpecs2(context: Context) {
 
 
     val tableData_DeviceSpec = listOf(
-        "Serial" to getDeviceSerialNumber(context),
+        "Serial" to getDeviceSerialNumber_v2(),
         "MAC Address" to getMac(context),
         "Brand" to Build.BRAND,
         "MODEL" to Build.MODEL,
@@ -82,6 +82,7 @@ fun ShowDeviceSpecs2(context: Context) {
         "NFC" to context.packageManager.hasSystemFeature(PackageManager.FEATURE_NFC).toString(),
         "Bluetooth version" to getBluetoothVersion(),
         "FINGERPRINT" to Build.FINGERPRINT,
+
     )
 
     val tableData_StateReport = listOf(

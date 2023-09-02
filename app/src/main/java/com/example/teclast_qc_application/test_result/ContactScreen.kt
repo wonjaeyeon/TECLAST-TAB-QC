@@ -19,10 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultDialog
-import com.example.teclast_qc_application.test_result.test_results_db.SortType
-import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import com.example.teclast_qc_application.test_result.test_results_db.*
 
 
 @Composable
@@ -40,7 +37,7 @@ fun ContactScreen(
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Filled.ArrowBack,
+                            imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
@@ -58,6 +55,8 @@ fun ContactScreen(
             }
         },
     ) { _ ->
+        //AddTestResultV2(state = state, onEvent = onEvent)
+
         if(state.isAddingContact) {
             AddTestResultDialog(state = state, onEvent = onEvent)
         }

@@ -196,11 +196,18 @@ import java.util.*
 //}
 
 
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CameraTest1(context: Context, navController: NavController) {
+fun CameraTest1(
+    context: Context,
+    navController: NavController,
+    runningTestMode: Boolean = false,
+    testMode: String = "None",
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
+) {
     val cameraPermission = Manifest.permission.CAMERA
     val cameraRequestCode = 1234
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
@@ -278,15 +285,57 @@ fun CameraTest1(context: Context, navController: NavController) {
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
-                    navController.popBackStack()
-                }) {
+                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+                            Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
+                            Log.i("MyTag:CameraTest1", "nextTestRoute: $nextTestRoute")
+                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+                            val nextPath = nextTestRoute.drop(1)
+                            val nextPathString = nextPath.joinToString(separator = "->")
+                            Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
+                            Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
+
+                            var nextRouteWithArguments = "aaaa"
+                            if (nextPathString.isNotEmpty()) {
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                            } else {
+                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                            }
+
+                            navController.navigate(nextRouteWithArguments)
+                        } else if (runningTestMode)
+                            onTestComplete()
+                        else
+                            navController.popBackStack()
+                    }) {
                     Text("Good")
                 }
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
-                    navController.popBackStack()
-                }) {
+                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+                            Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
+                            Log.i("MyTag:CameraTest1", "nextTestRoute: $nextTestRoute")
+                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+                            val nextPath = nextTestRoute.drop(1)
+                            val nextPathString = nextPath.joinToString(separator = "->")
+                            Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
+                            Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
+
+                            var nextRouteWithArguments = "aaaa"
+                            if (nextPathString.isNotEmpty()) {
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                            } else {
+                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                            }
+
+                            navController.navigate(nextRouteWithArguments)
+                        } else if (runningTestMode)
+                            onTestComplete()
+                        else
+                            navController.popBackStack()
+                    }) {
                     Text("Fail")
                 }
             }

@@ -24,10 +24,9 @@ import kotlinx.coroutines.withContext
 
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun StandardModeScreen_V1(state: TestResultState,
+fun StandardModeScreen(state: TestResultState,
                        onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavHostController) {
     var progress by remember { mutableStateOf(0.0f) }
-    val coroutineScope = rememberCoroutineScope()
     var testsCompleted by remember { mutableStateOf(false) }
     // var done is empty list
 
@@ -41,14 +40,14 @@ fun StandardModeScreen_V1(state: TestResultState,
             "5. gpu test 2",
             "6. ram test 1",
             "7. rom test 1",
-            "8. battery test 1",
-            "9. battery test 2",
-            "10. usb test 1",
-            "11. usb test 2",
-            "12. wifi test 1",
-            "13. wifi test 2",
-            "14. wifi test 3",
-            "15. bluetooth test 1",
+//            "8. battery test 1",
+//            "9. battery test 2",
+//            "10. usb test 1",
+//            "11. usb test 2",
+//            "12. wifi test 1",
+//            "13. wifi test 2",
+//            "14. wifi test 3",
+//            "15. bluetooth test 1",
         )
     }
     // 매우 긴 nextTestRoute를 던져주고 이걸 딱딱 나눠서 보도록 하면 된다. 즉 호출 함수는 그냥 첫 함수인 거고 나머지 뒤에 따라오는 함수들은 내가 정한 nextTestRoute에 따라 따라오는 것이다.
@@ -59,13 +58,17 @@ fun StandardModeScreen_V1(state: TestResultState,
         "wifi_test_test_mode_screen",
         "bluetooth_test_test_mode_screen",
         //"usb_test_t1_screen",
-        "touch_panel_test_t2_screen",
-        "touch_panel_test_t3_screen",
+//        "touch_panel_test_t2_screen",
         "touch_panel_test_t4_screen",
 //        "touch_panel_test_t5_screen",
         "lcd_screen_test_t1_screen",
         "lcd_screen_test_t2_screen",
+        "physical_button_test_t1_screen",
+        "camera_test_t1_screen",
         "audio_test_t1_screen",
+        "vibration_test_test_mode_screen",
+        "flash_light_test_test_mode_screen",
+        "lcd_screen_test_t1_screen",
         "notNextTest"
     )
     if (!testsCompleted) {
@@ -83,7 +86,6 @@ fun StandardModeScreen_V1(state: TestResultState,
 
                 Log.i("StandardModeScreen", "1. cpuBufferTest() is called : $cpuTestResult1 : Percentage : $progress")
                 delay(100L)
-
 
                 val cpuTestResult2 = cpuTest1()
                 progress += 1f / (done.size + undone.size)
