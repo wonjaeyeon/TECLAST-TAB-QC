@@ -114,7 +114,7 @@ fun TriStateToggle2() : String{
     val states = listOf(
         "Standard Test",
         "Specific Test",
-        "Scenario Test"
+        //"Scenario Test"
     )
     var selectedOption by remember {
         mutableStateOf(states[0])

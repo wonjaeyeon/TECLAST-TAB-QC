@@ -49,8 +49,9 @@ import com.example.teclast_qc_application.device_tester.specific_test.vibration.
 import com.example.teclast_qc_application.device_tester.specific_test.vibration.tester.VibrationTestTestMode
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.WifiTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.WifiTestTestMode
-import com.example.teclast_qc_application.device_tester.standard_test.standard_mode_screen.StandardModeScreen
+import com.example.teclast_qc_application.device_tester.standard_test.standard_mode.StandardModeScreen
 import com.example.teclast_qc_application.settings.SettingsScreen
+import com.example.teclast_qc_application.settings.sub_screen.TestResultDBScreen
 import com.example.teclast_qc_application.test_result.ContactScreen
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -87,7 +88,6 @@ fun navigationGraph(
             HomeScreen2(context = context)
         }
         composable(BottomNavItem.Test.screenRoute) {
-            //TesterScreen2(context = context, navController = navController)
             TesterScreen2(context = context, navController = navController)
 
         }
@@ -103,13 +103,12 @@ fun navigationGraph(
         }
 
         composable("gpu_test_screen") {
-            GpuTestScreen(context = context, navController = navController)
+            GpuTestScreen(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
         composable("battery_test_screen") {
-            BatteryTestScreen(context = context, navController = navController)
+            BatteryTestScreen(state = state, onEvent = onEvent,context = context, navController = navController)
         }
-
 
         composable("battery_test_test_mode_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
             type = NavType.StringType
@@ -136,11 +135,11 @@ fun navigationGraph(
         }
 
         composable("ram_test_screen") {
-            RamTestScreen(context = context, navController = navController)
+            RamTestScreen(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
         composable("rom_test_screen") {
-            RomTestScreen(context = context, navController = navController)
+            RomTestScreen(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
         composable("usb_test_screen") {
@@ -503,9 +502,12 @@ fun navigationGraph(
             FlashLightTestT1(context = context, navController = navController)
         }
 
-        composable("flash_light_test_test_mode_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
-            type = NavType.StringType
-        })) {
+        composable(
+            "flash_light_test_test_mode_screen/{nextTestRoute}",
+            arguments = listOf(navArgument("nextTestRoute") {
+                type = NavType.StringType
+            })
+        ) {
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
                 FlashLightTestTestMode(context = context, navController = navController)
             } else {
@@ -547,7 +549,6 @@ fun navigationGraph(
             AutoSleepTestT1(context = context, navController = navController)
         }
 
-
         //Standard Test
         composable("standard_mode_screen") {
             StandardModeScreen(state = state, onEvent = onEvent, context = context, navController = navController)
@@ -555,6 +556,10 @@ fun navigationGraph(
 
         composable("contract_screen") {
             ContactScreen(state = state, onEvent = onEvent, navController = navController)
+        }
+
+        composable("test_result_db_screen") {
+            TestResultDBScreen(state = state, onEvent = onEvent, navController = navController)
         }
 
     }

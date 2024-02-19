@@ -46,13 +46,13 @@ fun WifiTestTestMode(
                 delay(100) // Check wifi status every second
             }
         }
-
         onDispose {
             job.cancel()
         }
     }
 
     val wifiMessage = if (wifiConnectedStatus.value.startsWith("Connected to Wi-Fi") && wifiSignalStrength.value > 20) {
+
         if(!hasNavigated.value) {
             Log.i(testMode, "12. getWifiConnectionStatus() is called : Success : Wifi is connected")
             Log.i(testMode, "13. getWifiSignalStrength() is called : Success : Wifi signal strength is $wifiSignalStrength")
@@ -70,10 +70,10 @@ fun WifiTestTestMode(
                 var nextRouteWithArguments = "aaaa"
                 if (nextPathString.isNotEmpty()) {
                     nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
-                    Log.i("MyTag:UsbTest", "nextRouteWithArguments: $nextRouteWithArguments")
+                    Log.i("MyTag:WifiTest", "nextRouteWithArguments: $nextRouteWithArguments")
                 } else {
                     nextRouteWithArguments = "${nextTestRoute[0]}"
-                    Log.i("MyTag:UsbTest", "nextRouteWithArguments: $nextRouteWithArguments")
+                    Log.i("MyTag:WifiTest", "nextRouteWithArguments: $nextRouteWithArguments")
                 }
 
                 navController.navigate(nextRouteWithArguments)

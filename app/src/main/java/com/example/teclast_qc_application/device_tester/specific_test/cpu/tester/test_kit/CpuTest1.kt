@@ -3,17 +3,41 @@ package com.example.teclast_qc_application.device_tester.specific_test.cpu.teste
 import android.content.Context
 import android.os.Build
 import android.os.PowerManager
+import android.util.Log
 import androidx.annotation.RequiresApi
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 import kotlin.system.measureTimeMillis
 
-fun cpuTest1(limit: Int = 50000): String {
-    return try {
+fun cpuTest1(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
+    limit: Int = 50000): String {
+
+    var isPassed = false
+    var errorLine = ""
+    try {
         val elapsedTime = measureTimeMillis {
             findPrimesUpTo(limit)
         }
-        "CPU TEST: Success (Time: ${elapsedTime}ms)"
+        AddTestResultV2(state = state, onEvent = onEvent, "CPU TEST 1", "Success", Date().toString())
+        Log.i("CPU TEST 1", "Success & ${Date()}")
+    return "CPU TEST: Success (Time: ${elapsedTime}ms)"
     } catch (error: Exception) {
-        "Error: ${error.message}"
+        errorLine = error.toString()
+
+    }
+
+    if (isPassed){
+        AddTestResultV2(state = state, onEvent = onEvent, "CPU TEST 1", "Success", Date().toString())
+        Log.i("CPU TEST 1", "Success & ${Date()}")
+        return "CPU TEST: Success"
+    } else {
+        AddTestResultV2(state = state, onEvent = onEvent, "CPU TEST 1", "Failed", Date().toString())
+        Log.i("CPU TEST 1", "Failed & with error: $errorLine & ${Date()}")
+        return "CPU TEST: Failed"
     }
 }
 

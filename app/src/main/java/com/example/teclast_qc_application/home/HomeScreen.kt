@@ -24,10 +24,8 @@ import com.example.teclast_qc_application.home.device_spec.*
 import com.example.teclast_qc_application.test_result.createReportFile
 import com.example.teclast_qc_application.test_result.deleteReportFile
 
-
 @Composable
 fun HomeScreen2(context: Context) {
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -46,21 +44,14 @@ fun HomeScreen2(context: Context) {
                 textAlign = TextAlign.Left,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-
-
-
             ShowDeviceSpecs2(context)
-
         }
     }
 }
 
 
-
 @Composable
 fun ShowDeviceSpecs2(context: Context) {
-
-
     val tableData_DeviceSpec = listOf(
         "Serial" to getDeviceSerialNumber_v2(),
         "MAC Address" to getMac(context),
@@ -82,7 +73,6 @@ fun ShowDeviceSpecs2(context: Context) {
         "NFC" to context.packageManager.hasSystemFeature(PackageManager.FEATURE_NFC).toString(),
         "Bluetooth version" to getBluetoothVersion(),
         "FINGERPRINT" to Build.FINGERPRINT,
-
     )
 
     val tableData_StateReport = listOf(
@@ -149,7 +139,6 @@ fun ShowDeviceSpecs2(context: Context) {
             selectedTableData = tableData_StateReport
             column2Text = "Test Results"
         }
-
 
         // Here is the header
         Row(Modifier.background(Color.Gray).height(IntrinsicSize.Min)) {

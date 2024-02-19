@@ -5,7 +5,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -29,8 +32,10 @@ import kotlinx.coroutines.runBlocking
 @RequiresApi(34)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun CpuTestScreen(state: TestResultState,
-                  onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavController, ){
+fun CpuTestScreen(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavController,
+) {
 
     // Create a mutable state for battery health result
     val cpuBurningTest1Result = remember { mutableStateOf<String>("") }
@@ -76,11 +81,11 @@ fun CpuTestScreen(state: TestResultState,
 //                        val timeoutMillis = 1000L  // 1 second
 //                        cpuBurningTest1Result.value = CpuBurningTest(1000, timeoutMillis).start()
                         runBlocking {
-                            cpuBurningTest1Result.value = CpuBurningTest(1000L, this)
+                            cpuBurningTest1Result.value = CpuBurningTest(state = state, onEvent = onEvent,2000L, this)
                         }
                     }
                 ) {
-                    Text(text = "Start CPU Burning Test")
+                    Text(text = "CPU Burning Test")
                 }
                 Text(
                     text = cpuBurningTest1Result.value,
@@ -91,7 +96,7 @@ fun CpuTestScreen(state: TestResultState,
 
                 Button(
                     onClick = {
-                        cpuTest1Result.value = cpuTest1()
+                        cpuTest1Result.value = cpuTest1(state = state, onEvent = onEvent)
                     }
                 ) {
                     Text(text = "CPU Test1 : Calculation")
