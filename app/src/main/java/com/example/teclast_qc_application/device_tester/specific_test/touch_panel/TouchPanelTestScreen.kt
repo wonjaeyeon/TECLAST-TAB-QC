@@ -82,7 +82,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
 
                 //make a button for Touch test T2
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t2_screen") {
+                    navController.navigate("touch_panel_test_t2_screen/notNextTest") {
 //                        popUpTo("touch_panel_test_screen"){
 //                            inclusive = true
 //
@@ -104,7 +104,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
 
                 //make a button for Touch test T3
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t3_screen") {
+                    navController.navigate("touch_panel_test_t3_screen/notNextTest") {
 //                        popUpTo("touch_panel_test_screen"){
 //                            inclusive = true
 //
@@ -126,7 +126,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
 
                 // make a button for Touch test T4
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t4_screen") {
+                    navController.navigate("touch_panel_test_t4_screen/notNextTest") {
 //                        popUpTo("touch_panel_test_screen"){
 //                            inclusive = true
 //
@@ -144,7 +144,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                     modifier = Modifier.padding(top = 16.dp)
                 )
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t5_screen")
+                    navController.navigate("touch_panel_test_t5_screen/notNextTest")
                 }) {
                     Text(text = "Touch Test T5(Copy and Paste)")
                 }

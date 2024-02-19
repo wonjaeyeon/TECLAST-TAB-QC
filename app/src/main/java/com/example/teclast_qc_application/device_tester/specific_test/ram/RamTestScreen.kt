@@ -5,7 +5,10 @@ package com.example.teclast_qc_application.device_tester.specific_test.ram
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -18,11 +21,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.device_tester.specific_test.ram.tester.ramTest1
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun RamTestScreen(context: Context, navController: NavController, ) {
+fun RamTestScreen(state: TestResultState,
+                  onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavController, ) {
     // Create a mutable state for battery health result
     val ramTestResult = remember { mutableStateOf<String>("") }
 
@@ -56,7 +62,7 @@ fun RamTestScreen(context: Context, navController: NavController, ) {
             ) {
                 // Battery Test Button
                 Button(onClick = {
-                    ramTestResult.value = ramTest1()
+                    ramTestResult.value = ramTest1(state = state, onEvent = onEvent)
                 }) {
                     Text(text = "RAM Test 1")
                 }

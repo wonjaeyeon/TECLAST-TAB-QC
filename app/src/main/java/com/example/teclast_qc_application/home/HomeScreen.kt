@@ -19,15 +19,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber
+import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber_v2
 import com.example.teclast_qc_application.home.device_spec.*
 import com.example.teclast_qc_application.test_result.createReportFile
 import com.example.teclast_qc_application.test_result.deleteReportFile
 
-
 @Composable
 fun HomeScreen2(context: Context) {
-
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -46,23 +44,16 @@ fun HomeScreen2(context: Context) {
                 textAlign = TextAlign.Left,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-
-
-
             ShowDeviceSpecs2(context)
-
         }
     }
 }
 
 
-
 @Composable
 fun ShowDeviceSpecs2(context: Context) {
-
-
     val tableData_DeviceSpec = listOf(
-        "Serial" to getDeviceSerialNumber(context),
+        "Serial" to getDeviceSerialNumber_v2(),
         "MAC Address" to getMac(context),
         "Brand" to Build.BRAND,
         "MODEL" to Build.MODEL,
@@ -148,7 +139,6 @@ fun ShowDeviceSpecs2(context: Context) {
             selectedTableData = tableData_StateReport
             column2Text = "Test Results"
         }
-
 
         // Here is the header
         Row(Modifier.background(Color.Gray).height(IntrinsicSize.Min)) {

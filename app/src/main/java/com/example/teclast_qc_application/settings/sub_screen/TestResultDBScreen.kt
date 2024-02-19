@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.test_result
+package com.example.teclast_qc_application.settings.sub_screen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -19,11 +19,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.*
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultDialog
+import com.example.teclast_qc_application.test_result.test_results_db.SortType
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 
 
 @Composable
-fun ContactScreen(
+fun TestResultDBScreen(
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     navController: NavController

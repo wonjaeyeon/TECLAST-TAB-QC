@@ -50,7 +50,7 @@ fun CameraTestScreen(context: Context, navController: NavController, ) {
             ) {
                 // Camera Test t1 Button
                 Button(onClick = {
-                    navController.navigate("camera_test_t1_screen"){
+                    navController.navigate("camera_test_t1_screen/notNextTest"){
 //                        popUpTo("touch_panel_test_screen"){
 //                            inclusive = true
 //

@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.standard_test.standard_mode_screen.sub_screen
+package com.example.teclast_qc_application.device_tester.standard_test.standard_mode.sub_screen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
@@ -34,7 +34,7 @@ fun TestScreenScaffold(navController: NavHostController, progress: Float, done: 
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp).fillMaxSize()
         ) {
             LinearProgressIndicator(
                 progress,

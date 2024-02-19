@@ -18,8 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.checkUsbConnection
-import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.checkUsbHostModeAvailability
+import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.usbTest1
+import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.usbTest2
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -59,7 +59,7 @@ fun usbTestScreen(context: Context, navController: NavController, ) {
             ) {
                 // USB Test Button
                 Button(onClick = {
-                    connectionStateResult.value = checkUsbConnection(context)
+                    connectionStateResult.value = usbTest1(context)
                 }) {
                     Text(text = "connection Test")
                 }
@@ -75,7 +75,7 @@ fun usbTestScreen(context: Context, navController: NavController, ) {
 
                 // Card Reader Test Button
                 Button(onClick = {
-                    usbHostModeAvailabilityState.value = checkUsbHostModeAvailability(context)
+                    usbHostModeAvailabilityState.value = usbTest2(context)
                 }) {
                     Text(text = "USB Host Mode availablity Test")
                 }

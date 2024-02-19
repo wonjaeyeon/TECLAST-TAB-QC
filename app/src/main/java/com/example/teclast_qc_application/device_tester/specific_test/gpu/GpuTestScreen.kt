@@ -5,7 +5,10 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,6 +24,8 @@ import androidx.navigation.NavController
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.checkDeviceThermalStatus
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.gpu3DTest
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.gpuTest1
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,7 +33,10 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun GpuTestScreen(context: Context, navController: NavController, ) {
+fun GpuTestScreen(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavController,
+) {
     // Create a mutable state for battery health result
     val gpu2DCapacityTestResult = remember { mutableStateOf<String>("") }
     val gpu3DCapacityTestResult = remember { mutableStateOf<String>("") }
@@ -65,7 +73,9 @@ fun GpuTestScreen(context: Context, navController: NavController, ) {
             ) {
                 // Battery Test Button
                 Button(onClick = {
-                    CoroutineScope(Dispatchers.Main).launch {gpu2DCapacityTestResult.value = gpuTest1()}
+                    CoroutineScope(Dispatchers.Main).launch {
+                        gpu2DCapacityTestResult.value = gpuTest1(state = state, onEvent = onEvent)
+                    }
                 }) {
                     Text(text = "gpu Test 1")
                 }
@@ -80,7 +90,9 @@ fun GpuTestScreen(context: Context, navController: NavController, ) {
                 )
 
                 Button(onClick = {
-                    CoroutineScope(Dispatchers.Main).launch {gpu3DCapacityTestResult.value = gpu3DTest()}
+                    CoroutineScope(Dispatchers.Main).launch {
+                        gpu3DCapacityTestResult.value = gpu3DTest(state = state, onEvent = onEvent)
+                    }
                 }) {
                     Text(text = "gpu Test 2")
                 }
@@ -95,7 +107,9 @@ fun GpuTestScreen(context: Context, navController: NavController, ) {
                 )
 
                 Button(onClick = {
-                    CoroutineScope(Dispatchers.Main).launch {deviceThermalAfterTestState.value = checkDeviceThermalStatus(context = context)}
+                    CoroutineScope(Dispatchers.Main).launch {
+                        deviceThermalAfterTestState.value = checkDeviceThermalStatus(context = context)
+                    }
                 }) {
                     Text(text = "Device Thermal After GPU Test")
                 }

@@ -2,6 +2,8 @@ package com.example.teclast_qc_application.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+
+
 val Green200 = Color(0xFFA5D6A7)
 val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)

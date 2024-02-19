@@ -7,7 +7,10 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -19,18 +22,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.batteryTest1
+import com.example.teclast_qc_application.batteryTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.batteryTestT2
 import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.checkDeviceThermalStatus
-import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.getBatteryState
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun BatteryTestScreen(context: Context,navController: NavController, ) {
+fun BatteryTestScreen(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavController,
+) {
     // Create a mutable state for battery health result
     val batteryHealthResult = remember { mutableStateOf<String>("") }
-    val batteryStateofdevice = remember { mutableStateOf<String>("") }
+    val batteryStateOfDevice = remember { mutableStateOf<String>("") }
     val deviceThermalStateAfterTest = remember { mutableStateOf<String>("") }
 
     Scaffold(
@@ -63,7 +71,7 @@ fun BatteryTestScreen(context: Context,navController: NavController, ) {
             ) {
                 // Battery Test Button
                 Button(onClick = {
-                    batteryHealthResult.value = batteryTest1(context)
+                    batteryHealthResult.value = batteryTestT1(state = state, onEvent = onEvent, context = context)
                 }) {
                     Text(text = "Battery Test 1(Charged Percentage)(n/100)")
                 }
@@ -79,14 +87,14 @@ fun BatteryTestScreen(context: Context,navController: NavController, ) {
 
                 //make a button for battery test
                 Button(onClick = {
-                    batteryStateofdevice.value = getBatteryState(context)
+                    batteryStateOfDevice.value = batteryTestT2(context)
                 }) {
-                    Text(text = "Charing State Test")
+                    Text(text = "Charging State Test")
 
                 }
 
                 Text(
-                    text = batteryStateofdevice.value,
+                    text = batteryStateOfDevice.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,

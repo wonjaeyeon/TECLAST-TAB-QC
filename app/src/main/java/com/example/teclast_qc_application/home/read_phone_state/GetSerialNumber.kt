@@ -35,6 +35,28 @@ fun getDeviceSerialNumber(context: Context): String {
         }
     }
 
+fun getDeviceSerialNumber_v2(): String {
+    var serial: String
+
+    try {
+        serial = android.os.Build.SERIAL
+        if (serial != "" && serial != "unknown") return serial
+    } catch (e: Exception) {
+        serial = ""
+    }
+
+    try {
+        val c = Class.forName("android.os.SystemProperties")
+        val get = c.getMethod("get", String::class.java)
+        serial = get.invoke(c, "persist.sys.serialno") as String
+        if (serial != "" && serial != "unknown") return serial
+    } catch (e: Exception) {
+        serial = ""
+    }
+
+    return serial
+}
+
 
 
 

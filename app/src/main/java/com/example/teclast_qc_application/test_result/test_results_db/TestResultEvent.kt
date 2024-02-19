@@ -7,6 +7,9 @@ sealed interface TestResultEvent {
     data class SetTestDate(val testDate: String): TestResultEvent
     object ShowDialog: TestResultEvent
     object HideDialog: TestResultEvent
+
+    object StartTest: TestResultEvent
+    object EndTest: TestResultEvent
     data class SortContacts(val sortType: SortType): TestResultEvent
     data class DeleteTestResult(val contact: TestResult): TestResultEvent
 }

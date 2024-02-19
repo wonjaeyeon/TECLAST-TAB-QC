@@ -1,12 +1,17 @@
 package com.example.teclast_qc_application.device_tester.specific_test.gpu.tester
 
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.egl.EGLContext
 
-suspend fun gpu3DTest(): String {
+suspend fun gpu3DTest(state: TestResultState,
+                      onEvent: (TestResultEvent) -> Unit,): String {
     return withContext(Dispatchers.Default) {
         try {
             val egl = EGLContext.getEGL() as EGL10
@@ -32,12 +37,15 @@ suspend fun gpu3DTest(): String {
             egl.eglChooseConfig(display, configAttribs, configs, 1, numConfig)
 
             if (numConfig[0] > 0) {
-                "GPU TEST: Success"
+                AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST 2", "Success", Date().toString())
+                "GPU TEST 2 : Success"
             } else {
-                "Error: OpenGL ES 2.0 not available"
+                AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST 2", "Fail", Date().toString())
+                "GPU TEST 2 : Fail : Error: OpenGL ES 2.0 not available"
             }
         } catch (error: Exception) {
-            "Error: ${error.message}"
+            AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST 2", "Fail", Date().toString())
+            "GPU TEST 2 : Fail : Error: ${error.message}"
         }
     }
 }

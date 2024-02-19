@@ -53,7 +53,7 @@ fun PhysicalButtonTestScreen(context: Context, navController: NavController) {
             ) {
                 // Volume Up/Down Button
                 Button(onClick = {
-                    navController.navigate("physical_button_test_t1_screen"){
+                    navController.navigate("physical_button_test_t1_screen/notNextTest"){
                     }
                 }) {
                     Text(text = "Volume UP/Down Test")

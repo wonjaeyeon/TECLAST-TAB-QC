@@ -1,12 +1,17 @@
 package com.example.teclast_qc_application.device_tester.specific_test.gpu.tester
 
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.util.*
 import javax.microedition.khronos.egl.EGL10
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.egl.EGLContext
 
-suspend fun gpuTest1(): String {
+suspend fun gpuTest1(state: TestResultState,
+                     onEvent: (TestResultEvent) -> Unit,): String {
     return withContext(Dispatchers.Default) {
         try {
             val egl = EGLContext.getEGL() as EGL10
@@ -35,11 +40,15 @@ suspend fun gpuTest1(): String {
 
             val error = egl.eglGetError()
             if (error != EGL10.EGL_SUCCESS) {
+
+                AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST", "Fail", Date().toString())
                 "Error: EGL error code $error"
             } else {
+                AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST", "Success", Date().toString())
                 "GPU TEST: Success"
             }
         } catch (error: Exception) {
+            AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST", "Fail", Date().toString())
             "Error: ${error.message}"
         }
     }

@@ -19,7 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.navigation.NavController
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun BluetoothTestT1_ver2(navController: NavController, context: Context) {
+fun BluetoothTestT2_ver2(navController: NavController, context: Context) {
     val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
     val devices = remember { mutableStateOf(listOf<BluetoothDevice>()) }
 

@@ -164,7 +164,13 @@ import androidx.navigation.NavController
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun TouchPanelT3(context: Context, navController: NavController) {
+fun TouchPanelTest3(
+    context: Context, navController: NavController,
+    runningTestMode: Boolean = false,
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
+) {
     val scaffoldState = rememberScaffoldState()
     // set up all transformation states
     var scale by remember { mutableStateOf(1f) }
