@@ -20,11 +20,17 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.R
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AudioTestT1(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
     runningTestMode: Boolean = false,
@@ -40,12 +46,28 @@ fun AudioTestT1(
     rightMediaPlayer.setVolume(0f, 1f)
     val isRightPlaying = remember { mutableStateOf(false) }
 
+    // Define a cleanup function
+    fun cleanUpMediaPlayers() {
+        if (leftMediaPlayer.isPlaying) {
+            leftMediaPlayer.pause()
+        }
+        leftMediaPlayer.release()
+
+        if (rightMediaPlayer.isPlaying) {
+            rightMediaPlayer.pause()
+        }
+        rightMediaPlayer.release()
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Audio Test") },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = {
+                        cleanUpMediaPlayers()
+                        navController.popBackStack()
+                    }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             contentDescription = "Back"
@@ -102,6 +124,13 @@ fun AudioTestT1(
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Audio Test 1",
+                            "Success",
+                            Date().toString()
+                        )
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
@@ -118,18 +147,28 @@ fun AudioTestT1(
                             } else {
                                 nextRouteWithArguments = "${nextTestRoute[0]}"
                             }
-
+                            cleanUpMediaPlayers()
                             navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
+                        } else if (runningTestMode) {
+                            cleanUpMediaPlayers()
                             onTestComplete()
-                        else
+                        } else {
+                            cleanUpMediaPlayers()
                             navController.popBackStack()
+                        }
                     }) {
                     Text("Good")
                 }
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Audio Test 1",
+                            "Fail",
+                            Date().toString()
+                        )
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
@@ -146,12 +185,15 @@ fun AudioTestT1(
                             } else {
                                 nextRouteWithArguments = "${nextTestRoute[0]}"
                             }
-
+                            cleanUpMediaPlayers()
                             navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
+                        } else if (runningTestMode) {
+                            cleanUpMediaPlayers()
                             onTestComplete()
-                        else
+                        } else {
+                            cleanUpMediaPlayers()
                             navController.popBackStack()
+                        }
                     }) {
                     Text("Fail")
                 }
@@ -161,9 +203,9 @@ fun AudioTestT1(
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 Text(text = "Press the buttons to play sounds on the left or right speaker.")
-                Row(){
+                Row() {
                     Button(
                         colors = ButtonDefaults.buttonColors(if (isLeftPlaying.value) Color.Green else Color.Gray),
                         onClick = {
@@ -174,9 +216,13 @@ fun AudioTestT1(
                                 leftMediaPlayer.start()
                             }
                         }
-                    ){
+                    ) {
                         //volume up
-                        Icon(Icons.Filled.VolumeUp, contentDescription = "Volume Up", modifier = Modifier.graphicsLayer(scaleX = -1f)) // This line adds the icon and flips it horizontally
+                        Icon(
+                            Icons.Filled.VolumeUp,
+                            contentDescription = "Volume Up",
+                            modifier = Modifier.graphicsLayer(scaleX = -1f)
+                        ) // This line adds the icon and flips it horizontally
 
                         Text("Left", color = Color.White)
                     }
@@ -192,7 +238,7 @@ fun AudioTestT1(
                                 rightMediaPlayer.start()
                             }
                         }
-                    ){
+                    ) {
 
                         Text("Right", color = Color.White)
                         Icon(Icons.Filled.VolumeUp, contentDescription = "Volume Up") // This line adds the icon

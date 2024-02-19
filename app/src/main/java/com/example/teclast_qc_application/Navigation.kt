@@ -441,14 +441,14 @@ fun navigationGraph(
         }
 
         composable("audio_test_screen") {
-            AudioTestScreen(context = context, navController = navController)
+            AudioTestScreen(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
         composable("audio_test_t1_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
             type = NavType.StringType
         })) {
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
-                AudioTestT1(context = context, navController = navController)
+                AudioTestT1(state = state, onEvent = onEvent, context = context, navController = navController)
             } else {
                 val nextTestRoute = it.arguments?.getString("nextTestRoute")
                 //split nextTestRoute to get the test name
@@ -456,7 +456,7 @@ fun navigationGraph(
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "audio_test_t1_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
-                AudioTestT1(
+                AudioTestT1(state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
