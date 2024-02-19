@@ -44,7 +44,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import kotlin.reflect.KFunction1
 
-//check jy_july_07 branch is well made
+//check jy_24_feb_07 branch is well-made
 
 class MainActivity : ComponentActivity() {
     val VolumeUpPressed = mutableStateOf(false)
