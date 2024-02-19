@@ -45,7 +45,7 @@ import java.io.InputStreamReader
 import kotlin.reflect.KFunction1
 
 //check jy_24_feb_07 branch is well-made
-
+// check if i changed all right
 class MainActivity : ComponentActivity() {
     val VolumeUpPressed = mutableStateOf(false)
     val VolumeDownPressed = mutableStateOf(false)
