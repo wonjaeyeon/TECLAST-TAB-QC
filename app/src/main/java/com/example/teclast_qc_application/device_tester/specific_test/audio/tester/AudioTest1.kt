@@ -20,11 +20,17 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.R
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AudioTestT1(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
     runningTestMode: Boolean = false,
@@ -118,6 +124,13 @@ fun AudioTestT1(
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Audio Test 1",
+                            "Success",
+                            Date().toString()
+                        )
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
@@ -149,6 +162,13 @@ fun AudioTestT1(
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Audio Test 1",
+                            "Fail",
+                            Date().toString()
+                        )
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
