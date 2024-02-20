@@ -51,7 +51,7 @@ import com.example.teclast_qc_application.device_tester.specific_test.wifi.WifiT
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.WifiTestTestMode
 import com.example.teclast_qc_application.device_tester.standard_test.standard_mode.StandardModeScreen
 import com.example.teclast_qc_application.settings.SettingsScreen
-import com.example.teclast_qc_application.settings.sub_screen.TestResultDBScreen
+import com.example.teclast_qc_application.settings.sub_screen.test_result.TestResultDBScreen
 import com.example.teclast_qc_application.test_result.ContactScreen
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState

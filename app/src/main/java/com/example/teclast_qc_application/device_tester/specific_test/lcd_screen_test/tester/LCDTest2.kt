@@ -16,45 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import java.util.*
-
-//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-//@Composable
-//fun lcdTest2(context: Context, navController: NavController) {
-//    // 밝기 범위를 지정하고, 이를 흑백 색상으로 변환합니다.
-//    val brightnessLevels = listOf(0f, 0.25f, 0.5f, 0.75f, 1f)
-//    val colors = brightnessLevels.map { Color(1f, 1f, 1f, it) }
-//
-//    var colorIndex by remember { mutableStateOf(0) }
-//    val scaffoldState = rememberScaffoldState()
-//    Scaffold(
-//        scaffoldState = scaffoldState,
-//        topBar = {
-//            TopAppBar(
-//                title = { Text(text = "LCD Brightness Test") },
-//                backgroundColor = MaterialTheme.colors.primaryVariant,
-//                contentColor = Color.White,
-//                navigationIcon = {
-//                    IconButton(onClick = { navController.popBackStack() }) {
-//                        Icon(
-//                            imageVector = Icons.Filled.ArrowBack,
-//                            contentDescription = "Back"
-//                        )
-//                    }
-//                }
-//            )
-//        }
-//    ) {
-//        Box(
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .background(colors[colorIndex])
-//                .clickable {
-//                    colorIndex = (colorIndex + 1) % colors.size
-//                }
-//        )
-//    }
-//}
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -113,7 +74,7 @@ fun LcdTest2(
 //                            else
 //                                navController.popBackStack()
                             if (nextTestRoute.isNotEmpty()) {
-//
+
                                 val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                                 Log.i("MyTag:LCDTEST2", "pastRoute: $pastRoute")
                                 Log.i("MyTag:LCDTEST2", "nextTestRoute: $nextTestRoute")

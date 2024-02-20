@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.settings.sub_screen
+package com.example.teclast_qc_application.settings.sub_screen.test_result
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll

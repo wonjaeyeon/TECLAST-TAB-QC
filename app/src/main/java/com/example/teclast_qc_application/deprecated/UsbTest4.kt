@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.specific_test.usb.tester
+package com.example.teclast_qc_application.deprecated
 
 //import android.annotation.SuppressLint
 //import androidx.compose.material.Text

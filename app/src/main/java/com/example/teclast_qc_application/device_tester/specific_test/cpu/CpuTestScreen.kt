@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.checkDeviceThermalStatus
-import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.CpuBurningTest
+import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.CpuBurnInTest
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.cpuBufferTest
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.cpuTest1
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
@@ -81,7 +81,7 @@ fun CpuTestScreen(
 //                        val timeoutMillis = 1000L  // 1 second
 //                        cpuBurningTest1Result.value = CpuBurningTest(1000, timeoutMillis).start()
                         runBlocking {
-                            cpuBurningTest1Result.value = CpuBurningTest(state = state, onEvent = onEvent,2000L, this)
+                            cpuBurningTest1Result.value = CpuBurnInTest(state = state, onEvent = onEvent,2000L, this)
                         }
                     }
                 ) {
