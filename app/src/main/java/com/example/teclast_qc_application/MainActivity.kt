@@ -45,7 +45,7 @@ import java.io.InputStreamReader
 import kotlin.reflect.KFunction1
 
 //check jy_24_feb_07 branch is well-made
-// check if i changed all right
+// check if I changed all right
 class MainActivity : ComponentActivity() {
     val VolumeUpPressed = mutableStateOf(false)
     val VolumeDownPressed = mutableStateOf(false)
@@ -115,13 +115,6 @@ class MainActivity : ComponentActivity() {
         //deleteDatabase("testResults_v3.db")
 
 
-//        val intent = Intent(this, VolumeButtonService::class.java)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            startForegroundService(intent)
-//        } else {
-//            startService(intent)
-//        }
-
         setContent {
             MyApplicationTheme {
                 val state by viewModel.state.collectAsState()
@@ -135,24 +128,9 @@ class MainActivity : ComponentActivity() {
             //requestReadExternalStoragePermission()
             //requestReadLogsPermission()
         }
-//        viewModel.triplePressTriggered.observe(this) { triggered ->
-//            if (triggered) {
-//                // Launch the desired activity or perform any desired action.
-//                viewModel.resetTriplePressTriggered()
-//            }
-//        }
-
 
 
     }
-
-//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-//        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-//            viewModel.onVolumeUpPressed()
-//            return true
-//        }
-//        return super.onKeyDown(keyCode, event)
-//    }
 
     private fun requestCameraPermission() {
         when {
@@ -316,28 +294,19 @@ sealed class BottomNavItem(
 
 
 
-
-
-@Composable
-fun DefaultPreview(context: MainActivity) {
-    MyApplicationTheme {
-        HomeScreen2(context = context)
-    }
-}
-
-
-fun isDeviceRooted(): Boolean {
-    val command = "echo \"checking root\""
-    return try {
-        val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
-        val reader = BufferedReader(InputStreamReader(process.inputStream))
-        val output = reader.readLine()
-        reader.close()
-        process.waitFor()
-        output == "checking root"
-
-    } catch (e: Exception) {
-        Log.e("isDeviceRooted", "Error checking for root", e)
-        false
-    }
-}
+//
+//fun isDeviceRooted(): Boolean {
+//    val command = "echo \"checking root\""
+//    return try {
+//        val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
+//        val reader = BufferedReader(InputStreamReader(process.inputStream))
+//        val output = reader.readLine()
+//        reader.close()
+//        process.waitFor()
+//        output == "checking root"
+//
+//    } catch (e: Exception) {
+//        Log.e("isDeviceRooted", "Error checking for root", e)
+//        false
+//    }
+//}

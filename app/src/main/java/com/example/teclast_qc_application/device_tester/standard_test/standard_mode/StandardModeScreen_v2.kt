@@ -7,7 +7,7 @@ import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
 import com.example.teclast_qc_application.batteryTestT1
 import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.BatteryTestTestMode
-import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.CpuBurningTest
+import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.CpuBurnInTest
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.cpuBufferTest
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.cpuTest1
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.gpu3DTest
@@ -96,20 +96,13 @@ fun StandardModeScreen(state: TestResultState,
                 done.add("3. CPU BURNING")
                 undone.remove("3. CPU BURNING")
                 runBlocking {
-                    cpuTestResult3 = CpuBurningTest(state = state, onEvent = onEvent,1000L, this)
+                    cpuTestResult3 = CpuBurnInTest(state = state, onEvent = onEvent,1000L, this)
                 }
                 Log.i("StandardModeScreen", "3. CpuBurningTest() is called : $cpuTestResult3 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
 
-//                if(true)
-//                {
-//                    onEvent(TestResultEvent.SetItemName("CPU TEST - total success"))
-//                    onEvent(TestResultEvent.SetTestResult("Success"))
-//                    onEvent(TestResultEvent.SetTestDate(Date().toString()))
-//                    onEvent(TestResultEvent.SaveTestResult)
-//                }
 
                 try {
                     var gpuTestResult1 = ""

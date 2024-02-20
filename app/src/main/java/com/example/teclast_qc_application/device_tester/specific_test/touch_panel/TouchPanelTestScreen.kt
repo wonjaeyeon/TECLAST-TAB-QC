@@ -5,7 +5,10 @@ package com.example.teclast_qc_application.device_tester.specific_test.touch_pan
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -62,10 +65,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                 //make a button for Touch test T1
                 Button(onClick = {
                     navController.navigate("touch_panel_test_t1_screen") {
-//                        popUpTo("touch_panel_test_screen"){
-//                            inclusive = true
-//
-//                        }
+
                     }
                 }) {
                     Text(text = "Touch Test T1(Just Touch)")
@@ -83,10 +83,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                 //make a button for Touch test T2
                 Button(onClick = {
                     navController.navigate("touch_panel_test_t2_screen/notNextTest") {
-//                        popUpTo("touch_panel_test_screen"){
-//                            inclusive = true
-//
-//                        }
+
 
                     }
                 }) {
@@ -105,10 +102,6 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                 //make a button for Touch test T3
                 Button(onClick = {
                     navController.navigate("touch_panel_test_t3_screen/notNextTest") {
-//                        popUpTo("touch_panel_test_screen"){
-//                            inclusive = true
-//
-//                        }
 
 
                     }
@@ -127,10 +120,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                 // make a button for Touch test T4
                 Button(onClick = {
                     navController.navigate("touch_panel_test_t4_screen/notNextTest") {
-//                        popUpTo("touch_panel_test_screen"){
-//                            inclusive = true
-//
-//                        }
+
 
                     }
                 }) {
