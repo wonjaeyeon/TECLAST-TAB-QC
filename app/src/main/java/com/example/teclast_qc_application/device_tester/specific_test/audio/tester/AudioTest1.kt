@@ -134,6 +134,7 @@ fun AudioTestT1(
                             "Fail",
                             Date().toString()
                         )
+                        onEvent(TestResultEvent.SaveTestResult)
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
