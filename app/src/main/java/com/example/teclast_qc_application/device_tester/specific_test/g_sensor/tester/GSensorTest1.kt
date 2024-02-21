@@ -6,21 +6,30 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
 import android.view.View
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
 
 
 class GSensorView(context: Context) : View(context), SensorEventListener {
-    public val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-    public val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+    val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
     var sensorValues: List<Float> = listOf(0f, 0f, 0f)
 
     init {
@@ -41,56 +50,20 @@ class GSensorView(context: Context) : View(context), SensorEventListener {
         sensorManager.unregisterListener(this)
     }
 }
-//
-//
-//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-//@Composable
-//fun GSensorTestT1(context: Context, navController: NavController) {
-//    val sensorValues = remember { mutableStateOf(listOf(0f, 0f, 0f)) }
-//
-//    Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text(text = "G-Sensor T1 Test") },
-//                navigationIcon = {
-//                    IconButton(onClick = { navController.popBackStack() }) {
-//                        Icon(
-//                            imageVector = Icons.Filled.ArrowBack,
-//                            contentDescription = "Back"
-//                        )
-//                    }
-//                }
-//            )
-//        },
-//        content = {
-//            val gSensorView = remember {
-//                GSensorView(context).apply {
-//                    sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-//                }
-//            }
-//
-//            AndroidView({ gSensorView }) { view ->
-//                sensorValues.value = view.sensorValues
-//            }
-//
-//            DisposableEffect(Unit) {
-//                onDispose {
-//                    gSensorView.sensorManager.unregisterListener(gSensorView)
-//                }
-//            }
-//
-//            Column {
-//                Text(text = "G-sensor Test")
-//                Text(text = "X: ${sensorValues.value[0]}")
-//                Text(text = "Y: ${sensorValues.value[1]}")
-//                Text(text = "Z: ${sensorValues.value[2]}")
-//            }
-//        })
-//}
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun GSensorTestT1(context: Context, navController: NavController) {
+fun GSensorTestT1(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
+    context: Context,
+    navController: NavController,
+    runningTestMode: Boolean = false,
+    testMode: String = "StandardMode",
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
+) {
     val sensorManager = remember { context.getSystemService(Context.SENSOR_SERVICE) as SensorManager }
     val accelerometer = remember { sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) }
     val sensorValues = remember { mutableStateOf(listOf(0f, 0f, 0f)) }
@@ -132,52 +105,118 @@ fun GSensorTestT1(context: Context, navController: NavController) {
         },
         content = {
             Column(
-                modifier = Modifier.padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                modifier = Modifier.fillMaxSize().padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally, // Center content along the cross-axis
             ) {
-                Text(text = "Accelerometer Test")
-                Text(text = "X: ${sensorValues.value[0]}")
-                Text(text = "Y: ${sensorValues.value[1]}")
-                Text(text = "Z: ${sensorValues.value[2]}")
+                Text(
+                    text = "Accelerometer Test",
+                    style = MaterialTheme.typography.h4 // Use a larger text style, adjust as needed
+                )
+                Column(modifier = Modifier.padding(horizontal = 8.dp), horizontalAlignment = Alignment.Start) {
+                    Text(
+                        text = "X: ${String.format("%.2f", sensorValues.value[0])}",
+                        style = MaterialTheme.typography.h5 // Use a larger text style, adjust as needed
+                    )
+                    Text(
+                        text = "Y: ${String.format("%.2f", sensorValues.value[1])}",
+                        style = MaterialTheme.typography.h5 // Use a larger text style, adjust as needed
+                    )
+                    Text(
+                        text = "Z: ${String.format("%.2f", sensorValues.value[2])}",
+                        style = MaterialTheme.typography.h5 // Use a larger text style, adjust as needed
+                    )
+                }
+
+            }
+        },
+        floatingActionButton = {
+            Row(
+                modifier = Modifier.padding(16.dp).fillMaxWidth(),
+
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                FloatingActionButton(
+                    modifier = Modifier.padding(start = 16.dp),
+                    // add color to the background
+                    backgroundColor = Color(0xFF00FF00),
+
+                    onClick = { /* Handle success result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "G-Sensor Test 1",
+                            "Success",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
+                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+                            Log.i("MyTag:G-SensorTest1", "pastRoute: $pastRoute")
+                            Log.i("MyTag:G-SensorTest1", "nextTestRoute: $nextTestRoute")
+                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+                            val nextPath = nextTestRoute.drop(1)
+                            val nextPathString = nextPath.joinToString(separator = "->")
+                            Log.i("MyTag:G-SensorTest1", "nextPath: $nextPath")
+                            Log.i("MyTag:G-SensorTest1", "nextPathString: $nextPathString")
+
+                            var nextRouteWithArguments = "aaaa"
+                            if (nextPathString.isNotEmpty()) {
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                            } else {
+                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                            }
+
+                            navController.navigate(nextRouteWithArguments)
+                        } else if (runningTestMode)
+                            onTestComplete()
+                        else
+                            navController.popBackStack()
+                    }) {
+                    Text("Good")
+                }
+                FloatingActionButton(
+                    backgroundColor = Color(0xFFFF0000),
+                    onClick = { /* Handle fail result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "G-Sensor Test 1",
+                            "Fail",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
+                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+                            Log.i("MyTag:G-SensorTest1", "pastRoute: $pastRoute")
+                            Log.i("MyTag:G-SensorTest1", "nextTestRoute: $nextTestRoute")
+                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+                            val nextPath = nextTestRoute.drop(1)
+                            val nextPathString = nextPath.joinToString(separator = "->")
+                            Log.i("MyTag:G-SensorTest1", "nextPath: $nextPath")
+                            Log.i("MyTag:G-SensorTest1", "nextPathString: $nextPathString")
+
+                            var nextRouteWithArguments = "aaaa"
+                            if (nextPathString.isNotEmpty()) {
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                            } else {
+                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                            }
+
+                            navController.navigate(nextRouteWithArguments)
+                        } else if (runningTestMode)
+                            onTestComplete()
+                        else
+                            navController.popBackStack()
+                    }) {
+                    Text("Fail")
+                }
             }
         }
     )
 }
 
-
-
-//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-//@Composable
-//fun GSensorTestT1(context: Context, navController: NavController) {
-//    val gSensorView = remember { GSensorView(context) }
-//    val sensorValues = remember { mutableStateOf(listOf(0f, 0f, 0f)) }
-//
-//    Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text(text = "G-Sensor T1 Test") },
-//                navigationIcon = {
-//                    IconButton(onClick = { navController.popBackStack() }) {
-//                        Icon(
-//                            imageVector = Icons.Filled.ArrowBack,
-//                            contentDescription = "Back"
-//                        )
-//                    }
-//                }
-//            )
-//        },
-//        content = {
-//            AndroidView({ gSensorView }) { view ->
-//                sensorValues.value = view.sensorValues
-//            }
-//
-//            Column {
-//                Text(text = "G-sensor Test")
-//                Text(text = "X: ${sensorValues.value[0]}")
-//                Text(text = "Y: ${sensorValues.value[1]}")
-//                Text(text = "Z: ${sensorValues.value[2]}")
-//            }
-//        })
-//}
 
 

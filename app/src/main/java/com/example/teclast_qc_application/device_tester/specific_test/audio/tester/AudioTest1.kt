@@ -89,6 +89,7 @@ fun AudioTestT1(
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
+                        onEvent(TestResultEvent.SaveTestResult)
                         AddTestResultV2(
                             state = state,
                             onEvent = onEvent,
@@ -96,6 +97,8 @@ fun AudioTestT1(
                             "Success",
                             Date().toString()
                         )
+                        onEvent(TestResultEvent.SaveTestResult)
+
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
@@ -127,6 +130,7 @@ fun AudioTestT1(
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
+                        onEvent(TestResultEvent.SaveTestResult)
                         AddTestResultV2(
                             state = state,
                             onEvent = onEvent,
@@ -152,12 +156,15 @@ fun AudioTestT1(
                                 nextRouteWithArguments = "${nextTestRoute[0]}"
                             }
                             cleanUpMediaPlayers()
+                            onEvent(TestResultEvent.SaveTestResult)
                             navController.navigate(nextRouteWithArguments)
                         } else if (runningTestMode) {
                             cleanUpMediaPlayers()
+                            onEvent(TestResultEvent.SaveTestResult)
                             onTestComplete()
                         } else {
                             cleanUpMediaPlayers()
+                            onEvent(TestResultEvent.SaveTestResult)
                             navController.popBackStack()
                         }
                     }) {

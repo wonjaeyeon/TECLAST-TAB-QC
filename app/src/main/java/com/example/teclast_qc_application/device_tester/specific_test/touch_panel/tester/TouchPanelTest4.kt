@@ -11,15 +11,16 @@ import android.view.View
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateMapOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 
 interface OnMultiTouchListener {
     fun onMultiTouch()
@@ -75,6 +76,8 @@ class MultiTouchView(context: Context, private val listener: OnMultiTouchListene
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun TouchPanelTest4(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
     context: Context, navController: NavController,
     runningTestMode: Boolean = false,
     onTestComplete: () -> Unit = {},
@@ -84,6 +87,19 @@ fun TouchPanelTest4(
     val scaffoldState = rememberScaffoldState()
     val pointerIds = remember { mutableStateListOf<Long>() }
     val pointerPositions = remember { mutableStateMapOf<Long, Offset>() }
+
+    // Initially set the test result to "Fail"
+    LaunchedEffect(key1 = "initialTestResult") {
+        onEvent(TestResultEvent.SaveTestResult)
+        AddTestResultV2(
+            state = state,
+            onEvent = onEvent,
+            itemName = "Touch Panel Test 4",
+            testResult = "Fail",
+            testDate = Date().toString()
+        )
+        onEvent(TestResultEvent.SaveTestResult)
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -107,16 +123,25 @@ fun TouchPanelTest4(
         AndroidView(factory = { context ->
             MultiTouchView(context, object : OnMultiTouchListener {
                 override fun onMultiTouch() {
-                    // navController.popBackStack()yfgth
+                    // navController.popBackStack()
+                    onEvent(TestResultEvent.SaveTestResult)
+                    AddTestResultV2(
+                        state = state,
+                        onEvent = onEvent,
+                        "Touch Panel Test 4",
+                        "Success",
+                        Date().toString()
+                    )
+                    onEvent(TestResultEvent.SaveTestResult)
                     if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                         val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                        Log.i("MyTag:TOUCHPANELTEST4", "pastRoute: $pastRoute")
-                        Log.i("MyTag:TOUCHPANELTEST4", "nextTestRoute: $nextTestRoute")
+                        Log.i("MyTag:TouchPanelTest4", "pastRoute: $pastRoute")
+                        Log.i("MyTag:TouchPanelTest4", "nextTestRoute: $nextTestRoute")
                         val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
                         val nextPath = nextTestRoute.drop(1)
                         val nextPathString = nextPath.joinToString(separator = "->")
-                        Log.i("MyTag:TOUCHPANELTEST4", "nextPath: $nextPath")
-                        Log.i("MyTag:TOUCHPANELTEST4", "nextPathString: $nextPathString")
+                        Log.i("MyTag:TouchPanelTest4", "nextPath: $nextPath")
+                        Log.i("MyTag:TouchPanelTest4", "nextPathString: $nextPathString")
 
                         var nextRouteWithArguments = "aaaa"
                         if (nextPathString.isNotEmpty()) {

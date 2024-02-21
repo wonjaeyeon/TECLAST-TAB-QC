@@ -2,6 +2,7 @@ package com.example.teclast_qc_application.device_tester.specific_test.touch_pan
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -11,14 +12,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.addTestResult
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 
 
 data class TouchPoint(val x: Float, val y: Float, val color: Color)
@@ -26,25 +33,69 @@ data class TouchPoint(val x: Float, val y: Float, val color: Color)
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun TouchPanelTest1(context: Context, navController: NavController) {
+fun TouchPanelTest1(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
+    context: Context,
+    navController: NavController,
+    runningTestMode: Boolean = false,
+    testMode: String = "StandardMode",
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
+) {
     val touchPoints = remember { mutableStateListOf<TouchPoint>() }
     val colors = listOf(Color.Red, Color.Green, Color.Blue, Color.Yellow, Color.Magenta)
     val touchCount = remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
-    val testResult = remember { mutableStateOf("") }
+    val hasNavigated = remember { mutableStateOf(false) }  // State to track navigation status
 
     val onTouchThresholdReached: () -> Unit = {
         touchCount.value++
-        if (touchCount.value >= 10) {
-            //erase touch_panel_test_t1_screen form navicontroller
-            navController.popBackStack()
-            //navController.navigate("touch_panel_test_screen")
-            testResult.value = "Touch Test T1: Pass"
-            addTestResult("Touch Test T1", "Pass")
-        }
-        else {
-            testResult.value = "Touch Test T1: Fail"
-            addTestResult("Touch Test T1", "Fail")
+        if (touchCount.value >= 10 && hasNavigated.value == false) {
+            onEvent(TestResultEvent.SaveTestResult)
+            AddTestResultV2(
+                state = state,
+                onEvent = onEvent,
+                "Touch Panel Test 1",
+                "Success",
+                Date().toString()
+            )
+            onEvent(TestResultEvent.SaveTestResult)
+            if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+                Log.i("MyTag:TouchPanelTest1", "pastRoute: $pastRoute")
+                Log.i("MyTag:TouchPanelTest1", "nextTestRoute: $nextTestRoute")
+                val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+                val nextPath = nextTestRoute.drop(1)
+                val nextPathString = nextPath.joinToString(separator = "->")
+                Log.i("MyTag:TouchPanelTest1", "nextPath: $nextPath")
+                Log.i("MyTag:TouchPanelTest1", "nextPathString: $nextPathString")
+
+                var nextRouteWithArguments = "aaaa"
+                if (nextPathString.isNotEmpty()) {
+                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                } else {
+                    nextRouteWithArguments = "${nextTestRoute[0]}"
+                }
+
+                navController.navigate(nextRouteWithArguments)
+            } else if (runningTestMode)
+                onTestComplete()
+            else
+                navController.popBackStack()
+            hasNavigated.value = true
+        } else {
+            onEvent(TestResultEvent.SaveTestResult)
+            AddTestResultV2(
+                state = state,
+                onEvent = onEvent,
+                "Touch Panel Test 1",
+                "Fail",
+                Date().toString()
+            )
+            onEvent(TestResultEvent.SaveTestResult)
+
 
         }
     }
@@ -74,7 +125,13 @@ fun TouchPanelTest1(context: Context, navController: NavController) {
                 .fillMaxSize()
                 .background(MaterialTheme.colors.primaryVariant)
         ) {
-            Text(text = "Touch Count: ${touchCount.value}/10 times", modifier = Modifier.fillMaxSize(), textAlign = TextAlign.Center, color = Color.White, style = MaterialTheme.typography.h5)
+            Text(
+                text = "Touch Count: ${touchCount.value}/10 times",
+                modifier = Modifier.fillMaxSize(),
+                textAlign = TextAlign.Center,
+                color = Color.White,
+                style = MaterialTheme.typography.h5
+            )
             Canvas(modifier = Modifier
                 .fillMaxSize()
                 .pointerInput(Unit) {
@@ -103,5 +160,6 @@ fun TouchPanelTest1(context: Context, navController: NavController) {
                 }
             }
         }
-    }}
+    }
+}
 

@@ -57,6 +57,11 @@ class TestResultViewModel(
                     testDate = phoneNumber
                 )
                 viewModelScope.launch {
+                    // if the contact already exists, delete it and then insert the new contact
+                    if(dao.countTestResultByItemName(contact.itemName) > 0) {
+                        val existingContact = dao.getTestResultByItemName(contact.itemName)
+                        dao.deleteTestResult(existingContact)
+                    }
                     dao.upsertTestResult(contact)
                 }
                 _state.update { it.copy(

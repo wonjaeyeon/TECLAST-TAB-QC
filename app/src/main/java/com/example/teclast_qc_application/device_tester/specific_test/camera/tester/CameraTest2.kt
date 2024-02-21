@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,6 +29,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
 
 
@@ -196,11 +201,18 @@ import java.util.*
 //}
 
 
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun CameraTest2(context: Context, navController: NavController) {
+fun CameraTest2(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavController,
+    runningTestMode: Boolean = false,
+    testMode: String = "StandardMode",
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
+) {
     val cameraPermission = Manifest.permission.CAMERA
     val cameraRequestCode = 1234
     val cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
@@ -278,15 +290,75 @@ fun CameraTest2(context: Context, navController: NavController) {
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
-                    navController.popBackStack()
-                }) {
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Camera Test 2",
+                            "Success",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
+                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+                            Log.i("MyTag:CameraTest2", "pastRoute: $pastRoute")
+                            Log.i("MyTag:CameraTest2", "nextTestRoute: $nextTestRoute")
+                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+                            val nextPath = nextTestRoute.drop(1)
+                            val nextPathString = nextPath.joinToString(separator = "->")
+                            Log.i("MyTag:CameraTest2", "nextPath: $nextPath")
+                            Log.i("MyTag:CameraTest2", "nextPathString: $nextPathString")
+
+                            var nextRouteWithArguments = "aaaa"
+                            if (nextPathString.isNotEmpty()) {
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                            } else {
+                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                            }
+
+                            navController.navigate(nextRouteWithArguments)
+                        } else if (runningTestMode)
+                            onTestComplete()
+                        else
+                            navController.popBackStack()
+                    }) {
                     Text("Good")
                 }
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
-                    navController.popBackStack()
-                }) {
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Camera Test 2",
+                            "Fail",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
+                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+                            Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
+                            Log.i("MyTag:CameraTest1", "nextTestRoute: $nextTestRoute")
+                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+                            val nextPath = nextTestRoute.drop(1)
+                            val nextPathString = nextPath.joinToString(separator = "->")
+                            Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
+                            Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
+
+                            var nextRouteWithArguments = "aaaa"
+                            if (nextPathString.isNotEmpty()) {
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                            } else {
+                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                            }
+
+                            navController.navigate(nextRouteWithArguments)
+                        } else if (runningTestMode)
+                            onTestComplete()
+                        else
+                            navController.popBackStack()
+                    }) {
                     Text("Fail")
                 }
             }

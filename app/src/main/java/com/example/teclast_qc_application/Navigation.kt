@@ -41,8 +41,8 @@ import com.example.teclast_qc_application.device_tester.specific_test.ram.RamTes
 import com.example.teclast_qc_application.device_tester.specific_test.rom.RomTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.touch_panel.TouchPanelTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.touch_panel.tester.*
-import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.UsbTest1TestMode
 import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.UsbTestEachPort
+import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.UsbTestTestMode
 import com.example.teclast_qc_application.device_tester.specific_test.usb.usbTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.vibration.VibrationTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.vibration.tester.VibrationTestT1
@@ -107,7 +107,7 @@ fun navigationGraph(
         }
 
         composable("battery_test_screen") {
-            BatteryTestScreen(state = state, onEvent = onEvent,context = context, navController = navController)
+            BatteryTestScreen(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
         composable("battery_test_test_mode_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
@@ -120,6 +120,7 @@ fun navigationGraph(
 //            LcdTest1(context = context, navController = navController)
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
                 BatteryTestTestMode(
+                    state = state, onEvent = onEvent,
                     context = context, navController = navController
                 )
             } else {
@@ -129,7 +130,13 @@ fun navigationGraph(
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "battery_test_test_mode_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
-                BatteryTestTestMode(context = context, navController = navController, nextTestRoute = nextTestNameList)
+                BatteryTestTestMode(
+                    state = state,
+                    onEvent = onEvent,
+                    context = context,
+                    navController = navController,
+                    nextTestRoute = nextTestNameList
+                )
                 //            LcdTest2(context = context, navController = navController)}
             }
         }
@@ -143,15 +150,16 @@ fun navigationGraph(
         }
 
         composable("usb_test_screen") {
-            usbTestScreen(context = context, navController = navController)
+            usbTestScreen(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
-        composable("usb_test_t1_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
+        composable("usb_test_test_mode_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
             type = NavType.StringType
         })) {
 
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
-                UsbTest1TestMode(
+                UsbTestTestMode(
+                    state = state, onEvent = onEvent,
                     context = context, navController = navController
                 )
             } else {
@@ -159,9 +167,10 @@ fun navigationGraph(
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
-                nextTestNameList.add(0, "usb_test_t1_screen")
+                nextTestNameList.add(0, "usb_test_test_mode_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
-                UsbTest1TestMode(
+                UsbTestTestMode(
+                    state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -175,7 +184,7 @@ fun navigationGraph(
         }
 
         composable("wifi_test_screen") {
-            WifiTestScreen(context = context, navController = navController)
+            WifiTestScreen(state = state, onEvent = onEvent,context = context, navController = navController)
         }
 
         composable("wifi_test_test_mode_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
@@ -184,6 +193,7 @@ fun navigationGraph(
 
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
                 WifiTestTestMode(
+                    state = state, onEvent = onEvent,
                     context = context, navController = navController
                 )
             } else {
@@ -194,6 +204,7 @@ fun navigationGraph(
                 nextTestNameList.add(0, "wifi_test_test_mode_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
                 WifiTestTestMode(
+                    state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -216,7 +227,7 @@ fun navigationGraph(
 
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
                 BluetoothTestTestMode(
-                    context = context, navController = navController
+                    state = state, onEvent = onEvent, context = context, navController = navController
                 )
             } else {
                 val nextTestRoute = it.arguments?.getString("nextTestRoute")
@@ -225,7 +236,7 @@ fun navigationGraph(
                 nextTestNameList.add(0, "bluetooth_test_test_mode_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
                 BluetoothTestTestMode(
-                    context = context,
+                    state = state, onEvent = onEvent, context = context,
                     navController = navController,
                     navigateToNextTest = true,
                     nextTestRoute = nextTestNameList
@@ -236,12 +247,35 @@ fun navigationGraph(
             TouchPanelTestScreen(context = context, navController = navController)
         }
 
-        composable("touch_panel_test_t1_screen") {
-            TouchPanelTest1(context = context, navController = navController)
-//            { testResult ->
-//                // Update the touchPanelTest1Result.value in the TouchPanelTestScreen when navigating back
-//                navController.previousBackStackEntry?.savedStateHandle?.set("testResult", testResult)
-//            }
+//        composable("touch_panel_test_t1_screen") {
+//            TouchPanelTest1(state = state, onEvent = onEvent,context = context, navController = navController)
+////            { testResult ->
+////                // Update the touchPanelTest1Result.value in the TouchPanelTestScreen when navigating back
+////                navController.previousBackStackEntry?.savedStateHandle?.set("testResult", testResult)
+////            }
+//        }
+
+        composable("touch_panel_test_t1_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
+            type = NavType.StringType
+        })) {
+            if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
+                TouchPanelTest1(state = state, onEvent = onEvent, context = context, navController = navController)
+            } else {
+                val nextTestRoute = it.arguments?.getString("nextTestRoute")
+                //split nextTestRoute to get the test name
+                val nextTestName = nextTestRoute!!.split("->")
+                val nextTestNameList = nextTestName!!.toMutableList()
+                nextTestNameList.add(0, "touch_panel_test_t1_screen")
+                Log.i("nextTestName2", nextTestNameList.toString())
+                TouchPanelTest1(
+                    state = state,
+                    onEvent = onEvent,
+                    context = context,
+                    navController = navController,
+                    navigateToNextTest = true,
+                    nextTestRoute = nextTestNameList
+                )
+            }
         }
 
         composable("touch_panel_test_t2_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
@@ -249,7 +283,8 @@ fun navigationGraph(
         })) {
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
                 TouchPanelTest2(
-                    context = context, navController = navController
+                    state = state,
+                    onEvent = onEvent, context = context, navController = navController
                 )
             } else {
                 val nextTestRoute = it.arguments?.getString("nextTestRoute")
@@ -259,6 +294,8 @@ fun navigationGraph(
                 nextTestNameList.add(0, "touch_panel_test_t2_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest2(
+                    state = state,
+                    onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -295,7 +332,8 @@ fun navigationGraph(
         })) {
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
                 TouchPanelTest4(
-                    context = context, navController = navController
+                    state = state,
+                    onEvent = onEvent, context = context, navController = navController
                 )
             } else {
                 val nextTestRoute = it.arguments?.getString("nextTestRoute")
@@ -305,6 +343,8 @@ fun navigationGraph(
                 nextTestNameList.add(0, "touch_panel_test_t4_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest4(
+                    state = state,
+                    onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -326,6 +366,7 @@ fun navigationGraph(
         })) {
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
                 PhysicalButtonTestT1(
+                    state = state, onEvent = onEvent,
                     context = context, navController = navController,
                     volumeUpPressed = volumeUpPressed,
                     volumeDownPressed = volumeDownPressed
@@ -338,6 +379,7 @@ fun navigationGraph(
                 nextTestNameList.add(0, "physical_button_test_t1_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
                 PhysicalButtonTestT1(
+                    state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     volumeUpPressed = volumeUpPressed,
@@ -360,15 +402,11 @@ fun navigationGraph(
         composable("lcd_screen_test_t1_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
             type = NavType.StringType
         })) {
-////            LcdTest1(context = context, navController = navController, navigateToNextTest= true, nextTestRoute = "lcd_screen_test_t2_screen")
-//            argument("nextRouteInfo") {
-//                defaultValue = false
-//            }
-//            LcdTest1(context = context, navController = navController)
+
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
                 LcdTest1(
+                    state = state, onEvent = onEvent,
                     context = context, navController = navController
-                    //, testMode = it.arguments?.getString("testMode")!!
                 )
             } else {
                 val nextTestRoute = it.arguments?.getString("nextTestRoute")
@@ -378,6 +416,7 @@ fun navigationGraph(
                 nextTestNameList.add(0, "lcd_screen_test_t1_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
                 LcdTest1(
+                    state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -390,7 +429,7 @@ fun navigationGraph(
             type = NavType.StringType
         })) {
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
-                LcdTest2(context = context, navController = navController)
+                LcdTest2(state = state, onEvent = onEvent, context = context, navController = navController)
             } else {
                 val nextTestRoute = it.arguments?.getString("nextTestRoute")
                 //split nextTestRoute to get the test name
@@ -399,6 +438,7 @@ fun navigationGraph(
                 nextTestNameList.add(0, "lcd_screen_test_t2_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
                 LcdTest2(
+                    state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -408,18 +448,15 @@ fun navigationGraph(
         }
 
         composable("camera_test_screen") {
-            CameraTestScreen(context = context, navController = navController)
+            CameraTestScreen(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
-//        composable("camera_test_t1_screen") {
-//            CameraTest1(context = context, navController = navController)
-//        }
 
         composable("camera_test_t1_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
             type = NavType.StringType
         })) {
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
-                CameraTest1(context = context, navController = navController)
+                CameraTest1(state = state, onEvent = onEvent, context = context, navController = navController)
             } else {
                 val nextTestRoute = it.arguments?.getString("nextTestRoute")
                 //split nextTestRoute to get the test name
@@ -428,6 +465,7 @@ fun navigationGraph(
                 nextTestNameList.add(0, "camera_test_t1_screen")
                 Log.i("nextTestName2_Camera1", nextTestNameList.toString())
                 CameraTest1(
+                    state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -437,7 +475,29 @@ fun navigationGraph(
         }
 
         composable("camera_test_t2_screen") {
-            CameraTest2(context = context, navController = navController)
+            CameraTest2(state = state, onEvent = onEvent, context = context, navController = navController)
+        }
+
+        composable("camera_test_t2_screen/{nextTestRoute}", arguments = listOf(navArgument("nextTestRoute") {
+            type = NavType.StringType
+        })) {
+            if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
+                CameraTest2(state = state, onEvent = onEvent, context = context, navController = navController)
+            } else {
+                val nextTestRoute = it.arguments?.getString("nextTestRoute")
+                //split nextTestRoute to get the test name
+                val nextTestName = nextTestRoute!!.split("->")
+                val nextTestNameList = nextTestName!!.toMutableList()
+                nextTestNameList.add(0, "camera_test_t2_screen")
+                Log.i("nextTestName2_Camera2", nextTestNameList.toString())
+                CameraTest2(
+                    state = state, onEvent = onEvent,
+                    context = context,
+                    navController = navController,
+                    navigateToNextTest = true,
+                    nextTestRoute = nextTestNameList
+                )
+            }
         }
 
         composable("audio_test_screen") {
@@ -456,7 +516,8 @@ fun navigationGraph(
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "audio_test_t1_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
-                AudioTestT1(state = state, onEvent = onEvent,
+                AudioTestT1(
+                    state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -477,7 +538,12 @@ fun navigationGraph(
             type = NavType.StringType
         })) {
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
-                VibrationTestTestMode(context = context, navController = navController)
+                VibrationTestTestMode(
+                    state = state,
+                    onEvent = onEvent,
+                    context = context,
+                    navController = navController
+                )
             } else {
                 val nextTestRoute = it.arguments?.getString("nextTestRoute")
                 //split nextTestRoute to get the test name
@@ -486,6 +552,7 @@ fun navigationGraph(
                 nextTestNameList.add(0, "vibration_test_test_mode_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
                 VibrationTestTestMode(
+                    state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -509,7 +576,12 @@ fun navigationGraph(
             })
         ) {
             if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
-                FlashLightTestTestMode(context = context, navController = navController)
+                FlashLightTestTestMode(
+                    state = state,
+                    onEvent = onEvent,
+                    context = context,
+                    navController = navController
+                )
             } else {
                 val nextTestRoute = it.arguments?.getString("nextTestRoute")
                 //split nextTestRoute to get the test name
@@ -518,6 +590,7 @@ fun navigationGraph(
                 nextTestNameList.add(0, "flash_light_test_test_mode_screen")
                 Log.i("nextTestName2", nextTestNameList.toString())
                 FlashLightTestTestMode(
+                    state = state, onEvent = onEvent,
                     context = context,
                     navController = navController,
                     navigateToNextTest = true,
@@ -530,7 +603,7 @@ fun navigationGraph(
         }
 
         composable("gps_test_t1_screen") {
-            GPSTestT1(context = context, navController = navController)
+            GPSTestT1(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
         composable("g_sensor_test_screen") {
@@ -538,7 +611,32 @@ fun navigationGraph(
         }
 
         composable("g_sensor_test_t1_screen") {
-            GSensorTestT1(context = context, navController = navController)
+            GSensorTestT1(state = state, onEvent = onEvent, context = context, navController = navController)
+        }
+
+        composable(
+            "g_sensor_test_t1_screen/{nextTestRoute}",
+            arguments = listOf(navArgument("nextTestRoute") {
+                type = NavType.StringType
+            })
+        ) {
+            if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
+                GSensorTestT1(state = state, onEvent = onEvent, context = context, navController = navController)
+            } else {
+                val nextTestRoute = it.arguments?.getString("nextTestRoute")
+                //split nextTestRoute to get the test name
+                val nextTestName = nextTestRoute!!.split("->")
+                val nextTestNameList = nextTestName!!.toMutableList()
+                nextTestNameList.add(0, "g_sensor_test_t1_screen")
+                Log.i("nextTestName2", nextTestNameList.toString())
+                GSensorTestT1(
+                    state = state, onEvent = onEvent,
+                    context = context,
+                    navController = navController,
+                    navigateToNextTest = true,
+                    nextTestRoute = nextTestNameList
+                )
+            }
         }
 
         composable("auto_sleep_test_screen") {

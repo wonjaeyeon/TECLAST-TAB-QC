@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,183 +29,22 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
-
-
-//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-//@Composable
-//fun CameraTest1(context: Context, navController: NavController) {
-//    val cameraPermission = Manifest.permission.CAMERA
-//    val cameraRequestCode = 1234
-//    var cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
-//
-//    val lifecycleOwner = LocalLifecycleOwner.current
-//    val cameraSelector = remember { CameraSelector.DEFAULT_BACK_CAMERA }
-//
-//    val preview = remember {
-//        Preview.Builder()
-//            .build()
-//    }
-//
-//    LaunchedEffect(cameraProviderFuture) {
-//        if (ContextCompat.checkSelfPermission(context, cameraPermission) == PackageManager.PERMISSION_GRANTED) {
-//            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-//
-//            try {
-//                // Unbind use cases before rebinding
-//                cameraProvider.unbindAll()
-//
-//                // Bind use cases to camera
-//                cameraProvider.bindToLifecycle(
-//                    lifecycleOwner, cameraSelector, preview
-//                )
-//            } catch (exc: Exception) {
-//                Log.e("CameraTest", "Use case binding failed", exc)
-//            }
-//        } else {
-//            ActivityCompat.requestPermissions(context as Activity, arrayOf(cameraPermission), cameraRequestCode)
-//        }
-//    }
-//
-//    Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text(text = "Camera Test") },
-//                navigationIcon = {
-//                    IconButton(onClick = { navController.popBackStack() }) {
-//                        Icon(
-//                            imageVector = Icons.Filled.ArrowBack,
-//                            contentDescription = "Back"
-//                        )
-//                    }
-//                }
-//            )
-//        }
-//    ) {
-//        AndroidView(
-//            modifier = Modifier.fillMaxSize(),
-//            factory = { context ->
-//                PreviewView(context).apply {
-//                    preview.setSurfaceProvider(surfaceProvider)
-//                }
-//            }
-//        )
-//    }
-//}
-
-
-// ver 2  - good, fail 버튼 추가
-//@OptIn(ExperimentalComposeUiApi::class)
-//@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-//@Composable
-//fun CameraTest1(context: Context, navController: NavController) {
-//    val cameraPermission = Manifest.permission.CAMERA
-//    val cameraRequestCode = 1234
-//    var cameraProviderFuture = remember { ProcessCameraProvider.getInstance(context) }
-//
-//    val lifecycleOwner = LocalLifecycleOwner.current
-//    val cameraSelector = remember { CameraSelector.DEFAULT_BACK_CAMERA }
-//
-//    val preview = remember {
-//        Preview.Builder()
-//            .build()
-//    }
-//
-//    // zoom
-//    var camera: Camera? = null
-//
-//    LaunchedEffect(cameraProviderFuture) {
-//        if (ContextCompat.checkSelfPermission(context, cameraPermission) == PackageManager.PERMISSION_GRANTED) {
-//            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-//
-//            try {
-//                // Unbind use cases before rebinding
-//                cameraProvider.unbindAll()
-//
-//                // Bind use cases to camera
-//                cameraProvider.bindToLifecycle(
-//                    lifecycleOwner, cameraSelector, preview
-//                )
-//            } catch (exc: Exception) {
-//                Log.e("CameraTest", "Use case binding failed", exc)
-//            }
-//        } else {
-//            ActivityCompat.requestPermissions(context as Activity, arrayOf(cameraPermission), cameraRequestCode)
-//        }
-//    }
-//
-//    var scaleGestureDetector: ScaleGestureDetector? = null
-//
-//    Scaffold(
-//        topBar = {
-//            TopAppBar(
-//                title = { Text(text = "Camera Test") },
-//                navigationIcon = {
-//                    IconButton(onClick = { navController.popBackStack() }) {
-//                        Icon(
-//                            imageVector = Icons.Filled.ArrowBack,
-//                            contentDescription = "Back"
-//                        )
-//                    }
-//                }
-//            )
-//        },
-//        floatingActionButton = {
-//            Row(
-//                modifier = Modifier.padding(16.dp),
-//                horizontalArrangement = Arrangement.SpaceBetween
-//            ) {
-//                FloatingActionButton(onClick = { /* Handle success result */
-//                navController.popBackStack()
-//
-//                }) {
-//                    Text("Good")
-//                }
-//
-//                FloatingActionButton(onClick = { /* Handle fail result */
-//                navController.popBackStack()
-//                }) {
-//                    Text("Fail")
-//                }
-//            }
-//        }
-//    ) {
-//        AndroidView(
-//            modifier = Modifier.fillMaxSize()
-//                                .pointerInteropFilter { event ->
-//                    scaleGestureDetector?.onTouchEvent(event)
-//                    true
-//                },
-//            factory = { context ->
-//
-//                scaleGestureDetector = ScaleGestureDetector(context, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-//                    override fun onScale(detector: ScaleGestureDetector): Boolean {
-//                        val zoomRatio = camera?.cameraInfo?.zoomState?.value?.zoomRatio
-//                        zoomRatio?.let {
-//                            val scale = detector.scaleFactor
-//                            camera?.cameraControl?.setZoomRatio(it * scale)
-//                        }
-//                        return true
-//                    }
-//                })
-//
-//                PreviewView(context).apply {
-//                    preview.setSurfaceProvider(surfaceProvider)
-//                }
-//            }
-//        )
-//    }
-//}
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CameraTest1(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
     runningTestMode: Boolean = false,
-    testMode: String = "None",
+    testMode: String = "StandardMode",
     onTestComplete: () -> Unit = {},
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
@@ -285,6 +126,15 @@ fun CameraTest1(
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Camera Test 1",
+                            "Success",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
@@ -313,6 +163,15 @@ fun CameraTest1(
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Camera Test 1",
+                            "Fail",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")

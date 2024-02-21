@@ -23,6 +23,12 @@ interface TestResultDao {
 
     @Query("SELECT * FROM testResult ORDER BY testDate ASC")
     fun getTestResultsOrderedByPhoneNumber(): Flow<List<TestResult>>
+
+    @Query("SELECT COUNT(*) FROM testResult WHERE itemName = :itemName")
+    suspend fun countTestResultByItemName(itemName: String): Int
+
+    @Query("SELECT * FROM testResult WHERE itemName = :itemName LIMIT 1")
+    suspend fun getTestResultByItemName(itemName: String): TestResult
 }
 
 

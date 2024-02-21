@@ -64,7 +64,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
 
                 //make a button for Touch test T1
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t1_screen") {
+                    navController.navigate("touch_panel_test_t1_screen/notNextTest") {
 
                     }
                 }) {

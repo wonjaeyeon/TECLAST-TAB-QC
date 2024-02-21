@@ -9,7 +9,6 @@ import com.example.teclast_qc_application.batteryTestT1
 import com.example.teclast_qc_application.device_tester.specific_test.battery.tester.BatteryTestTestMode
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.CpuBurnInTest
 import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.cpuBufferTest
-import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit.cpuTest1
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.gpu3DTest
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.gpuTest1
 import com.example.teclast_qc_application.device_tester.specific_test.ram.tester.ramTest1
@@ -24,8 +23,10 @@ import kotlinx.coroutines.withContext
 
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun StandardModeScreen(state: TestResultState,
-                         onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavHostController) {
+fun StandardModeScreen(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavHostController
+) {
     var progress by remember { mutableStateOf(0.0f) }
     var testsCompleted by remember { mutableStateOf(false) }
     // var done is empty list
@@ -34,8 +35,8 @@ fun StandardModeScreen(state: TestResultState,
     val undone = remember {
         mutableStateListOf(
             "1. CPU Buffer",
-            "2. CPU TEST 1",
-            "3. CPU BURNING",
+            //"2. CPU TEST 1",
+            "3. CPU BURNIN",
             "4. gpu test",
             "5. gpu test 2",
             "6. ram test 1",
@@ -48,17 +49,21 @@ fun StandardModeScreen(state: TestResultState,
     val tests = mutableListOf<String>(
         "battery_test_test_mode_screen",
         "wifi_test_test_mode_screen",
-        "bluetooth_test_test_mode_screen",
-//        "usb_test_t1_screen",
+//        "bluetooth_test_test_mode_screen",
+//        "usb_test_test_mode_screen",
+//        "touch_panel_test_t1_screen",
 //        "touch_panel_test_t2_screen",
-//        "touch_panel_test_t4_screen",
+        "touch_panel_test_t4_screen",
 //        "touch_panel_test_t5_screen",
-//        "lcd_screen_test_t1_screen",
-//        "lcd_screen_test_t2_screen",
-//        "physical_button_test_t1_screen",
-//        "camera_test_t1_screen",
+        "lcd_screen_test_t1_screen",
+        "lcd_screen_test_t2_screen",
+        "physical_button_test_t1_screen",
+//        "gps_test_t1_screen",
+        "g_sensor_test_t1_screen",
+        "camera_test_t1_screen",
+//        "camera_test_t2_screen",
         "audio_test_t1_screen",
-        "vibration_test_test_mode_screen",
+//        "vibration_test_test_mode_screen",
         "flash_light_test_test_mode_screen",
         "lcd_screen_test_t1_screen",
         "notNextTest"
@@ -82,23 +87,23 @@ fun StandardModeScreen(state: TestResultState,
                 delay(100L)
 
 
-                val cpuTestResult2 = cpuTest1(state = state, onEvent = onEvent)
-                progress += 1f / (done.size + undone.size)
-                done.add("2. CPU TEST 1")
-                undone.remove("2. CPU TEST 1")
-                Log.i("StandardModeScreen", "2. cpuTest1() is called : $cpuTestResult2 : Percentage : $progress")
-                delay(100L)
-                onEvent(TestResultEvent.SaveTestResult)
-                delay(100L)
+//                val cpuTestResult2 = cpuTest1(state = state, onEvent = onEvent)
+//                progress += 1f / (done.size + undone.size)
+//                done.add("2. CPU TEST 1")
+//                undone.remove("2. CPU TEST 1")
+//                Log.i("StandardModeScreen", "2. cpuTest1() is called : $cpuTestResult2 : Percentage : $progress")
+//                delay(100L)
+//                onEvent(TestResultEvent.SaveTestResult)
+//                delay(100L)
 
                 var cpuTestResult3 = ""
                 progress += 1f / (done.size + undone.size)
-                done.add("3. CPU BURNING")
-                undone.remove("3. CPU BURNING")
+                done.add("3. CPU BURNIN")
+                undone.remove("3. CPU BURNIN")
                 runBlocking {
-                    cpuTestResult3 = CpuBurnInTest(state = state, onEvent = onEvent,1000L, this)
+                    cpuTestResult3 = CpuBurnInTest(state = state, onEvent = onEvent, 1000L, this)
                 }
-                Log.i("StandardModeScreen", "3. CpuBurningTest() is called : $cpuTestResult3 : Percentage : $progress")
+                Log.i("StandardModeScreen", "3. CpuBurnInTest() is called : $cpuTestResult3 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
@@ -180,6 +185,7 @@ fun StandardModeScreen(state: TestResultState,
     }
     if (testsCompleted) {
         BatteryTestTestMode(
+            state = state, onEvent = onEvent,
             context = context, navController = navController, navigateToNextTest = true, nextTestRoute = tests
         )
     }

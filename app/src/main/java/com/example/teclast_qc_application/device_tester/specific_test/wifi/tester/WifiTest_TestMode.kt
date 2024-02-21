@@ -16,6 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -24,6 +26,8 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun WifiTestTestMode(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
     runningTestMode: Boolean = false,
@@ -33,17 +37,18 @@ fun WifiTestTestMode(
     nextTestRoute: MutableList<String> = mutableListOf()
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val wifiConnectedStatus = remember { mutableStateOf(getWifiConnectionStatus(context)) }
-    val wifiSignalStrength = remember { mutableStateOf(getWifiSignalStrength(context)) }
+    val wifiConnectedStatus = remember { mutableStateOf(wifiConnectionTest(state, onEvent, context)) }
+    val wifiSignalStrength = remember { mutableStateOf(wifiSignalStrengthTest(state, onEvent, context)) }
     val hasNavigated = remember { mutableStateOf(false) }  // State to track navigation status
 
 
     DisposableEffect(Unit) {
         val job = coroutineScope.launch {
             while (isActive) {
-                wifiConnectedStatus.value = getWifiConnectionStatus(context)
-                wifiSignalStrength.value = getWifiSignalStrength(context)
-                delay(100) // Check wifi status every second
+                wifiConnectedStatus.value = wifiConnectionTest(state, onEvent, context)
+                delay(100)
+                wifiSignalStrength.value = wifiSignalStrengthTest(state, onEvent, context)
+                delay(100) // Check Wi-Fi status every second
             }
         }
         onDispose {
@@ -51,48 +56,52 @@ fun WifiTestTestMode(
         }
     }
 
-    val wifiMessage = if (wifiConnectedStatus.value.startsWith("Connected to Wi-Fi") && wifiSignalStrength.value > 20) {
+    val wifiMessage =
+        if (wifiConnectedStatus.value.startsWith("Connected to Wi-Fi") && wifiSignalStrength.value.startsWith("WIFI : Pass")) {
 
-        if(!hasNavigated.value) {
-            Log.i(testMode, "12. getWifiConnectionStatus() is called : Success : Wifi is connected")
-            Log.i(testMode, "13. getWifiSignalStrength() is called : Success : Wifi signal strength is $wifiSignalStrength")
+            if (!hasNavigated.value) {
+                Log.i(testMode, "12. getWifiConnectionStatus() is called : Success : Wifi is connected")
+                Log.i(
+                    testMode,
+                    "13. getWifiSignalStrength() is called : Success : Wifi signal strength is $wifiSignalStrength"
+                )
 
-            if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-                val pastRoute = nextTestRoute.removeAt(0)
-                Log.i("MyTag:WifiTest", "pastRoute: $pastRoute")
-                Log.i("MyTag:WifiTest", "nextTestRoute: $nextTestRoute")
-                val nextRoute = nextTestRoute[0]
-                val nextPath = nextTestRoute.drop(1)
-                val nextPathString = nextPath.joinToString(separator = "->")
-                Log.i("MyTag:WifiTest", "nextPath: $nextPath")
-                Log.i("MyTag:WifiTest", "nextPathString: $nextPathString")
+                if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+                    val pastRoute = nextTestRoute.removeAt(0)
+                    Log.i("MyTag:WifiTest", "pastRoute: $pastRoute")
+                    Log.i("MyTag:WifiTest", "nextTestRoute: $nextTestRoute")
+                    val nextRoute = nextTestRoute[0]
+                    val nextPath = nextTestRoute.drop(1)
+                    val nextPathString = nextPath.joinToString(separator = "->")
+                    Log.i("MyTag:WifiTest", "nextPath: $nextPath")
+                    Log.i("MyTag:WifiTest", "nextPathString: $nextPathString")
 
-                var nextRouteWithArguments = "aaaa"
-                if (nextPathString.isNotEmpty()) {
-                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
-                    Log.i("MyTag:WifiTest", "nextRouteWithArguments: $nextRouteWithArguments")
-                } else {
-                    nextRouteWithArguments = "${nextTestRoute[0]}"
-                    Log.i("MyTag:WifiTest", "nextRouteWithArguments: $nextRouteWithArguments")
-                }
+                    var nextRouteWithArguments = "aaaa"
+                    if (nextPathString.isNotEmpty()) {
+                        nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                        Log.i("MyTag:WifiTest", "nextRouteWithArguments: $nextRouteWithArguments")
+                    } else {
+                        nextRouteWithArguments = "${nextTestRoute[0]}"
+                        Log.i("MyTag:WifiTest", "nextRouteWithArguments: $nextRouteWithArguments")
+                    }
 
-                navController.navigate(nextRouteWithArguments)
+                    navController.navigate(nextRouteWithArguments)
+                    hasNavigated.value = true
+                } else if (runningTestMode) {
+                    onTestComplete()
+                    hasNavigated.value = true
+                } else
+                    navController.popBackStack()
                 hasNavigated.value = true
-            } else if (runningTestMode) {
-                onTestComplete()
-                hasNavigated.value = true
-            } else
-                navController.popBackStack()
-            hasNavigated.value = true
 
-            "Success : Wifi is connected with signal strength $wifiSignalStrength"
-        }else{
-            "Success : Wifi is connected with signal strength $wifiSignalStrength"
+                "Success : Wifi is connected with signal strength $wifiSignalStrength"
+            } else {
+                "Success : Wifi is connected with signal strength $wifiSignalStrength"
+            }
+
+        } else {
+            "Wifi is not connected"
         }
-
-    } else {
-        "Wifi is not connected"
-    }
 
     Scaffold(
         topBar = {
