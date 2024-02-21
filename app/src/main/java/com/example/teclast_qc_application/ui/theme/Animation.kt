@@ -105,6 +105,11 @@ fun ButtonWithJYEffect(
                 MotionEvent.ACTION_DOWN -> {
                     selected.value = true }
 
+                MotionEvent.ACTION_CANCEL -> {
+                    selected.value = false }
+
+
+
                 MotionEvent.ACTION_UP  -> {
                     onClick()
                     selected.value = false }
@@ -139,64 +144,3 @@ fun ButtonWithJYEffect(
     }
 }
 
-
-//@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
-//@Composable
-//fun ButtonWithJYEffect2(
-//    onClick: () -> Unit,
-//    modifier: Modifier = Modifier,
-//    enabled: Boolean = true,
-//    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
-//    elevation: ButtonElevation? = ButtonDefaults.elevation(),
-//    shape: Shape = MaterialTheme.shapes.small,
-//    border: BorderStroke? = null,
-//    colors: ButtonColors = ButtonDefaults.buttonColors(),
-//    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-//    content: @Composable RowScope.() -> Unit
-//) {
-//    val selected = remember { mutableStateOf(false) }
-//    val scale = animateFloatAsState(if (selected.value) 0.95f else 1f)
-//    val contentColor by colors.contentColor(enabled)
-//    Surface(
-//        onClick = onClick,
-//        modifier = modifier.scale(scale.value).pointerInteropFilter {
-//            when (it.action) {
-//                MotionEvent.ACTION_DOWN -> {
-//                    selected.value = true
-//                    true
-//                }
-//                MotionEvent.ACTION_UP -> {
-//                    onClick()
-//                    selected.value = false
-//                    false // Let the click event propagate to the Surface
-//                }
-//                else -> false
-//            }
-//        },
-//        enabled = enabled,
-//        shape = shape,
-//        color = colors.backgroundColor(enabled).value,
-//        contentColor = contentColor.copy(alpha = 1f),
-//        border = border,
-//        elevation = elevation?.elevation(enabled, interactionSource)?.value ?: 0.dp,
-//        interactionSource = interactionSource,
-//    ) {
-//        CompositionLocalProvider(LocalContentAlpha provides contentColor.alpha) {
-//            ProvideTextStyle(
-//                value = MaterialTheme.typography.button
-//            ) {
-//                Row(
-//                    Modifier
-//                        .defaultMinSize(
-//                            minWidth = ButtonDefaults.MinWidth,
-//                            minHeight = ButtonDefaults.MinHeight
-//                        )
-//                        .padding(contentPadding),
-//                    horizontalArrangement = Arrangement.Center,
-//                    verticalAlignment = Alignment.CenterVertically,
-//                    content = content
-//                )
-//            }
-//        }
-//    }
-//}

@@ -14,18 +14,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.delay
+import java.util.*
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "SuspiciousIndentation")
 @Composable
 fun PhysicalButtonTestT1(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
     volumeUpPressed: MutableState<Boolean>,
     volumeDownPressed: MutableState<Boolean>,
     runningTestMode: Boolean = false,
-    testMode: String = "None",
+    testMode: String = "StandardMode",
     onTestComplete: () -> Unit = {},
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
@@ -36,6 +42,15 @@ fun PhysicalButtonTestT1(
     LaunchedEffect(volumeUpPressed.value, volumeDownPressed.value) {
         if (volumeUpPressed.value && volumeDownPressed.value) {
             // navController.popBackStack()
+            onEvent(TestResultEvent.SaveTestResult)
+            AddTestResultV2(
+                state = state,
+                onEvent = onEvent,
+                "Physical Button Test 1",
+                "Success",
+                Date().toString()
+            )
+            onEvent(TestResultEvent.SaveTestResult)
             if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                 val pastRoute = nextTestRoute.removeAt(0)
                 Log.i("MyTag:PhysicalButtonTestT1", "pastRoute: $pastRoute")
@@ -61,6 +76,16 @@ fun PhysicalButtonTestT1(
                 Log.i("MyTag:PhysicalButtonTestT1", "delay(1000)")
                 delay(1000)
                 navController.popBackStack()}
+        } else{
+            onEvent(TestResultEvent.SaveTestResult)
+            AddTestResultV2(
+                state = state,
+                onEvent = onEvent,
+                "Physical Button Test 1",
+                "Fail",
+                Date().toString()
+            )
+            onEvent(TestResultEvent.SaveTestResult)
         }
     }
 

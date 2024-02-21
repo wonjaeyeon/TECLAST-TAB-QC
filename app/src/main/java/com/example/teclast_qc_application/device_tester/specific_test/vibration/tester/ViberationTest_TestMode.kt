@@ -17,16 +17,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun VibrationTestTestMode(context: Context,
-                           navController: NavController,
-                           runningTestMode: Boolean = false,
-                           testMode: String = "StandardMode",
-                           onTestComplete: () -> Unit = {},
-                           navigateToNextTest: Boolean = false,
-                           nextTestRoute: MutableList<String> = mutableListOf<String>()
+fun VibrationTestTestMode(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
+    context: Context,
+    navController: NavController,
+    runningTestMode: Boolean = false,
+    testMode: String = "StandardMode",
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     var vibrationResult = remember { mutableStateOf("Ready for Test") }
@@ -57,15 +64,24 @@ fun VibrationTestTestMode(context: Context,
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Vibration Test 1",
+                            "Success",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                            Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
-                            Log.i("MyTag:CameraTest1", "nextTestRoute: $nextTestRoute")
+                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")
+                            Log.i("MyTag:VibrationTest1", "nextTestRoute: $nextTestRoute")
                             val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
                             val nextPath = nextTestRoute.drop(1)
                             val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
-                            Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
+                            Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
+                            Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
 
                             var nextRouteWithArguments = "aaaa"
                             if (nextPathString.isNotEmpty()) {
@@ -85,15 +101,24 @@ fun VibrationTestTestMode(context: Context,
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Vibration Test 1",
+                            "Fail",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                            Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
-                            Log.i("MyTag:CameraTest1", "nextTestRoute: $nextTestRoute")
+                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")
+                            Log.i("MyTag:VibrationTest1", "nextTestRoute: $nextTestRoute")
                             val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
                             val nextPath = nextTestRoute.drop(1)
                             val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
-                            Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
+                            Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
+                            Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
 
                             var nextRouteWithArguments = "aaaa"
                             if (nextPathString.isNotEmpty()) {
@@ -137,13 +162,13 @@ fun VibrationTestTestMode(context: Context,
                         vibrationResult.value = "This device does not support vibration"
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                            Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
-                            Log.i("MyTag:CameraTest1", "nextTestRoute: $nextTestRoute")
+                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")
+                            Log.i("MyTag:VibrationTest1", "nextTestRoute: $nextTestRoute")
                             val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
                             val nextPath = nextTestRoute.drop(1)
                             val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
-                            Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
+                            Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
+                            Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
 
                             var nextRouteWithArguments = "aaaa"
                             if (nextPathString.isNotEmpty()) {

@@ -41,30 +41,3 @@ fun getDeviceTemperature(context: Context): String {
         return "battery is not present"
     }
 }
-
-//fun checkStorageUsage(): Boolean {
-//    val externalStorage = Environment.getExternalStorageDirectory()
-//    val statFs = StatFs(externalStorage.path)
-//    val blockSize = statFs.blockSizeLong
-//    val totalBlocks = statFs.blockCountLong
-//    val availableBlocks = statFs.availableBlocksLong
-//
-//    val usedBytes = blockSize * (totalBlocks - availableBlocks)
-//    val totalBytes = blockSize * totalBlocks
-//    val usedPercentage = (usedBytes.toDouble() / totalBytes.toDouble()) * 100
-//    val threshold = 80.0
-//
-//    return usedPercentage <= threshold
-//}
-
-//fun checkQuality(context: Context): String {
-//    val batteryHealthOk = checkBatteryHealth(context)
-//    val storageUsageOk = checkStorageUsage()
-//
-//    return when {
-//        !batteryHealthOk && !storageUsageOk -> "Battery and storage issues detected."
-//        !batteryHealthOk -> "Battery issue detected."
-//        !storageUsageOk -> "Storage issue detected."
-//        else -> "No issues detected."
-//    }
-//}

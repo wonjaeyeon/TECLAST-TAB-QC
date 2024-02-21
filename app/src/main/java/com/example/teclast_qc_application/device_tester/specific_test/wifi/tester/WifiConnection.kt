@@ -4,8 +4,16 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 
-fun getWifiConnectionStatus(context: Context): String {
+fun wifiConnectionTest(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
+    context: Context
+): String {
     val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     val isConnectedToWifi = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         val network = connectivityManager.activeNetwork ?: return "Not connected to Wi-Fi"
@@ -17,5 +25,15 @@ fun getWifiConnectionStatus(context: Context): String {
         networkInfo != null && networkInfo.isConnected && networkInfo.type == ConnectivityManager.TYPE_WIFI
     }
 
-    return if (isConnectedToWifi) "Connected to Wi-Fi" else "Not connected to Wi-Fi"
+    if (isConnectedToWifi) {
+        onEvent(TestResultEvent.SaveTestResult)
+        AddTestResultV2(state = state, onEvent = onEvent, "Wifi TEST 1", "Success", Date().toString())
+        onEvent(TestResultEvent.SaveTestResult)
+        return "Connected to Wi-Fi"
+    } else {
+        onEvent(TestResultEvent.SaveTestResult)
+        AddTestResultV2(state = state, onEvent = onEvent, "Wifi TEST 1", "Fail", Date().toString())
+        onEvent(TestResultEvent.SaveTestResult)
+        return "Not connected to Wi-Fi"
+    }
 }

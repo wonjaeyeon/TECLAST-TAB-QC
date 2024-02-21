@@ -23,9 +23,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.fetchIpGeolocation
-import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.getWifiConnectionStatus
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.getWifiDataUsage
-import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.getWifiSignalStrength
+import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.wifiConnectionTest
+import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.wifiSignalStrengthTest
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,7 +37,13 @@ import java.net.DatagramSocket
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun WifiTestScreen(context: Context, navController: NavController, viewModel: YourViewModel = viewModel()) {
+fun WifiTestScreen(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
+    context: Context,
+    navController: NavController,
+    viewModel: YourViewModel = viewModel()
+) {
     // Create a mutable state for battery health result
     val connectionStateResult = remember { mutableStateOf<String>("") }
     val wifiDataUsageResult = remember { mutableStateOf<String>("") }
@@ -44,7 +52,7 @@ fun WifiTestScreen(context: Context, navController: NavController, viewModel: Yo
     // val for HTTP Test
     val httpTestResult = remember { mutableStateOf("") }
 
-    val wifiSignalStrength = remember { mutableStateOf(0) }
+    val wifiSignalStrength = remember { mutableStateOf("") }
 
     // get reference to the coroutine scope
     val coroutineScope = rememberCoroutineScope()
@@ -80,7 +88,7 @@ fun WifiTestScreen(context: Context, navController: NavController, viewModel: Yo
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
 
-                ) {
+                    ) {
                     Icon(
                         imageVector = Icons.Filled.Settings,
                         //tint = MaterialTheme.colors.primary,
@@ -90,18 +98,18 @@ fun WifiTestScreen(context: Context, navController: NavController, viewModel: Yo
                     Spacer(modifier = Modifier.padding(6.dp))
 
                     Button(onClick = {
-                    val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
-                    context.startActivity(intent)
-                }) {
-                    Text("Go to WI-FI settings")
-                }
+                        val intent = Intent(Settings.ACTION_WIFI_SETTINGS)
+                        context.startActivity(intent)
+                    }) {
+                        Text("Go to WI-FI settings")
+                    }
                 }
 
 
                 Spacer(modifier = Modifier.padding(top = 40.dp))
                 // Battery Test Button
                 Button(onClick = {
-                    connectionStateResult.value = getWifiConnectionStatus(context)
+                    connectionStateResult.value = wifiConnectionTest(state, onEvent, context)
                 }) {
                     Text(text = "connection Test")
                 }
@@ -187,20 +195,21 @@ fun WifiTestScreen(context: Context, navController: NavController, viewModel: Yo
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
-               Button(onClick = {
+                Button(onClick = {
                     coroutineScope.launch {
-                        wifiSignalStrength.value = getWifiSignalStrength(context)
+                        wifiSignalStrength.value = wifiSignalStrengthTest(state, onEvent, context)
                     }
                 }) {
                     Text("Signal Strength Test")
                 }
 
                 Text(
-                    text = "Signal Strength: ${wifiSignalStrength.value}/100",
+                    text = wifiSignalStrength.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = Color.White,
-                    modifier = Modifier.padding(top = 16.dp))
+                    modifier = Modifier.padding(top = 16.dp)
+                )
 
 
             }

@@ -26,16 +26,26 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun TouchPanelTest2(context: Context, navController: NavController,runningTestMode: Boolean = false,
-                    testMode: String = "None",
-                    onTestComplete: () -> Unit = {},
-                    navigateToNextTest: Boolean = false,
-                    nextTestRoute: MutableList<String> = mutableListOf<String>()) {
+fun TouchPanelTest2(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
+    context: Context,
+    navController: NavController,
+    runningTestMode: Boolean = false,
+    testMode: String = "StandardMode",
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
+) {
     val trail = remember { mutableStateListOf<Offset>() }
     val touchCount = remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
@@ -43,6 +53,7 @@ fun TouchPanelTest2(context: Context, navController: NavController,runningTestMo
     val offsetY = remember { mutableStateOf(0f) }
     var size by remember { mutableStateOf(Size.Zero) }
     var isFinished by remember { mutableStateOf(false) }
+    val hasAddedResult = remember { mutableStateOf(false) }  // State to track navigation status
 
     // Initialize checkpoints
     val checkpoints = remember {
@@ -63,7 +74,7 @@ fun TouchPanelTest2(context: Context, navController: NavController,runningTestMo
             "pointRC" to false,
             "pointCC" to false,
 
-        )
+            )
     }
 
     val onTouchThresholdReached: () -> Unit = {
@@ -71,15 +82,24 @@ fun TouchPanelTest2(context: Context, navController: NavController,runningTestMo
         if (checkpoints.values.all { it } && !isFinished) {
             // All checkpoints are true, so we can navigate to the next screen
             // navController.popBackStack()
+            onEvent(TestResultEvent.SaveTestResult)
+            AddTestResultV2(
+                state = state,
+                onEvent = onEvent,
+                "Touch Panel Test 2",
+                "Success",
+                Date().toString()
+            )
+            onEvent(TestResultEvent.SaveTestResult)
             if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                 val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                Log.i("MyTag:TOUCHPANELTEST2", "pastRoute: $pastRoute")
-                Log.i("MyTag:TOUCHPANELTEST2", "nextTestRoute: $nextTestRoute")
+                Log.i("MyTag:TouchPanelTest2", "pastRoute: $pastRoute")
+                Log.i("MyTag:TouchPanelTest2", "nextTestRoute: $nextTestRoute")
                 val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
                 val nextPath = nextTestRoute.drop(1)
                 val nextPathString = nextPath.joinToString(separator = "->")
-                Log.i("MyTag:TOUCHPANELTEST2", "nextPath: $nextPath")
-                Log.i("MyTag:TOUCHPANELTEST2", "nextPathString: $nextPathString")
+                Log.i("MyTag:TouchPanelTest2", "nextPath: $nextPath")
+                Log.i("MyTag:TouchPanelTest2", "nextPathString: $nextPathString")
 
                 var nextRouteWithArguments = "aaaa"
                 if (nextPathString.isNotEmpty()) {
@@ -95,6 +115,19 @@ fun TouchPanelTest2(context: Context, navController: NavController,runningTestMo
                 navController.popBackStack()
             isFinished = true
 
+        } else {
+            if (!hasAddedResult.value) {
+                onEvent(TestResultEvent.SaveTestResult)
+                AddTestResultV2(
+                    state = state,
+                    onEvent = onEvent,
+                    "Touch Panel Test 2",
+                    "Fail",
+                    Date().toString()
+                )
+                onEvent(TestResultEvent.SaveTestResult)
+                hasAddedResult.value = true
+            }
         }
     }
 
@@ -148,7 +181,12 @@ fun TouchPanelTest2(context: Context, navController: NavController,runningTestMo
 
             // Draw the draggable circle
             Box(
-                Modifier.offset { IntOffset((offsetX.value - 25f).roundToInt(), (offsetY.value - 25f).roundToInt()) } // Adjust the offset
+                Modifier.offset {
+                    IntOffset(
+                        (offsetX.value - 25f).roundToInt(),
+                        (offsetY.value - 25f).roundToInt()
+                    )
+                } // Adjust the offset
                     .size(50.dp)
                     .background(Color.Blue, shape = CircleShape)
                     .pointerInput(Unit) {
@@ -174,14 +212,22 @@ fun TouchPanelTest2(context: Context, navController: NavController,runningTestMo
                             if (abs(newValue.x + newValue.y - size.width) < 50f) checkpoints["diag2"] = true
 
                             if (newValue.x < 50f && newValue.y < 50f) checkpoints["pointLT"] = true
-                            if (newValue.x < 50f && newValue.y > size.height - 50.dp.toPx()) checkpoints["pointLB"] = true
-                            if (newValue.x > size.width - 50.dp.toPx() && newValue.y < 50f) checkpoints["pointRT"] = true
-                            if (newValue.x > size.width - 50.dp.toPx() && newValue.y > size.height - 50.dp.toPx()) checkpoints["pointRB"] = true
-                            if (newValue.x > size.width / 2 - 50.dp.toPx() && newValue.x < size.width / 2 + 50.dp.toPx() && newValue.y < 50f) checkpoints["pointCT"] = true
-                            if (newValue.x > size.width / 2 - 50.dp.toPx() && newValue.x < size.width / 2 + 50.dp.toPx() && newValue.y > size.height - 50.dp.toPx()) checkpoints["pointCB"] = true
-                            if (newValue.x < 50f && newValue.y > size.height / 2 - 50.dp.toPx() && newValue.y < size.height / 2 + 50.dp.toPx()) checkpoints["pointLC"] = true
-                            if (newValue.x > size.width - 50.dp.toPx() && newValue.y > size.height / 2 - 50.dp.toPx() && newValue.y < size.height / 2 + 50.dp.toPx()) checkpoints["pointRC"] = true
-                            if (newValue.x > size.width / 2 - 50.dp.toPx() && newValue.x < size.width / 2 + 50.dp.toPx() && newValue.y > size.height / 2 - 50.dp.toPx() && newValue.y < size.height / 2 + 50.dp.toPx()) checkpoints["pointCC"] = true
+                            if (newValue.x < 50f && newValue.y > size.height - 50.dp.toPx()) checkpoints["pointLB"] =
+                                true
+                            if (newValue.x > size.width - 50.dp.toPx() && newValue.y < 50f) checkpoints["pointRT"] =
+                                true
+                            if (newValue.x > size.width - 50.dp.toPx() && newValue.y > size.height - 50.dp.toPx()) checkpoints["pointRB"] =
+                                true
+                            if (newValue.x > size.width / 2 - 50.dp.toPx() && newValue.x < size.width / 2 + 50.dp.toPx() && newValue.y < 50f) checkpoints["pointCT"] =
+                                true
+                            if (newValue.x > size.width / 2 - 50.dp.toPx() && newValue.x < size.width / 2 + 50.dp.toPx() && newValue.y > size.height - 50.dp.toPx()) checkpoints["pointCB"] =
+                                true
+                            if (newValue.x < 50f && newValue.y > size.height / 2 - 50.dp.toPx() && newValue.y < size.height / 2 + 50.dp.toPx()) checkpoints["pointLC"] =
+                                true
+                            if (newValue.x > size.width - 50.dp.toPx() && newValue.y > size.height / 2 - 50.dp.toPx() && newValue.y < size.height / 2 + 50.dp.toPx()) checkpoints["pointRC"] =
+                                true
+                            if (newValue.x > size.width / 2 - 50.dp.toPx() && newValue.x < size.width / 2 + 50.dp.toPx() && newValue.y > size.height / 2 - 50.dp.toPx() && newValue.y < size.height / 2 + 50.dp.toPx()) checkpoints["pointCC"] =
+                                true
 
 
                             onTouchThresholdReached()

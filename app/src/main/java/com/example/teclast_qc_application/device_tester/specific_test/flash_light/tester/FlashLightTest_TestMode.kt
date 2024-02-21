@@ -15,16 +15,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun FlashLightTestTestMode(context: Context,
-                          navController: NavController,
-                          runningTestMode: Boolean = false,
-                          testMode: String = "StandardMode",
-                          onTestComplete: () -> Unit = {},
-                          navigateToNextTest: Boolean = false,
-                          nextTestRoute: MutableList<String> = mutableListOf<String>()
+fun FlashLightTestTestMode(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
+    context: Context,
+    navController: NavController,
+    runningTestMode: Boolean = false,
+    testMode: String = "StandardMode",
+    onTestComplete: () -> Unit = {},
+    navigateToNextTest: Boolean = false,
+    nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
     var isFlashOn = false
     var flashlightResult = remember { mutableStateOf("Ready for Test") }
@@ -55,6 +62,15 @@ fun FlashLightTestTestMode(context: Context,
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Flashlight Test 1",
+                            "Success",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:FlashLightTest1", "pastRoute: $pastRoute")
@@ -83,6 +99,15 @@ fun FlashLightTestTestMode(context: Context,
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResultV2(
+                            state = state,
+                            onEvent = onEvent,
+                            "Flashlight Test 1",
+                            "Fail",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:FlashLightTest1", "pastRoute: $pastRoute")
@@ -119,7 +144,7 @@ fun FlashLightTestTestMode(context: Context,
                 Button(onClick = {
                     isFlashOn = !isFlashOn
                     flashlightResult.value = toggleFlashLight(context, isFlashOn)
-                    if(flashlightResult.value.startsWith("Cannot find Flashlight")){
+                    if (flashlightResult.value.startsWith("Cannot find Flashlight")) {
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")

@@ -6,7 +6,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 
 
-fun BluetoothTestT2_V3(context: Context): String {
+fun BluetoothTestT2_v4(context: Context): String {
 
     val bluetoothAdapter = context.getSystemService(BluetoothManager::class.java)?.adapter
     val devices = bluetoothAdapter?.bondedDevices?.toList() ?: listOf()
@@ -27,4 +27,3 @@ fun BluetoothTestT2_V3(context: Context): String {
     }
 
 }
-

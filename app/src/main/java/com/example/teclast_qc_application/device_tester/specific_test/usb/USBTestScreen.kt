@@ -6,7 +6,10 @@ package com.example.teclast_qc_application.device_tester.specific_test.usb
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -20,11 +23,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.usbTest1
 import com.example.teclast_qc_application.device_tester.specific_test.usb.tester.usbTest2
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun usbTestScreen(context: Context, navController: NavController, ) {
+fun usbTestScreen(state: TestResultState,
+                  onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavController, ) {
     // Create a mutable state for battery health result
     val connectionStateResult = remember { mutableStateOf<String>("") }
     val usbHostModeAvailabilityState = remember { mutableStateOf<String>("") }
@@ -59,7 +65,7 @@ fun usbTestScreen(context: Context, navController: NavController, ) {
             ) {
                 // USB Test Button
                 Button(onClick = {
-                    connectionStateResult.value = usbTest1(context)
+                    connectionStateResult.value = usbTest1(state, onEvent, context)
                 }) {
                     Text(text = "connection Test")
                 }
@@ -75,7 +81,7 @@ fun usbTestScreen(context: Context, navController: NavController, ) {
 
                 // Card Reader Test Button
                 Button(onClick = {
-                    usbHostModeAvailabilityState.value = usbTest2(context)
+                    usbHostModeAvailabilityState.value = usbTest2(state, onEvent, context)
                 }) {
                     Text(text = "USB Host Mode availablity Test")
                 }

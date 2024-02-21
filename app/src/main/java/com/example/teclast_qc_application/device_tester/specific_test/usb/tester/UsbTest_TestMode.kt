@@ -3,7 +3,9 @@ package com.example.teclast_qc_application.device_tester.specific_test.usb.teste
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -12,6 +14,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -19,7 +23,9 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun UsbTest1TestMode(
+fun UsbTestTestMode(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
     runningTestMode: Boolean = false,
@@ -30,7 +36,7 @@ fun UsbTest1TestMode(
 ) {
 
     val coroutineScope = rememberCoroutineScope()
-    val usbHostModeStatus = remember { mutableStateOf(usbTest2(context)) }
+    val usbHostModeStatus = remember { mutableStateOf("USB Host Mode Off") }
     val usbDevicesStatus = remember { mutableStateOf("No USB devices connected.") }
     val hasNavigated = remember { mutableStateOf(false) }  // State to track navigation status
 
@@ -38,7 +44,9 @@ fun UsbTest1TestMode(
         val job = coroutineScope.launch {
             while (isActive) {
 
-                usbDevicesStatus.value = usbTest1(context)
+                usbDevicesStatus.value = usbTest1(state =state,onEvent = onEvent,context = context)
+                delay(100)
+                usbHostModeStatus.value = usbTest2(state =state,onEvent = onEvent,context = context)
 //                usbDevicesStatus.value = "Usb TEST : Success : Device ID: 111, Manufacturer: apple, Product: macbook\n"
 
 

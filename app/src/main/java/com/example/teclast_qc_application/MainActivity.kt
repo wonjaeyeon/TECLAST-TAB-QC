@@ -40,11 +40,9 @@ import com.example.teclast_qc_application.test_result.test_results_db.TestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultViewModel
 import com.example.teclast_qc_application.ui.theme.MyApplicationTheme
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import kotlin.reflect.KFunction1
 
-//check jy_24_feb_07 branch is well-made
+//check jy_24_feb_20 branch is well-made _ 11:17
 // check if I changed all right
 class MainActivity : ComponentActivity() {
     val VolumeUpPressed = mutableStateOf(false)
