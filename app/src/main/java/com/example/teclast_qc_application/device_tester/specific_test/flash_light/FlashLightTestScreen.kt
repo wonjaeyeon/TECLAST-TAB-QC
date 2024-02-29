@@ -25,7 +25,7 @@ fun FlashLightTestScreen(context: Context, navController: NavController, ) {
             TopAppBar(
                 title = { Text(text = "Flash Light Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(

@@ -47,6 +47,7 @@ import kotlin.reflect.KFunction1
 class MainActivity : ComponentActivity() {
     val VolumeUpPressed = mutableStateOf(false)
     val VolumeDownPressed = mutableStateOf(false)
+    val IsDarkTheme = mutableStateOf(true)
 
 
     private val requestPermissionLauncher =
@@ -114,9 +115,9 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-            MyApplicationTheme {
+            MyApplicationTheme (darkTheme = IsDarkTheme.value){
                 val state by viewModel.state.collectAsState()
-                MainScreenView(context = this,state = state, onEvent = viewModel::onEvent, volumeUpPressed = VolumeUpPressed, volumeDownPressed = VolumeDownPressed, openSettings = this::openSettings)
+                MainScreenView(context = this,state = state, onEvent = viewModel::onEvent, volumeUpPressed = VolumeUpPressed, volumeDownPressed = VolumeDownPressed, openSettings = this::openSettings, darkTheme = IsDarkTheme)
             }
 
             requestCameraPermission()
@@ -206,13 +207,14 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(34)
 @Composable
-fun MainScreenView(context: MainActivity, state: TestResultState, onEvent: KFunction1<TestResultEvent, Unit>, volumeUpPressed : MutableState<Boolean>, volumeDownPressed : MutableState<Boolean>, openSettings: () -> Unit ) {
+fun MainScreenView(context: MainActivity, state: TestResultState, onEvent: KFunction1<TestResultEvent, Unit>, volumeUpPressed : MutableState<Boolean>, volumeDownPressed : MutableState<Boolean>, openSettings: () -> Unit, darkTheme: MutableState<Boolean>) {
     val navController = rememberNavController()
     Scaffold(
+
         bottomBar = { BottomNavigation(navController = navController) }
     ) {
         Box(Modifier.padding(it)){
-            navigationGraph(context = context,navController = navController, state = state, onEvent = onEvent, volumeUpPressed = volumeUpPressed, volumeDownPressed = volumeDownPressed, openSettings = openSettings)
+            navigationGraph(context = context,navController = navController, state = state, onEvent = onEvent, volumeUpPressed = volumeUpPressed, volumeDownPressed = volumeDownPressed, openSettings = openSettings, darkTheme = darkTheme)
         }
     }
 }
@@ -227,7 +229,7 @@ fun BottomNavigation(navController: NavHostController) {
     )
 
     BottomNavigation(
-        backgroundColor = Color.White,
+        backgroundColor = MaterialTheme.colors.onPrimary,
         contentColor = Color(0xFF3F414E)
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()

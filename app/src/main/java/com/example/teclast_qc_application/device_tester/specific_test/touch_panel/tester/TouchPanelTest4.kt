@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
@@ -91,7 +91,7 @@ fun TouchPanelTest4(
     // Initially set the test result to "Fail"
     LaunchedEffect(key1 = "initialTestResult") {
         onEvent(TestResultEvent.SaveTestResult)
-        AddTestResultV2(
+        AddTestResult(
             state = state,
             onEvent = onEvent,
             itemName = "Touch Panel Test 4",
@@ -107,7 +107,7 @@ fun TouchPanelTest4(
             TopAppBar(
                 title = { Text(text = "Touch Test T4") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -125,7 +125,7 @@ fun TouchPanelTest4(
                 override fun onMultiTouch() {
                     // navController.popBackStack()
                     onEvent(TestResultEvent.SaveTestResult)
-                    AddTestResultV2(
+                    AddTestResult(
                         state = state,
                         onEvent = onEvent,
                         "Touch Panel Test 4",

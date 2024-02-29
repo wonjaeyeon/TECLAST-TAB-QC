@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
@@ -27,12 +27,12 @@ fun wifiConnectionTest(
 
     if (isConnectedToWifi) {
         onEvent(TestResultEvent.SaveTestResult)
-        AddTestResultV2(state = state, onEvent = onEvent, "Wifi TEST 1", "Success", Date().toString())
+        AddTestResult(state = state, onEvent = onEvent, "Wifi TEST 1", "Success", Date().toString())
         onEvent(TestResultEvent.SaveTestResult)
         return "Connected to Wi-Fi"
     } else {
         onEvent(TestResultEvent.SaveTestResult)
-        AddTestResultV2(state = state, onEvent = onEvent, "Wifi TEST 1", "Fail", Date().toString())
+        AddTestResult(state = state, onEvent = onEvent, "Wifi TEST 1", "Fail", Date().toString())
         onEvent(TestResultEvent.SaveTestResult)
         return "Not connected to Wi-Fi"
     }

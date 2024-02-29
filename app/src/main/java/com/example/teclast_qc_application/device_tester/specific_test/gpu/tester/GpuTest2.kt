@@ -1,6 +1,6 @@
 package com.example.teclast_qc_application.device_tester.specific_test.gpu.tester
 
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.Dispatchers
@@ -37,14 +37,14 @@ suspend fun gpu3DTest(state: TestResultState,
             egl.eglChooseConfig(display, configAttribs, configs, 1, numConfig)
 
             if (numConfig[0] > 0) {
-                AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST 2", "Success", Date().toString())
+                AddTestResult(state = state, onEvent = onEvent, "GPU TEST 2", "Success", Date().toString())
                 "GPU TEST 2 : Success"
             } else {
-                AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST 2", "Fail", Date().toString())
+                AddTestResult(state = state, onEvent = onEvent, "GPU TEST 2", "Fail", Date().toString())
                 "GPU TEST 2 : Fail : Error: OpenGL ES 2.0 not available"
             }
         } catch (error: Exception) {
-            AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST 2", "Fail", Date().toString())
+            AddTestResult(state = state, onEvent = onEvent, "GPU TEST 2", "Fail", Date().toString())
             "GPU TEST 2 : Fail : Error: ${error.message}"
         }
     }

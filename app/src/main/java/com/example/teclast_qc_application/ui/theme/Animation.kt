@@ -76,7 +76,7 @@ fun AnimatedButton() {
                     true
                 }
         ) {
-            Text(text = "Explore Airbnb", fontSize = 15.sp, color = Color.White)
+            Text(text = "Explore Airbnb", fontSize = 15.sp, color = MaterialTheme.colors.onPrimary)
         }
     }
 

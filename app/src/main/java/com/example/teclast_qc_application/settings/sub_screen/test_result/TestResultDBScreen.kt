@@ -36,7 +36,7 @@ fun TestResultDBScreen(
             TopAppBar(
                 title = { Text(text = "DataBase Screen") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -48,7 +48,10 @@ fun TestResultDBScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = {
+            FloatingActionButton(
+                backgroundColor = Color(0xFF6200EE), // Explicitly set the color here
+                contentColor = Color(0xFFFFFFFF),
+                onClick = {
                 onEvent(TestResultEvent.ShowDialog)
             }) {
                 Icon(
@@ -88,7 +91,10 @@ fun TestResultDBScreen(
                                 selected = state.sortType == sortType,
                                 onClick = {
                                     onEvent(TestResultEvent.SortContacts(sortType))
-                                }
+                                }, colors = RadioButtonDefaults.colors(
+                                    selectedColor = Color.Green,
+                                    unselectedColor = MaterialTheme.colors.onPrimary
+                                )
                             )
                             Text(text = sortType.name)
                         }
@@ -102,13 +108,25 @@ fun TestResultDBScreen(
                     Column(
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text(
-                            text = "${contact.itemName} ${contact.testResult}",
-                            fontSize = 20.sp
-                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = contact.itemName,
+                                fontSize = 20.sp
+                            )
+                            Text(
+                                text = contact.testResult,
+                                fontSize = 20.sp,
+                                color = if (contact.testResult == "Success") Color.Green else Color.Red,
+                            )
+                        }
                         Text(text = contact.testDate, fontSize = 12.sp)
                     }
-                    IconButton(onClick = {
+                    Spacer(modifier = Modifier.width(16.dp))
+                    IconButton(
+                        onClick = {
                         onEvent(TestResultEvent.DeleteTestResult(contact))
                     }) {
                         Icon(

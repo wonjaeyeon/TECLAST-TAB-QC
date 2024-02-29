@@ -38,7 +38,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
             TopAppBar(
                 title = { Text(text = "Touch Panel Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -76,7 +76,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                     text = touchPanelTest1Result.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
@@ -94,7 +94,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                     text = touchPanelTest2Result.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
@@ -113,7 +113,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                     text = touchPanelTest3Result.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
@@ -130,7 +130,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                     text = touchPanelTest4Result.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
                 Button(onClick = {
@@ -142,7 +142,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                     text = touchPanelTest5Result.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
             }

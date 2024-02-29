@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assignment
@@ -12,7 +13,6 @@ import androidx.compose.material.icons.filled.ElectricBolt
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,13 +48,13 @@ fun SenarioTest(context: Context, navController: NavHostController) {
                     Icon(
                         imageVector = button.second,
                         contentDescription = button.first,
-                        tint = Color.White,
+                        tint = MaterialTheme.colors.onPrimary,
                         modifier = Modifier.size(40.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = button.first,
-                        style = TextStyle(fontSize = 30.sp, color = Color.White)
+                        style = TextStyle(fontSize = 30.sp, color = MaterialTheme.colors.onPrimary)
                     )
                 }
             }

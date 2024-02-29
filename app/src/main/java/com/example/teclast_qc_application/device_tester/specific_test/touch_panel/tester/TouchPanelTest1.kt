@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
@@ -54,7 +54,7 @@ fun TouchPanelTest1(
         touchCount.value++
         if (touchCount.value >= 10 && hasNavigated.value == false) {
             onEvent(TestResultEvent.SaveTestResult)
-            AddTestResultV2(
+            AddTestResult(
                 state = state,
                 onEvent = onEvent,
                 "Touch Panel Test 1",
@@ -87,7 +87,7 @@ fun TouchPanelTest1(
             hasNavigated.value = true
         } else {
             onEvent(TestResultEvent.SaveTestResult)
-            AddTestResultV2(
+            AddTestResult(
                 state = state,
                 onEvent = onEvent,
                 "Touch Panel Test 1",
@@ -107,7 +107,7 @@ fun TouchPanelTest1(
             TopAppBar(
                 title = { Text(text = "Touch Test T1") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -129,7 +129,7 @@ fun TouchPanelTest1(
                 text = "Touch Count: ${touchCount.value}/10 times",
                 modifier = Modifier.fillMaxSize(),
                 textAlign = TextAlign.Center,
-                color = Color.White,
+                color = MaterialTheme.colors.onPrimary,
                 style = MaterialTheme.typography.h5
             )
             Canvas(modifier = Modifier

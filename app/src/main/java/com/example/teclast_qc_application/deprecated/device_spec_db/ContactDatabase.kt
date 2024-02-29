@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.test_result.device_spec_db//package com.example.teclast_qc_application.test_result.room_db
+package com.example.teclast_qc_application.deprecated.device_spec_db//package com.example.teclast_qc_application.test_result.room_db
 //
 //import androidx.room.Database
 //import androidx.room.RoomDatabase

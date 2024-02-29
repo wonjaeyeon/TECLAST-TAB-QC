@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
@@ -143,7 +143,7 @@ fun GSensorTestT1(
 
                     onClick = { /* Handle success result */
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "G-Sensor Test 1",
@@ -180,7 +180,7 @@ fun GSensorTestT1(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "G-Sensor Test 1",

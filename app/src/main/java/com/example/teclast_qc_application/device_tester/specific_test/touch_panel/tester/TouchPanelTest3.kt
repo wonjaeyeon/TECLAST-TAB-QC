@@ -61,7 +61,7 @@ fun TouchPanelTest3(
             TopAppBar(
                 title = { Text(text = "Touch Test T3") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(

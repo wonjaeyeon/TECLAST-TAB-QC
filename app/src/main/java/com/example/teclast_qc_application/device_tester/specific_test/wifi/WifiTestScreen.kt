@@ -62,7 +62,7 @@ fun WifiTestScreen(
             TopAppBar(
                 title = { Text(text = "WIFI Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -119,7 +119,7 @@ fun WifiTestScreen(
                     text = connectionStateResult.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
@@ -133,7 +133,7 @@ fun WifiTestScreen(
                     text = wifiDataUsageResult.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
@@ -150,7 +150,7 @@ fun WifiTestScreen(
 //                    text = wifiDataReceivedResult.value,
 //                    style = MaterialTheme.typography.body1,
 //                    textAlign = TextAlign.Center,
-//                    color = Color.White,
+//                    color = MaterialTheme.colors.onPrimary,
 //                    modifier = Modifier.padding(top = 16.dp))
 //                Button(onClick = {
 //                    scope.launch {
@@ -173,7 +173,7 @@ fun WifiTestScreen(
                     text = "Received Message: ${receivedMessage.value}",
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
@@ -191,7 +191,7 @@ fun WifiTestScreen(
                     text = "Received Message: ${httpTestResult.value}",
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
@@ -207,7 +207,7 @@ fun WifiTestScreen(
                     text = wifiSignalStrength.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 

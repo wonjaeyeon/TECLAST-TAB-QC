@@ -1,6 +1,6 @@
 package com.example.teclast_qc_application.device_tester.specific_test.gpu.tester
 
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.Dispatchers
@@ -41,14 +41,14 @@ suspend fun gpuTest1(state: TestResultState,
             val error = egl.eglGetError()
             if (error != EGL10.EGL_SUCCESS) {
 
-                AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST", "Fail", Date().toString())
+                AddTestResult(state = state, onEvent = onEvent, "GPU TEST", "Fail", Date().toString())
                 "Error: EGL error code $error"
             } else {
-                AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST", "Success", Date().toString())
+                AddTestResult(state = state, onEvent = onEvent, "GPU TEST", "Success", Date().toString())
                 "GPU TEST: Success"
             }
         } catch (error: Exception) {
-            AddTestResultV2(state = state, onEvent = onEvent, "GPU TEST", "Fail", Date().toString())
+            AddTestResult(state = state, onEvent = onEvent, "GPU TEST", "Fail", Date().toString())
             "Error: ${error.message}"
         }
     }

@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
@@ -83,7 +83,7 @@ fun TouchPanelTest2(
             // All checkpoints are true, so we can navigate to the next screen
             // navController.popBackStack()
             onEvent(TestResultEvent.SaveTestResult)
-            AddTestResultV2(
+            AddTestResult(
                 state = state,
                 onEvent = onEvent,
                 "Touch Panel Test 2",
@@ -118,7 +118,7 @@ fun TouchPanelTest2(
         } else {
             if (!hasAddedResult.value) {
                 onEvent(TestResultEvent.SaveTestResult)
-                AddTestResultV2(
+                AddTestResult(
                     state = state,
                     onEvent = onEvent,
                     "Touch Panel Test 2",
@@ -137,7 +137,7 @@ fun TouchPanelTest2(
             TopAppBar(
                 title = { Text(text = "Touch Test T2") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(

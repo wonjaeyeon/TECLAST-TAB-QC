@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
@@ -47,7 +47,7 @@ fun LcdTest2(
             TopAppBar(
                 title = { Text(text = "LCD Screen Test T2") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -71,7 +71,7 @@ fun LcdTest2(
 
                     onClick = { /* Handle success result */
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "LCD Test 2",
@@ -108,7 +108,7 @@ fun LcdTest2(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "LCD Test 2",

@@ -38,7 +38,7 @@ fun RomTestScreen(
             TopAppBar(
                 title = { Text(text = "ROM Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -73,7 +73,7 @@ fun RomTestScreen(
                     text = romTestResult.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
