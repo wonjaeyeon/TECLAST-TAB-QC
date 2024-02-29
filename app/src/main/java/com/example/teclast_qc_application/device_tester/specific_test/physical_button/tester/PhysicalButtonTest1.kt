@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.delay
@@ -43,7 +43,7 @@ fun PhysicalButtonTestT1(
         if (volumeUpPressed.value && volumeDownPressed.value) {
             // navController.popBackStack()
             onEvent(TestResultEvent.SaveTestResult)
-            AddTestResultV2(
+            AddTestResult(
                 state = state,
                 onEvent = onEvent,
                 "Physical Button Test 1",
@@ -78,7 +78,7 @@ fun PhysicalButtonTestT1(
                 navController.popBackStack()}
         } else{
             onEvent(TestResultEvent.SaveTestResult)
-            AddTestResultV2(
+            AddTestResult(
                 state = state,
                 onEvent = onEvent,
                 "Physical Button Test 1",

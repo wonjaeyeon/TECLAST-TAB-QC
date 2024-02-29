@@ -46,7 +46,7 @@ fun BatteryTestScreen(
             TopAppBar(
                 title = { Text(text = "Battery Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -81,7 +81,7 @@ fun BatteryTestScreen(
                     text = batteryHealthResult.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
@@ -97,7 +97,7 @@ fun BatteryTestScreen(
                     text = batteryStateOfDevice.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
@@ -112,7 +112,7 @@ fun BatteryTestScreen(
                     text = deviceThermalStateAfterTest.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
             }

@@ -86,6 +86,20 @@ class TestResultViewModel(
                     testDate = event.testDate
                 ) }
             }
+
+            is TestResultEvent.FindbyItemName -> {
+                viewModelScope.launch {
+                    if(dao.countTestResultByItemName(event.itemName) > 0) {
+                        val existingContact = dao.getTestResultByItemName(event.itemName)
+                        _state.update { it.copy(
+                            itemName = existingContact.itemName,
+                            testResult = existingContact.testResult,
+                            testDate = existingContact.testDate
+                        ) }
+                    }
+                }
+            }
+
             TestResultEvent.ShowDialog -> {
                 _state.update { it.copy(
                     isAddingContact = true
@@ -106,6 +120,8 @@ class TestResultViewModel(
             is TestResultEvent.SortContacts -> {
                 _sortType.value = event.sortType
             }
+
+            else -> {}
         }
     }
 }

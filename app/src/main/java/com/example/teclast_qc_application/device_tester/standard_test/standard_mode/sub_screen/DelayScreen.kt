@@ -20,7 +20,7 @@ fun TestScreenScaffold(navController: NavHostController, progress: Float, done: 
             TopAppBar(
                 title = { Text(text = titleText) },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(

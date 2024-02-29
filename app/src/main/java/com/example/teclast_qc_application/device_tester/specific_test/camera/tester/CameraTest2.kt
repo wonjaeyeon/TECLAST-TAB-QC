@@ -29,7 +29,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
@@ -291,7 +291,7 @@ fun CameraTest2(
 
                     onClick = { /* Handle success result */
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "Camera Test 2",
@@ -328,7 +328,7 @@ fun CameraTest2(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "Camera Test 2",

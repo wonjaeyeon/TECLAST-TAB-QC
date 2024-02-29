@@ -1,7 +1,7 @@
 package com.example.teclast_qc_application.device_tester.specific_test.cpu.tester.test_kit
 
 import android.util.Log
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.nio.ByteBuffer
@@ -28,11 +28,11 @@ fun cpuBufferTest(
         buffer.clear()
 
         if (originalData.contentEquals(readData)) {
-            AddTestResultV2(state = state, onEvent = onEvent, "CPU BUFFER TEST", "Success", Date().toString())
+            AddTestResult(state = state, onEvent = onEvent, "CPU BUFFER TEST", "Success", Date().toString())
             Log.i("CPU BUFFER TEST", "Success & ${Date()}")
             "CPU BUFFER TEST: Success"
         } else {
-            AddTestResultV2(state = state, onEvent = onEvent, "CPU BUFFER TEST", "Fail", Date().toString())
+            AddTestResult(state = state, onEvent = onEvent, "CPU BUFFER TEST", "Fail", Date().toString())
             "CPU BUFFER TEST: Failed"
         }
 

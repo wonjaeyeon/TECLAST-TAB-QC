@@ -32,7 +32,7 @@ fun LcdScreenTest(context: Context, navController: NavController, ) {
             TopAppBar(
                 title = { Text(text = "LCD Screen Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -78,7 +78,7 @@ fun LcdScreenTest(context: Context, navController: NavController, ) {
                     text = lcdTestResult.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 

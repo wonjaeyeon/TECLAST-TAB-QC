@@ -28,7 +28,7 @@ fun GSensorTestScreen(context: Context, navController: NavController, ) {
             TopAppBar(
                 title = { Text(text = "G-Sensor Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(

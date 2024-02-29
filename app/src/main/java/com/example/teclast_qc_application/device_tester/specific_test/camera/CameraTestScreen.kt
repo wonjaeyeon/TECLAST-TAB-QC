@@ -33,7 +33,7 @@ fun CameraTestScreen(
             TopAppBar(
                 title = { Text(text = "Camera Screen Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(

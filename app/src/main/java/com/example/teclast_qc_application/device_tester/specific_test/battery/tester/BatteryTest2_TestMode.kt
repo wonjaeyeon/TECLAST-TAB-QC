@@ -17,7 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.delay
@@ -84,7 +84,7 @@ fun BatteryTestTestMode(
                     }
                     if (!hasNavigated.value) {
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "Battery Test 2",
@@ -102,7 +102,7 @@ fun BatteryTestTestMode(
 
                     if (!hasNavigated.value) {
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "Battery Test 2",
@@ -116,7 +116,7 @@ fun BatteryTestTestMode(
 
                     if (!hasNavigated.value) {
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "Battery Test 2",
@@ -139,7 +139,7 @@ fun BatteryTestTestMode(
         BatteryManager.BATTERY_STATUS_DISCHARGING -> {
             if (!hasAddedTestResult.value) {
                 onEvent(TestResultEvent.SaveTestResult)
-                AddTestResultV2(
+                AddTestResult(
                     state = state,
                     onEvent = onEvent,
                     "Battery Test 2",
@@ -156,7 +156,7 @@ fun BatteryTestTestMode(
 
             if (!hasAddedTestResult.value) {
                 onEvent(TestResultEvent.SaveTestResult)
-                AddTestResultV2(
+                AddTestResult(
                     state = state,
                     onEvent = onEvent,
                     "Battery Test 2",

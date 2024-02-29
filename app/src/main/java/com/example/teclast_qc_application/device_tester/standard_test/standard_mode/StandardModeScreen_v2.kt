@@ -29,8 +29,8 @@ fun StandardModeScreen(
 ) {
     var progress by remember { mutableStateOf(0.0f) }
     var testsCompleted by remember { mutableStateOf(false) }
-    // var done is empty list
 
+    // var done is empty list
     val done = remember { mutableStateListOf<String>() }
     val undone = remember {
         mutableStateListOf(
@@ -74,6 +74,7 @@ fun StandardModeScreen(
                 Log.i("StandardModeScreen", "Test Started")
                 onEvent(TestResultEvent.StartTest)
                 Log.i("StandardModeScreen", "Test DataBase is Ready")
+
                 // Cpu Test
                 delay(100L)
                 val cpuTestResult1 = cpuBufferTest(state = state, onEvent = onEvent)

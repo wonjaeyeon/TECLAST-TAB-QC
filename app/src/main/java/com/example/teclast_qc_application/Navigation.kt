@@ -51,8 +51,8 @@ import com.example.teclast_qc_application.device_tester.specific_test.wifi.WifiT
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.WifiTestTestMode
 import com.example.teclast_qc_application.device_tester.standard_test.standard_mode.StandardModeScreen
 import com.example.teclast_qc_application.settings.SettingsScreen
+import com.example.teclast_qc_application.settings.sub_screen.color_theme.ColorThemeModeScreen
 import com.example.teclast_qc_application.settings.sub_screen.test_result.TestResultDBScreen
-import com.example.teclast_qc_application.test_result.ContactScreen
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlin.reflect.KFunction1
@@ -67,6 +67,7 @@ fun navigationGraph(
     volumeUpPressed: MutableState<Boolean>,
     volumeDownPressed: MutableState<Boolean>,
     openSettings: () -> Unit,
+    darkTheme: MutableState<Boolean>
 ) {
 
 //    val navController = rememberNavController()
@@ -85,17 +86,17 @@ fun navigationGraph(
 
     NavHost(navController = navController, startDestination = BottomNavItem.Home.screenRoute) {
         composable(BottomNavItem.Home.screenRoute) {
-            HomeScreen2(context = context)
+            HomeScreen2(context = context, onEvent = onEvent)
         }
         composable(BottomNavItem.Test.screenRoute) {
             TesterScreen2(context = context, navController = navController)
 
         }
         composable(BottomNavItem.Analysis.screenRoute) {
-            LogScreen()
+            LogScreen(context = context, navController = navController)
         }
         composable(BottomNavItem.Settings.screenRoute) {
-            SettingsScreen(context = context, navController = navController)
+            SettingsScreen(context = context, navController = navController, darkTheme = darkTheme)
         }
 
         composable("cpu_test_screen") {
@@ -652,12 +653,12 @@ fun navigationGraph(
             StandardModeScreen(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
-        composable("contract_screen") {
-            ContactScreen(state = state, onEvent = onEvent, navController = navController)
-        }
-
         composable("test_result_db_screen") {
             TestResultDBScreen(state = state, onEvent = onEvent, navController = navController)
+        }
+
+        composable("color_theme_mode_screen") {
+            ColorThemeModeScreen(context = context, navController = navController, darkTheme = darkTheme)
         }
 
     }

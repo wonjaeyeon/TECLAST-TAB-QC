@@ -2,7 +2,7 @@ package com.example.teclast_qc_application
 
 import android.content.Context
 import android.os.BatteryManager
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
@@ -14,10 +14,10 @@ fun batteryTestT1(state: TestResultState,
     val threshold = 80
 
     if (batteryHealth >= threshold) {
-        AddTestResultV2(state = state, onEvent = onEvent, "Battery TEST 1", "Success", Date().toString())
+        AddTestResult(state = state, onEvent = onEvent, "Battery TEST 1", "Success", Date().toString())
         return "Battery TEST : Success : ($batteryHealth/100)"
     } else {
-        AddTestResultV2(state = state, onEvent = onEvent, "Battery TEST 1", "Fail", Date().toString())
+        AddTestResult(state = state, onEvent = onEvent, "Battery TEST 1", "Fail", Date().toString())
         return "Battery TEST : Fail : ($batteryHealth/100)"
     }
 }

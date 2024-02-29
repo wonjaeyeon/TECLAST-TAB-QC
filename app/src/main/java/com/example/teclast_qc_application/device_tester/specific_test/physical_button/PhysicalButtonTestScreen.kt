@@ -28,7 +28,7 @@ fun PhysicalButtonTestScreen(context: Context, navController: NavController) {
             TopAppBar(
                 title = { Text(text = "Physical Button Test") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -66,7 +66,7 @@ fun PhysicalButtonTestScreen(context: Context, navController: NavController) {
                     text = ramTestResult.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
-                    color = Color.White,
+                    color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
 

@@ -21,11 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber_v2
 import com.example.teclast_qc_application.home.device_spec.*
+import com.example.teclast_qc_application.home.test_report.TestReportList
 import com.example.teclast_qc_application.test_result.createReportFile
 import com.example.teclast_qc_application.test_result.deleteReportFile
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 
 @Composable
-fun HomeScreen2(context: Context) {
+fun HomeScreen2(context: Context, onEvent: (TestResultEvent) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -42,16 +44,18 @@ fun HomeScreen2(context: Context) {
                 text = "State Report",
                 style = MaterialTheme.typography.h6,
                 textAlign = TextAlign.Left,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp),
+                color = MaterialTheme.colors.onPrimary
+
             )
-            ShowDeviceSpecs2(context)
+            ShowDeviceSpecs2(context, onEvent = onEvent)
         }
     }
 }
 
 
 @Composable
-fun ShowDeviceSpecs2(context: Context) {
+fun ShowDeviceSpecs2(context: Context, onEvent: (TestResultEvent) -> Unit) {
     val tableData_DeviceSpec = listOf(
         "Serial" to getDeviceSerialNumber_v2(),
         "MAC Address" to getMac(context),
@@ -75,24 +79,7 @@ fun ShowDeviceSpecs2(context: Context) {
         "FINGERPRINT" to Build.FINGERPRINT,
     )
 
-    val tableData_StateReport = listOf(
-        "CPU" to "PASS",
-        "GPU" to "PASS",
-        "RAM" to "PASS",
-        "Storage" to "PASS",
-        "Battery" to "PASS",
-        "USB" to "PASS",
-        "Bluetooth" to "FAIL",
-        "Wifi" to "PASS",
-        "Camera" to "PASS",
-        "Screen" to "FAIL",
-        "Speaker" to "PASS",
-        "Microphone" to "PASS",
-        "Vibrator" to "PASS",
-        "GPS" to "PASS",
-        "Auto-Sleep" to "FAIL",
-        "Brightness" to "PASS",
-    )
+    val tableData_StateReport = TestReportList(context, onEvent = onEvent)
     var selectedOption = "Device Specs"
     var selectedTableData = tableData_DeviceSpec
     var column2Text = "State Report"
@@ -107,13 +94,18 @@ fun ShowDeviceSpecs2(context: Context) {
         Row(Modifier.fillMaxWidth().align(Alignment.CenterHorizontally).height(IntrinsicSize.Min)) {
             selectedOption = TriStateToggle()
             Spacer(modifier = Modifier.weight(1f))
-            IconButton(onClick = {
-                createReportFile(context)
-                if (selectedOption == "Test Report") {
-                    Toast.makeText(context, "Report Saved", Toast.LENGTH_SHORT).show()
-                }
-            }) {
-                Icon(Icons.Rounded.Save, contentDescription = "Save Report")
+            IconButton(
+                onClick = {
+                    createReportFile(context)
+                    if (selectedOption == "Test Report") {
+                        Toast.makeText(context, "Report Saved", Toast.LENGTH_SHORT).show()
+                    }
+                }) {
+                Icon(
+                    Icons.Rounded.Save,
+                    contentDescription = "Save Report",
+                    tint = MaterialTheme.colors.onSecondary
+                )
             }
             if (selectedOption == "Test Report") {
                 IconButton(onClick = {
@@ -121,13 +113,15 @@ fun ShowDeviceSpecs2(context: Context) {
                     deleteReportFile(context)
                     Toast.makeText(context, "Report Deleted", Toast.LENGTH_SHORT).show()
                 }) {
-                    Icon(Icons.Rounded.Delete, contentDescription = "Delete Report")
+                    Icon(Icons.Rounded.Delete, contentDescription = "Delete Report",
+                        tint = MaterialTheme.colors.onSecondary)
 
                 }
             }
 
             IconButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Filled.Share, contentDescription = "Localized description")
+                Icon(Icons.Filled.Share, contentDescription = "Localized description",
+                    tint = MaterialTheme.colors.onSecondary)
             }
         }
 
@@ -172,7 +166,8 @@ fun RowScope.TableCell(
             .border(1.dp, Color.Transparent)
             .weight(weight)
             .fillMaxHeight() // Ensuring that TableCell fills the maximum available height
-            .padding(8.dp)
+            .padding(8.dp),
+        color = MaterialTheme.colors.onPrimary
     )
 }
 
@@ -195,7 +190,8 @@ fun TriStateToggle(): String {
         shape = RoundedCornerShape(24.dp),
         elevation = 4.dp,
         modifier = Modifier
-            .wrapContentSize()
+            .wrapContentSize(),
+        color = MaterialTheme.colors.secondary
     ) {
         Row {
             states.forEach { text ->

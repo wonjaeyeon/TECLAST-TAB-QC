@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultV2
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
@@ -35,7 +35,7 @@ fun LcdTest1(
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
-    val colors = listOf(Color.Red, Color.Green, Color.Blue, Color.White, Color.Black)
+    val colors = listOf(Color.Red, Color.Green, Color.Blue, MaterialTheme.colors.onPrimary, Color.Black)
     var colorIndex by remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
     Scaffold(
@@ -44,7 +44,7 @@ fun LcdTest1(
             TopAppBar(
                 title = { Text(text = "LCD Screen Test T1") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = Color.White,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -69,7 +69,7 @@ fun LcdTest1(
 
                     onClick = { /* Handle success result */
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "LCD Test 1",
@@ -106,7 +106,7 @@ fun LcdTest1(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
                         onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResultV2(
+                        AddTestResult(
                             state = state,
                             onEvent = onEvent,
                             "LCD Test 1",
