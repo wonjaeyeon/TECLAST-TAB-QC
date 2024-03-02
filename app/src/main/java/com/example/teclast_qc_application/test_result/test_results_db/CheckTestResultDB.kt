@@ -1,17 +1,18 @@
 package com.example.teclast_qc_application.test_result.test_results_db
 
-import android.util.Log
-
-fun CheckTestResultDB(
+fun CheckTestResultDB (
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     itemName: String = ""
-) {
-    // Check the test result from the database
-    onEvent(TestResultEvent.FindbyItemName(itemName))
-    when (state) {
-        is TestResultState -> {
-            Log.i("CheckTestResultDB", "${state.testResults}")
+): String {
+    val testResult = state.testResults.filter { it.itemName.contains(itemName) }
+    if (testResult.isEmpty()) {
+        return "No Test Result"
+    }
+    for (result in testResult) {
+        if (result.testResult == "Fail") {
+            return "FAIL"
         }
     }
+    return "PASS"
 }

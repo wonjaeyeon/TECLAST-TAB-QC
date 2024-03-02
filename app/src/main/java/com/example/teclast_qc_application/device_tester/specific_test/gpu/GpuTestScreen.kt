@@ -17,11 +17,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.checkDeviceThermalStatus
+import com.example.teclast_qc_application.device_tester.specific_test.device_thermal.tester.checkDeviceThermalStatus
+
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.gpu3DTest
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.gpuTest1
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
@@ -43,7 +43,6 @@ fun GpuTestScreen(
     val deviceThermalAfterTestState = remember { mutableStateOf<String>("") }
 
     Scaffold(
-
         topBar = {
             TopAppBar(
                 title = { Text(text = "GPU Test") },
@@ -58,7 +57,6 @@ fun GpuTestScreen(
                     }
                 }
             )
-
         }
     ) {
         Box(
@@ -121,7 +119,6 @@ fun GpuTestScreen(
                     color = MaterialTheme.colors.onPrimary,
                     modifier = Modifier.padding(top = 16.dp)
                 )
-
 
             }
         }

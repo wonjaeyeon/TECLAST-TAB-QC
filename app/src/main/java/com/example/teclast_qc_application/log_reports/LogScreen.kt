@@ -2,12 +2,13 @@ package com.example.teclast_qc_application
 
 import android.content.Context
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,11 +27,14 @@ import java.io.InputStreamReader
 @Composable
 fun LogScreen(context: Context, navController: NavHostController) {
 
-    var selectedOption = "Show Logs"
+    var selectedOption = ""
+
+    val isScreenEntered = remember { mutableStateOf(true) }
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(horizontal = 16.dp)
+        modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()
     ) {
         val logText = remember { mutableStateOf(AnnotatedString("")) }
         val logTextString = remember { mutableStateOf("") }
@@ -43,36 +47,24 @@ fun LogScreen(context: Context, navController: NavHostController) {
             modifier = Modifier.padding(bottom = 16.dp),
             color = MaterialTheme.colors.onPrimary
         )
-        Row(
-            Modifier.fillMaxWidth(),
-        ) {
-
-            Button(
-                //modifier = Modifier.bounceEffect(),
-                interactionSource = remember { MutableInteractionSource() },
-                onClick = { logText.value = fetchAndHighlightErrorLogs() }) {
-
-
-                Text(text = "Show Logs")
-            }
-            // make a litte space
-            Spacer(modifier = Modifier.width(16.dp))
-            Button(
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red, contentColor = MaterialTheme.colors.onPrimary),
-                onClick = {}) {
-
-                Text(text = "only error")
-            }
-
-            Button(
-                //modifier = Modifier.bounceEffect(),
-                interactionSource = remember { MutableInteractionSource() },
-                onClick = {
+        selectedOption = LogVersionToggle()
+        Spacer(modifier = Modifier.height(8.dp))
+        when (selectedOption) {
+            "Show All" -> {
+                if (isScreenEntered.value) {
+                    isScreenEntered.value = false
+                } else {
+                    logText.value = fetchAndHighlightErrorLogs()
                 }
-            ) {
-                Text(text = "Bug Report")
+
             }
 
+            "Info" -> logText.value = AnnotatedString("Info logs")
+            "Warning" -> logText.value = AnnotatedString("Warning logs")
+            "Error" -> logText.value = AnnotatedString("Error logs")
+            "Debug" -> logText.value = AnnotatedString("Debug logs")
+            "Verbose" -> logText.value = AnnotatedString("Verbose logs")
+            else -> logText.value = AnnotatedString("Select a log type")
         }
 
 
@@ -90,7 +82,11 @@ fun LogScreen(context: Context, navController: NavHostController) {
 fun LogVersionToggle(): String {
     val states = listOf(
         "Show All",
-        ""
+        "Info",
+        "Warning",
+        "Error",
+        "Debug",
+        "Verbose"
     )
     var selectedOption by remember {
         mutableStateOf(states[0])
@@ -138,8 +134,15 @@ private fun fetchAndHighlightErrorLogs(): AnnotatedString {
     //Runtime.getRuntime().exec("logcat -c") // Clear the logcat buffer
 
     return try {
+        //val process = Runtime.getRuntime().exec("ps")
         //val process = Runtime.getRuntime().exec("logcat -d")
-        val process = Runtime.getRuntime().exec("logcat -d")
+        //val process = Runtime.getRuntime().exec("procrank")
+        // val process = Runtime.getRuntime().exec("logcat -v time -d")
+        // val process = Runtime.getRuntime().exec("cat /proc/cpuinfo")
+        //val process = Runtime.getRuntime().exec("cat /proc/meminfo")
+        // val process = Runtime.getRuntime().exec("vmstat")
+         val process = Runtime.getRuntime().exec(" logcat -b system -d")
+        //val process = Runtime.getRuntime().exec("dmesg")
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
 
         buildAnnotatedString {

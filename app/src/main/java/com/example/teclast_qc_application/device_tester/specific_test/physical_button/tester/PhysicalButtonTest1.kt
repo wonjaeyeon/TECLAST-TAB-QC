@@ -72,11 +72,12 @@ fun PhysicalButtonTestT1(
                 navController.navigate(nextRouteWithArguments)
             } else if (runningTestMode)
                 onTestComplete()
-            else{
+            else {
                 Log.i("MyTag:PhysicalButtonTestT1", "delay(1000)")
                 delay(1000)
-                navController.popBackStack()}
-        } else{
+                navController.popBackStack()
+            }
+        } else {
             onEvent(TestResultEvent.SaveTestResult)
             AddTestResult(
                 state = state,
@@ -100,7 +101,9 @@ fun PhysicalButtonTestT1(
                             contentDescription = "Back"
                         )
                     }
-                }
+                },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+                contentColor = MaterialTheme.colors.onPrimary,
             )
         },
 

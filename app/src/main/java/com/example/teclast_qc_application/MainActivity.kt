@@ -1,6 +1,8 @@
 package com.example.teclast_qc_application
 
 import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -25,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
@@ -42,13 +45,42 @@ import com.example.teclast_qc_application.test_result.test_results_db.TestResult
 import com.example.teclast_qc_application.ui.theme.MyApplicationTheme
 import kotlin.reflect.KFunction1
 
-//check jy_24_feb_20 branch is well-made _ 11:17
+private const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
+
+private fun foregroundPermissionApproved(context: Context): Boolean {
+    val writePermissionFlag = PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+        context, Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
+    val readPermissionFlag = PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+        context, Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+
+    return writePermissionFlag && readPermissionFlag
+}
+
+private fun requestForegroundPermission(context: Context) {
+    val provideRationale = foregroundPermissionApproved(context = context)
+    if (provideRationale) {
+        ActivityCompat.requestPermissions(
+            context as Activity,
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+            REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE
+        )
+    } else {
+        ActivityCompat.requestPermissions(
+            context as Activity,
+            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
+            REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE
+        )
+    }
+}
+
+//check jy_24_feb_29 branch is well-made
 // check if I changed all right
 class MainActivity : ComponentActivity() {
     val VolumeUpPressed = mutableStateOf(false)
     val VolumeDownPressed = mutableStateOf(false)
     val IsDarkTheme = mutableStateOf(true)
-
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -59,8 +91,6 @@ class MainActivity : ComponentActivity() {
                 throw Error("Permission denied")
             }
         }
-
-
 
     private val db by lazy {
         Room.databaseBuilder(
@@ -111,10 +141,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // when deleting Database, uncomment below
-        //deleteDatabase("testResults_v3.db")
+        // deleteDatabase("testResult.db")
 
 
         setContent {
+            val context = LocalContext.current
+            requestForegroundPermission(context)
+
             MyApplicationTheme (darkTheme = IsDarkTheme.value){
                 val state by viewModel.state.collectAsState()
                 MainScreenView(context = this,state = state, onEvent = viewModel::onEvent, volumeUpPressed = VolumeUpPressed, volumeDownPressed = VolumeDownPressed, openSettings = this::openSettings, darkTheme = IsDarkTheme)
@@ -164,6 +197,8 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
     //read external storage 권한 요청
 //    private fun requestReadExternalStoragePermission() {
 //        when {

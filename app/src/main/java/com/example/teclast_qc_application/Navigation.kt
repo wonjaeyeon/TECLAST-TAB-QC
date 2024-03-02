@@ -86,7 +86,7 @@ fun navigationGraph(
 
     NavHost(navController = navController, startDestination = BottomNavItem.Home.screenRoute) {
         composable(BottomNavItem.Home.screenRoute) {
-            HomeScreen2(context = context, onEvent = onEvent)
+            HomeScreen2(state = state, context = context, onEvent = onEvent)
         }
         composable(BottomNavItem.Test.screenRoute) {
             TesterScreen2(context = context, navController = navController)

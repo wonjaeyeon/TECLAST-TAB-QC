@@ -34,7 +34,7 @@ fun SettingsScreen(
         ListItem(
             1,
             "Color Theme Mode",
-            if(darkTheme.value) "Dark Mode" else "Light Mode",
+            if (darkTheme.value) "Dark Mode" else "Light Mode",
             Icons.Filled.Brush,
             "color_theme_mode_screen"
         ), // Icons.Filled.ArrowForwardIos
@@ -52,7 +52,13 @@ fun SettingsScreen(
             Icons.Filled.Storage,
             "test_result_db_screen"
         ),
-        ListItem(4, "Emergency Tool Kit", "Emergency Tool Kit", Icons.Filled.Construction, "emergency_tool_kit_screen"),
+        ListItem(
+            4,
+            "Emergency Tool Kit",
+            "Emergency Tool Kit",
+            Icons.Filled.Construction,
+            "emergency_tool_kit_screen"
+        ),
         ListItem(
             5,
             "Developer Profile",
@@ -134,7 +140,11 @@ fun ListItem(item: ListItem, navController: NavHostController) {
                     style = MaterialTheme.typography.h6,
                     color = MaterialTheme.colors.onPrimary
                 )
-                Text(text = item.subtitle, style = MaterialTheme.typography.body2, color = MaterialTheme.colors.onSurface)
+                Text(
+                    text = item.subtitle,
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.onSurface
+                )
             }
 //            IconButton(
 //                onClick = {}

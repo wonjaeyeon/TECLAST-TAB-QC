@@ -47,7 +47,9 @@ fun FlashLightTestTestMode(
                             contentDescription = "Back"
                         )
                     }
-                }
+                },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+                contentColor = MaterialTheme.colors.onPrimary,
             )
         },
         floatingActionButton = {

@@ -30,6 +30,8 @@ class TestResultViewModel(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TestResultState())
 
+    // TODO : 여기에 이전에 어떤 항목을 추가했는지에 대한 기억 변수를 만들고 만약 이전에 추가한 적이 있다면 다시 추가 안 하도록 로직을 추가하면 되지 않을까?
+
     fun onEvent(event: TestResultEvent) {
         when(event) {
             is TestResultEvent.DeleteTestResult -> {
@@ -87,18 +89,6 @@ class TestResultViewModel(
                 ) }
             }
 
-            is TestResultEvent.FindbyItemName -> {
-                viewModelScope.launch {
-                    if(dao.countTestResultByItemName(event.itemName) > 0) {
-                        val existingContact = dao.getTestResultByItemName(event.itemName)
-                        _state.update { it.copy(
-                            itemName = existingContact.itemName,
-                            testResult = existingContact.testResult,
-                            testDate = existingContact.testDate
-                        ) }
-                    }
-                }
-            }
 
             TestResultEvent.ShowDialog -> {
                 _state.update { it.copy(

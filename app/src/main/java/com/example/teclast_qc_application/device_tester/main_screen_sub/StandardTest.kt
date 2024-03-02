@@ -8,10 +8,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Assignment
-import androidx.compose.material.icons.filled.ElectricBolt
-import androidx.compose.material.icons.filled.SmartDisplay
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,17 +15,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.teclast_qc_application.device_tester.main_screen_sub.test_filter.filterTestMode
 import com.example.teclast_qc_application.ui.theme.ButtonWithJYEffect
 
 @Composable
 fun StandardTest(context: Context, navController: NavHostController) {
-    val buttons = listOf(
-        Pair("Standard Mode", Icons.Filled.Assignment),
-        Pair("Fast Mode", Icons.Filled.ElectricBolt),
-        Pair("T-Order Mode", Icons.Filled.SmartDisplay),
-        Pair("SCSPRO Mode", Icons.Filled.SmartDisplay)
-    )
-
+    val buttons = filterTestMode()
 
 
     LazyVerticalGrid(

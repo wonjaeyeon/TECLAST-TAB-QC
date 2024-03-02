@@ -13,5 +13,4 @@ sealed interface TestResultEvent {
     data class SortContacts(val sortType: SortType): TestResultEvent
     data class DeleteTestResult(val contact: TestResult): TestResultEvent
 
-    data class FindbyItemName(val itemName: String): TestResultEvent
 }
