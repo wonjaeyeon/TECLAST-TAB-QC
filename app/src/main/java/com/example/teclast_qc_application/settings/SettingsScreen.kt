@@ -5,13 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Brush
-import androidx.compose.material.icons.filled.Construction
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.runtime.Composable
@@ -38,13 +34,13 @@ fun SettingsScreen(
             Icons.Filled.Brush,
             "color_theme_mode_screen"
         ), // Icons.Filled.ArrowForwardIos
-        ListItem(
-            2,
-            "Device Info DB",
-            "Only User With Authority Allowed",
-            Icons.Filled.Storage,
-            "device_info_db_screen"
-        ),
+//        ListItem(
+//            2,
+//            "Device Info DB",
+//            "Only User With Authority Allowed",
+//            Icons.Filled.Storage,
+//            "device_info_db_screen"
+//        ),
         ListItem(
             3,
             "Test Result DB(for Beta Test)",
@@ -52,13 +48,13 @@ fun SettingsScreen(
             Icons.Filled.Storage,
             "test_result_db_screen"
         ),
-        ListItem(
-            4,
-            "Emergency Tool Kit",
-            "Emergency Tool Kit",
-            Icons.Filled.Construction,
-            "emergency_tool_kit_screen"
-        ),
+//        ListItem(
+//            4,
+//            "Emergency Tool Kit",
+//            "Emergency Tool Kit",
+//            Icons.Filled.Construction,
+//            "emergency_tool_kit_screen"
+//        ),
         ListItem(
             5,
             "Developer Profile",
@@ -119,7 +115,8 @@ fun ListItem(item: ListItem, navController: NavHostController) {
                 e.printStackTrace()
             }
 
-        }
+        },
+        elevation = ButtonDefaults.elevation(0.dp, 0.dp, 0.dp)
     ) {
         Row(
             modifier = Modifier

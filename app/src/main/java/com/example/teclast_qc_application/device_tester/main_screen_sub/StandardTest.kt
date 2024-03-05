@@ -22,7 +22,6 @@ import com.example.teclast_qc_application.ui.theme.ButtonWithJYEffect
 fun StandardTest(context: Context, navController: NavHostController) {
     val buttons = filterTestMode()
 
-
     LazyVerticalGrid(
         columns = GridCells.Adaptive(200.dp),
         contentPadding = PaddingValues(8.dp)
@@ -30,7 +29,6 @@ fun StandardTest(context: Context, navController: NavHostController) {
         items(buttons.size) { index ->
             val button = buttons[index]
             ButtonWithJYEffect(
-
                 onClick = {
                     try {
                         navController.navigate("${button.first.lowercase().replace(" ", "_")}_screen")

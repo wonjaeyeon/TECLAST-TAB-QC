@@ -15,6 +15,9 @@ interface TestResultDao {
     @Delete
     suspend fun deleteTestResult(contact: TestResult)
 
+    @Query("DELETE FROM testResult")
+    suspend fun deleteAllTestResults()
+
     @Query("SELECT * FROM testResult ORDER BY itemName ASC")
     fun getTestResultsOrderedByFirstName(): Flow<List<TestResult>>
 
@@ -29,6 +32,26 @@ interface TestResultDao {
 
     @Query("SELECT * FROM testResult WHERE itemName = :itemName LIMIT 1")
     suspend fun getTestResultByItemName(itemName: String): TestResult
+
+
+    @Query("SELECT itemName FROM testResult GROUP BY itemName HAVING COUNT(*) > 2")
+    suspend fun getItemNamesWithMoreThanTwoEntries(): List<String>
+
+    @Query("SELECT id FROM testResult WHERE itemName = :itemName ORDER BY testDate DESC LIMIT -1 OFFSET 1")
+    suspend fun getIdsForDeletion(itemName: String): List<Long>
+
+    @Query("DELETE FROM testResult WHERE id IN (:ids)")
+    suspend fun deleteTestResultsByIds(ids: List<Long>)
+
+    suspend fun cleanUpPreviousTestResults() {
+        val itemNames = getItemNamesWithMoreThanTwoEntries()
+        itemNames.forEach { itemName ->
+            val idsToDelete = getIdsForDeletion(itemName)
+            if (idsToDelete.isNotEmpty()) {
+                deleteTestResultsByIds(idsToDelete)
+            }
+        }
+    }
 }
 
 

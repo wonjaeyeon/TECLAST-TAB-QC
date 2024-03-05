@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -38,7 +37,7 @@ fun CpuTestScreen(
 ) {
 
     // Create a mutable state for battery health result
-    val cpuBurningTest1Result = remember { mutableStateOf<String>("") }
+    val cpuBurnInTest1Result = remember { mutableStateOf<String>("") }
     val cpuTest1Result = remember { mutableStateOf<String>("") }
     val cpuTest2Result = remember { mutableStateOf<String>("") }
     val deviceThermalState = remember { mutableStateOf<String>("") }
@@ -81,14 +80,14 @@ fun CpuTestScreen(
 //                        val timeoutMillis = 1000L  // 1 second
 //                        cpuBurningTest1Result.value = CpuBurningTest(1000, timeoutMillis).start()
                         runBlocking {
-                            cpuBurningTest1Result.value = CpuBurnInTest(state = state, onEvent = onEvent,2000L, this)
+                            cpuBurnInTest1Result.value = CpuBurnInTest(state = state, onEvent = onEvent,500L, 16600,this)
                         }
                     }
                 ) {
-                    Text(text = "CPU Burning Test")
+                    Text(text = "CPU Burn-In Test")
                 }
                 Text(
-                    text = cpuBurningTest1Result.value,
+                    text = cpuBurnInTest1Result.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center
                 )

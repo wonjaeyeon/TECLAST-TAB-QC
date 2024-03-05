@@ -8,9 +8,17 @@ sealed interface TestResultEvent {
     object ShowDialog: TestResultEvent
     object HideDialog: TestResultEvent
 
+    object ShowDeleteAllDialog: TestResultEvent
+
+    object HideDeleteAllDialog: TestResultEvent
+
     object StartTest: TestResultEvent
     object EndTest: TestResultEvent
     data class SortContacts(val sortType: SortType): TestResultEvent
     data class DeleteTestResult(val contact: TestResult): TestResultEvent
+
+    object DeleteAllTestResults: TestResultEvent
+
+    object ClearPreviousTestResults: TestResultEvent
 
 }

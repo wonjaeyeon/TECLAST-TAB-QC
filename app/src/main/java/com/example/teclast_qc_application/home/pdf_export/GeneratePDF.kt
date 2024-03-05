@@ -26,7 +26,7 @@ fun generatePDF(context: Context, directory: File) {
     val myPage = pdfDocument.startPage(myPageInfo)
     val canvas: Canvas = myPage.canvas
     val bitmap: Bitmap? = drawableToBitmap(context.resources.getDrawable(R.drawable.teclast_korea))
-    val scaleBitmap: Bitmap? = Bitmap.createScaledBitmap(bitmap!!, 120, 120, false)
+    val scaleBitmap: Bitmap? = Bitmap.createScaledBitmap(bitmap!!, 60, 60, false)
     canvas.drawBitmap(scaleBitmap!!, 40f, 40f, paint)
     title.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
     title.textSize = 15f
@@ -39,7 +39,8 @@ fun generatePDF(context: Context, directory: File) {
     title.textAlign = Paint.Align.CENTER
     canvas.drawText("This is sample document which we have created.", 396f, 560f, title)
     pdfDocument.finishPage(myPage)
-    val file = File(directory, "sample.pdf")
+
+    val file = File(directory, "Test_Report.pdf")
 
     try {
         pdfDocument.writeTo(FileOutputStream(file))

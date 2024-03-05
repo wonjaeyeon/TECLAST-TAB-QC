@@ -39,12 +39,12 @@ class TestResultViewModel(
                     dao.deleteTestResult(event.contact)
                 }
             }
-            TestResultEvent.HideDialog -> {
+            is TestResultEvent.HideDialog -> {
                 _state.update { it.copy(
                     isAddingContact = false
                 ) }
             }
-            TestResultEvent.SaveTestResult -> {
+            is TestResultEvent.SaveTestResult -> {
                 val firstName = state.value.itemName
                 val lastName = state.value.testResult
                 val phoneNumber = state.value.testDate
@@ -90,18 +90,30 @@ class TestResultViewModel(
             }
 
 
-            TestResultEvent.ShowDialog -> {
+            is TestResultEvent.ShowDialog -> {
                 _state.update { it.copy(
                     isAddingContact = true
                 ) }
             }
 
-            TestResultEvent.StartTest -> {
+            is TestResultEvent.ShowDeleteAllDialog -> {
+                _state.update { it.copy(
+                    isDeletingAllContacts = true
+                ) }
+            }
+
+            is TestResultEvent.HideDeleteAllDialog -> {
+                _state.update { it.copy(
+                    isDeletingAllContacts = false
+                ) }
+            }
+
+            is TestResultEvent.StartTest -> {
                 _state.update { it.copy(
                     isAddingContact = true
                 ) }
             }
-            TestResultEvent.EndTest -> {
+            is TestResultEvent.EndTest -> {
                 _state.update { it.copy(
                     isAddingContact = false
                 ) }
@@ -109,6 +121,18 @@ class TestResultViewModel(
 
             is TestResultEvent.SortContacts -> {
                 _sortType.value = event.sortType
+            }
+
+            is TestResultEvent.DeleteAllTestResults -> {
+                viewModelScope.launch {
+                    dao.deleteAllTestResults()
+                }
+            }
+
+            is TestResultEvent.ClearPreviousTestResults -> {
+                viewModelScope.launch {
+                    dao.cleanUpPreviousTestResults()
+                }
             }
 
             else -> {}

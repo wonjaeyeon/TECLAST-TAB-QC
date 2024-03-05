@@ -11,14 +11,14 @@ import kotlin.system.measureTimeMillis
 
 suspend fun CpuBurnInTest(
     state: TestResultState,
-    onEvent: (TestResultEvent) -> Unit, timeoutMillis: Long, scope: CoroutineScope
+    onEvent: (TestResultEvent) -> Unit, timeoutMillis: Long,countNumber: Int, scope: CoroutineScope
 ): String {
     var result = ""
 
     scope.launch {
         val timeTaken = measureTimeMillis {
             withTimeoutOrNull(timeoutMillis) {
-                findPrimesUpTo(50000)
+                findPrimesUpTo(countNumber)
             }
         }
 

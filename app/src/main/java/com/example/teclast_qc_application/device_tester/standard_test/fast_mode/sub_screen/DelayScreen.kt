@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.standard_test.standard_mode.sub_screen
+package com.example.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun StandardModeTestScreenScaffold(navController: NavHostController, progress: Float, done: List<String>, undone: List<String>, titleText: String = "TESTING Test", content: @Composable () -> Unit) {
+fun FastModeTestScreenScaffold(navController: NavHostController, progress: Float, done: List<String>, undone: List<String>, titleText: String = "TESTING Test", content: @Composable () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(

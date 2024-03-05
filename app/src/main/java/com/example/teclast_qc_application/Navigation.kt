@@ -49,7 +49,11 @@ import com.example.teclast_qc_application.device_tester.specific_test.vibration.
 import com.example.teclast_qc_application.device_tester.specific_test.vibration.tester.VibrationTestTestMode
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.WifiTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.WifiTestTestMode
+import com.example.teclast_qc_application.device_tester.standard_test.fast_mode.FastModeScreen
+import com.example.teclast_qc_application.device_tester.standard_test.fast_mode.FastModeScreen_2
+import com.example.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen.FastTestCompletedScreen
 import com.example.teclast_qc_application.device_tester.standard_test.standard_mode.StandardModeScreen
+import com.example.teclast_qc_application.device_tester.standard_test.standard_mode.sub_screen.StandardTestCompletedScreen
 import com.example.teclast_qc_application.settings.SettingsScreen
 import com.example.teclast_qc_application.settings.sub_screen.color_theme.ColorThemeModeScreen
 import com.example.teclast_qc_application.settings.sub_screen.test_result.TestResultDBScreen
@@ -67,7 +71,8 @@ fun navigationGraph(
     volumeUpPressed: MutableState<Boolean>,
     volumeDownPressed: MutableState<Boolean>,
     openSettings: () -> Unit,
-    darkTheme: MutableState<Boolean>
+    darkTheme: MutableState<Boolean>,
+    onExitApp : () -> Unit
 ) {
 
 //    val navController = rememberNavController()
@@ -603,8 +608,34 @@ fun navigationGraph(
             GPSTestScreen(context = context, navController = navController)
         }
 
-        composable("gps_test_t1_screen") {
-            GPSTestT1(state = state, onEvent = onEvent, context = context, navController = navController)
+        composable(
+            "gps_test_t1_screen/{nextTestRoute}",
+            arguments = listOf(navArgument("nextTestRoute") {
+                type = NavType.StringType
+            })
+        ) {
+            if (it.arguments?.getString("nextTestRoute") == "notNextTest") {
+                GPSTestT1(
+                    state = state,
+                    onEvent = onEvent,
+                    context = context,
+                    navController = navController
+                )
+            } else {
+                val nextTestRoute = it.arguments?.getString("nextTestRoute")
+                //split nextTestRoute to get the test name
+                val nextTestName = nextTestRoute!!.split("->")
+                val nextTestNameList = nextTestName!!.toMutableList()
+                nextTestNameList.add(0, "gps_test_t1_screen")
+                Log.i("nextTestName2", nextTestNameList.toString())
+                GPSTestT1(
+                    state = state, onEvent = onEvent,
+                    context = context,
+                    navController = navController,
+                    navigateToNextTest = true,
+                    nextTestRoute = nextTestNameList
+                )
+            }
         }
 
         composable("g_sensor_test_screen") {
@@ -653,6 +684,25 @@ fun navigationGraph(
             StandardModeScreen(state = state, onEvent = onEvent, context = context, navController = navController)
         }
 
+        composable("standard_test_completed_screen") {
+            StandardTestCompletedScreen(context = context, navController = navController,onExitApp = onExitApp)
+        }
+
+        //Fast Mode Test
+        composable("fast_mode_screen") {
+            FastModeScreen(state = state, onEvent = onEvent, context = context, navController = navController)
+        }
+
+        composable("fast_mode_screen_2") {
+            FastModeScreen_2(state = state, onEvent = onEvent, context = context, navController = navController)
+        }
+
+        composable("fast_test_completed_screen") {
+            FastTestCompletedScreen(context = context, navController = navController, onEvent = onEvent,onExitApp = onExitApp)
+        }
+
+
+
         composable("test_result_db_screen") {
             TestResultDBScreen(state = state, onEvent = onEvent, navController = navController)
         }
@@ -660,6 +710,7 @@ fun navigationGraph(
         composable("color_theme_mode_screen") {
             ColorThemeModeScreen(context = context, navController = navController, darkTheme = darkTheme)
         }
+
 
     }
 }

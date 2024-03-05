@@ -38,10 +38,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import com.example.teclast_qc_application.test_result.test_results_db.TestResultDatabase
-import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
-import com.example.teclast_qc_application.test_result.test_results_db.TestResultViewModel
+import com.example.teclast_qc_application.test_result.test_results_db.*
 import com.example.teclast_qc_application.ui.theme.MyApplicationTheme
 import kotlin.reflect.KFunction1
 
@@ -248,8 +245,11 @@ fun MainScreenView(context: MainActivity, state: TestResultState, onEvent: KFunc
 
         bottomBar = { BottomNavigation(navController = navController) }
     ) {
+
+
         Box(Modifier.padding(it)){
-            navigationGraph(context = context,navController = navController, state = state, onEvent = onEvent, volumeUpPressed = volumeUpPressed, volumeDownPressed = volumeDownPressed, openSettings = openSettings, darkTheme = darkTheme)
+
+            navigationGraph(context = context,navController = navController, state = state, onEvent = onEvent, volumeUpPressed = volumeUpPressed, volumeDownPressed = volumeDownPressed, openSettings = openSettings, darkTheme = darkTheme, onExitApp = {context.finishAndRemoveTask()})
         }
     }
 }

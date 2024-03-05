@@ -6,6 +6,7 @@ data class TestResultState(
     val testResult: String = "",
     val testDate: String = "",
     val isAddingContact: Boolean = false,
+    val isDeletingAllContacts: Boolean = false,
     val isTestModeRunning: Boolean = false,
     val sortType: SortType = SortType.ITEM_NAME
 )

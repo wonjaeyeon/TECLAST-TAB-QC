@@ -21,16 +21,20 @@ import com.example.teclast_qc_application.home.device_report.DeviceSpecReportLis
 import com.example.teclast_qc_application.home.pdf_export.generatePDF
 import com.example.teclast_qc_application.home.pdf_export.getDirectory
 import com.example.teclast_qc_application.home.test_report.TestReportList
+import com.example.teclast_qc_application.test_result.test_results_db.DeleteAllTestResultDialog
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 
 @Composable
 fun HomeScreen2(state: TestResultState, context: Context, onEvent: (TestResultEvent) -> Unit) {
+
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colors.primary)
     ) {
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -66,6 +70,9 @@ fun ShowDeviceSpecs2(state: TestResultState, context: Context, onEvent: (TestRes
     // Each cell of a column must have the same weight.
     val column1Weight = .3f // 30%
     val column2Weight = .7f // 70%
+
+    val showDeleteAlertDialog = remember { mutableStateOf(false) }
+
     // The LazyColumn will be our table. Notice the use of the weights below
     // The Column will be our table. Notice the use of the weights below
     Column(Modifier.fillMaxSize().padding(16.dp)) {
@@ -88,8 +95,7 @@ fun ShowDeviceSpecs2(state: TestResultState, context: Context, onEvent: (TestRes
             }
             if (selectedOption == "Test Report") {
                 IconButton(onClick = {
-
-                    Toast.makeText(context, "Report Deleted", Toast.LENGTH_SHORT).show()
+                    showDeleteAlertDialog.value = true
                 }) {
                     Icon(Icons.Rounded.Delete, contentDescription = "Delete Report",
                         tint = MaterialTheme.colors.onSecondary)
@@ -129,6 +135,9 @@ fun ShowDeviceSpecs2(state: TestResultState, context: Context, onEvent: (TestRes
                 Divider(color = Color.Black, modifier = Modifier.fillMaxHeight().width(1.dp))
                 TableCell(text = value, weight = column2Weight)
             }
+        }
+        if (showDeleteAlertDialog.value) {
+            DeleteAllTestResultDialog(context = context, state = state, onEvent = onEvent,  showDeleteAlertDialog = showDeleteAlertDialog)
         }
     }
 

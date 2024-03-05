@@ -1,6 +1,6 @@
 package com.example.teclast_qc_application.test_result.test_results_db
 
-fun CheckTestResultDB (
+fun CheckTestResultbyItem (
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     itemName: String = ""

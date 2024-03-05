@@ -94,9 +94,9 @@ fun WifiTestTestMode(
                     navController.popBackStack()
                 hasNavigated.value = true
 
-                "Success : Wifi is connected with signal strength $wifiSignalStrength"
+                "Wifi is connected : Success\n signal strength : Success"
             } else {
-                "Success : Wifi is connected with signal strength $wifiSignalStrength"
+                "Success : Wifi is connected\n signal strength : Success"
             }
 
         } else {
