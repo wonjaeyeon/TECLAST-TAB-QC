@@ -38,7 +38,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import com.example.teclast_qc_application.test_result.test_results_db.*
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultDatabase
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultViewModel
 import com.example.teclast_qc_application.ui.theme.MyApplicationTheme
 import kotlin.reflect.KFunction1
 
@@ -72,7 +75,7 @@ private fun requestForegroundPermission(context: Context) {
     }
 }
 
-//check jy_24_feb_29 branch is well-made
+//check fast_mode_implement branch is well-made
 // check if I changed all right
 class MainActivity : ComponentActivity() {
     val VolumeUpPressed = mutableStateOf(false)
