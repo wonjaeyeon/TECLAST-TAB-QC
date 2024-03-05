@@ -32,7 +32,9 @@ fun FlashLightTestT1(context: Context, navController: NavController) {
                             contentDescription = "Back"
                         )
                     }
-                }
+                },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+                contentColor = MaterialTheme.colors.onPrimary,
             )
         },
         content = {

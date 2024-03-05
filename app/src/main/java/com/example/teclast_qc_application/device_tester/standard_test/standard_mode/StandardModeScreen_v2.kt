@@ -13,7 +13,7 @@ import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.gpuTest1
 import com.example.teclast_qc_application.device_tester.specific_test.ram.tester.ramTest1
 import com.example.teclast_qc_application.device_tester.specific_test.rom.tester.romTest1
-import com.example.teclast_qc_application.device_tester.standard_test.standard_mode.sub_screen.TestScreenScaffold
+import com.example.teclast_qc_application.device_tester.standard_test.standard_mode.sub_screen.StandardModeTestScreenScaffold
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.Dispatchers
@@ -36,11 +36,11 @@ fun StandardModeScreen(
         mutableStateListOf(
             "1. CPU Buffer",
             //"2. CPU TEST 1",
-            "3. CPU BURNIN",
-            "4. gpu test",
-            "5. gpu test 2",
-            "6. ram test 1",
-            "7. rom test 1",
+            "2. CPU BURNIN",
+            "3. GPU test",
+            "4. GPU test 2",
+            "5. RAM test 1",
+            "6. ROM test 1",
         )
     }
     // 매우 긴 nextTestRoute를 던져주고 이걸 딱딱 나눠서 보도록 하면 된다. 즉 호출 함수는 그냥 첫 함수인 거고 나머지 뒤에 따라오는 함수들은 내가 정한 nextTestRoute에 따라 따라오는 것이다.
@@ -53,20 +53,19 @@ fun StandardModeScreen(
 //        "usb_test_test_mode_screen",
 //        "touch_panel_test_t1_screen",
 //        "touch_panel_test_t2_screen",
-        "touch_panel_test_t4_screen",
+////        "touch_panel_test_t4_screen",
 //        "touch_panel_test_t5_screen",
-        "lcd_screen_test_t1_screen",
-        "lcd_screen_test_t2_screen",
-        "physical_button_test_t1_screen",
+////        "lcd_screen_test_t1_screen",
+////        "lcd_screen_test_t2_screen",
+////        "physical_button_test_t1_screen",
 //        "gps_test_t1_screen",
-        "g_sensor_test_t1_screen",
-        "camera_test_t1_screen",
+////        "g_sensor_test_t1_screen",
+////        "camera_test_t1_screen",
 //        "camera_test_t2_screen",
-        "audio_test_t1_screen",
+////        "audio_test_t1_screen",
 //        "vibration_test_test_mode_screen",
-        "flash_light_test_test_mode_screen",
-        "lcd_screen_test_t1_screen",
-        "notNextTest"
+////        "flash_light_test_test_mode_screen",
+        "standard_test_completed_screen"
     )
     if (!testsCompleted) {
         LaunchedEffect(key1 = testsCompleted) {
@@ -102,7 +101,7 @@ fun StandardModeScreen(
                 done.add("3. CPU BURNIN")
                 undone.remove("3. CPU BURNIN")
                 runBlocking {
-                    cpuTestResult3 = CpuBurnInTest(state = state, onEvent = onEvent, 1000L, this)
+                    cpuTestResult3 = CpuBurnInTest(state = state, onEvent = onEvent, 500L, 16600,this) // fail when 500L/16800 , success when 500L/16700
                 }
                 Log.i("StandardModeScreen", "3. CpuBurnInTest() is called : $cpuTestResult3 : Percentage : $progress")
                 delay(100L)
@@ -181,7 +180,7 @@ fun StandardModeScreen(
     }
 
     if (testsCompleted == false) {
-        TestScreenScaffold(navController = navController, progress = progress, done = done, undone = undone) {
+        StandardModeTestScreenScaffold(navController = navController, progress = progress, done = done, undone = undone) {
         }
     }
     if (testsCompleted) {

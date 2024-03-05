@@ -42,9 +42,10 @@
     <uses-feature android:name="android.hardware.camera.any" />
     <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
     <uses-feature android:name="android.hardware.usb.host" android:required="true"/>
+    <uses-feature android:name="android.hardware.telephony" android:required="false"/>
     <!--usb port별로 check -->
 <!--    <uses-feature android:name="android.hardware.usb.host" android:required="true" />-->
-
+    <!-- App을 Recently Used List에서 지우기 위해 excludeFromRecents~ launch Mode 추가-->
     <application
             android:allowBackup="true"
             android:dataExtractionRules="@xml/data_extraction_rules"
@@ -55,6 +56,11 @@
             android:theme="@style/Theme.TECLAST_QC_Application"
             android:requestLegacyExternalStorage="true"
             android:usesCleartextTraffic="true"
+
+            android:excludeFromRecents="true"
+            android:taskAffinity=""
+            android:launchMode="singleInstance"
+
 
             tools:targetApi="31">
         <receiver android:name=".BootCompletedReceiver"

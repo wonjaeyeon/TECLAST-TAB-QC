@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.test_result
+package com.example.teclast_qc_application.deprecated
 
 //import androidx.compose.foundation.clickable
 //import androidx.compose.foundation.horizontalScroll

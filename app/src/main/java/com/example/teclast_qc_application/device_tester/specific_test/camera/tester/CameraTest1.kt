@@ -111,7 +111,9 @@ fun CameraTest1(
                             contentDescription = "Back"
                         )
                     }
-                }
+                },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+                contentColor = MaterialTheme.colors.onPrimary,
             )
         },
         floatingActionButton = {

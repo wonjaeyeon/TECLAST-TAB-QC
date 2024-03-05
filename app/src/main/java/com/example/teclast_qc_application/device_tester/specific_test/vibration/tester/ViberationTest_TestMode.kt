@@ -49,7 +49,9 @@ fun VibrationTestTestMode(
                             contentDescription = "Back"
                         )
                     }
-                }
+                },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+                contentColor = MaterialTheme.colors.onPrimary,
             )
         },
         floatingActionButton = {
@@ -160,6 +162,15 @@ fun VibrationTestTestMode(
                         // Log or show on UI that the device has no vibrator hardware
                         Log.e("Vibration Test", "This device does not support vibration")
                         vibrationResult.value = "This device does not support vibration"
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResult(
+                            state = state,
+                            onEvent = onEvent,
+                            "Vibration Test 1",
+                            "Fail",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
                             Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")

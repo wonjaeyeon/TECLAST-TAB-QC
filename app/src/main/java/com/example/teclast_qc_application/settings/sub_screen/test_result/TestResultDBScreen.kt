@@ -1,11 +1,10 @@
 package com.example.teclast_qc_application.settings.sub_screen.test_result
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -19,10 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.test_result.test_results_db.AddTestResultDialog
-import com.example.teclast_qc_application.test_result.test_results_db.SortType
-import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import com.example.teclast_qc_application.test_result.test_results_db.*
 
 
 @Composable
@@ -52,8 +48,8 @@ fun TestResultDBScreen(
                 backgroundColor = Color(0xFF6200EE), // Explicitly set the color here
                 contentColor = Color(0xFFFFFFFF),
                 onClick = {
-                onEvent(TestResultEvent.ShowDialog)
-            }) {
+                    onEvent(TestResultEvent.ShowDialog)
+                }) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = "Add contact"
@@ -63,9 +59,10 @@ fun TestResultDBScreen(
     ) { _ ->
         //AddTestResultV2(state = state, onEvent = onEvent)
 
-        if(state.isAddingContact) {
+        if (state.isAddingContact) {
             AddTestResultDialog(state = state, onEvent = onEvent)
         }
+
 
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
@@ -77,9 +74,10 @@ fun TestResultDBScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .horizontalScroll(rememberScrollState()),
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement =  Arrangement.SpaceBetween
                 ) {
-                    SortType.values().forEach { sortType ->
+                    Row(){SortType.values().forEach { sortType ->
                         Row(
                             modifier = Modifier
                                 .clickable {
@@ -98,6 +96,19 @@ fun TestResultDBScreen(
                             )
                             Text(text = sortType.name)
                         }
+                    }}
+
+                    Button(
+                        border = BorderStroke(1.dp, Color.Red),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = Color.Red,
+
+                            ),
+                        onClick = {
+                            onEvent(TestResultEvent.DeleteAllTestResults)
+                        }
+                    ) {
+                        Text(text = "Clear TestResults")
                     }
                 }
             }
@@ -127,8 +138,8 @@ fun TestResultDBScreen(
                     Spacer(modifier = Modifier.width(16.dp))
                     IconButton(
                         onClick = {
-                        onEvent(TestResultEvent.DeleteTestResult(contact))
-                    }) {
+                            onEvent(TestResultEvent.DeleteTestResult(contact))
+                        }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = "Delete contact"

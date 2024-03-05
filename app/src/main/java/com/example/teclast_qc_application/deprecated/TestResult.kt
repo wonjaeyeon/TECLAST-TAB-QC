@@ -1,9 +1,4 @@
-package com.example.teclast_qc_application.test_result
-
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
+package com.example.teclast_qc_application.deprecated
 
 //// A data class to represent test results
 //data class TestResult_old(val testName: String, val result: String, val timestamp: String)

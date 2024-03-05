@@ -74,4 +74,3 @@ fun requestBugReport(context: Context) {
         print("nothing to show")
     }
 }
-
