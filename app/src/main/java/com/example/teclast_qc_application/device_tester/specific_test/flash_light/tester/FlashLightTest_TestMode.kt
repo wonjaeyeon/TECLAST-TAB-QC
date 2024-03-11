@@ -6,7 +6,8 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.FlashlightOff
+import androidx.compose.material.icons.filled.FlashlightOn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,6 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.example.teclast_qc_application.home.device_report.DeviceSpecReportList
 import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -27,26 +31,21 @@ fun FlashLightTestTestMode(
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
-    runningTestMode: Boolean = false,
-    testMode: String = "StandardMode",
-    onTestComplete: () -> Unit = {},
+    testMode: String = "",
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
-    var isFlashOn = false
-    var flashlightResult = remember { mutableStateOf("Ready for Test") }
+    val isFlashOn = remember { mutableStateOf(false) }
+    val flashlightResult = remember { mutableStateOf("Ready for Test") }
+    val currentTestItem = "Flashlight Test 1"
+    val device_spec_pdf = DeviceSpecReportList(context)
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Flashlight Test") },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+                    NavigationPopButton(navController = navController, testMode = testMode)
                 },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
@@ -83,16 +82,15 @@ fun FlashLightTestTestMode(
                             Log.i("MyTag:FlashLightTest1", "nextPath: $nextPath")
                             Log.i("MyTag:FlashLightTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = "aaaa"
+                            var nextRouteWithArguments = ""
                             if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                             } else {
                                 nextRouteWithArguments = "${nextTestRoute[0]}"
                             }
 
                             navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
-                            onTestComplete()
+                        }
                         else
                             navController.popBackStack()
                     }) {
@@ -110,28 +108,38 @@ fun FlashLightTestTestMode(
                             Date().toString()
                         )
                         onEvent(TestResultEvent.SaveTestResult)
-                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                            Log.i("MyTag:FlashLightTest1", "pastRoute: $pastRoute")
-                            Log.i("MyTag:FlashLightTest1", "nextTestRoute: $nextTestRoute")
-                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-                            val nextPath = nextTestRoute.drop(1)
-                            val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:FlashLightTest1", "nextPath: $nextPath")
-                            Log.i("MyTag:FlashLightTest1", "nextPathString: $nextPathString")
-
-                            var nextRouteWithArguments = "aaaa"
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
-                            } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
-                            }
-
-                            navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
-                            onTestComplete()
-                        else
-                            navController.popBackStack()
+                        FailTestNavigator(
+                            context = context,
+                            onEvent = onEvent,
+                            state = state,
+                            navController = navController,
+                            testMode = testMode,
+                            navigateToNextTest = navigateToNextTest,
+                            nextTestRoute = nextTestRoute,
+                            currentTestItem = currentTestItem,
+                            deviceSpec = device_spec_pdf
+                        )
+//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+//                            Log.i("MyTag:FlashLightTest1", "pastRoute: $pastRoute")
+//                            Log.i("MyTag:FlashLightTest1", "nextTestRoute: $nextTestRoute")
+//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+//                            val nextPath = nextTestRoute.drop(1)
+//                            val nextPathString = nextPath.joinToString(separator = "->")
+//                            Log.i("MyTag:FlashLightTest1", "nextPath: $nextPath")
+//                            Log.i("MyTag:FlashLightTest1", "nextPathString: $nextPathString")
+//
+//                            var nextRouteWithArguments = ""
+//                            if (nextPathString.isNotEmpty()) {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                            } else {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}"
+//                            }
+//
+//                            navController.navigate(nextRouteWithArguments)
+//                        }
+//                        else
+//                            navController.popBackStack()
                     }) {
                     Text("Fail")
                 }
@@ -143,36 +151,62 @@ fun FlashLightTestTestMode(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                Icon(
+                    imageVector = if (isFlashOn.value) Icons.Filled.FlashlightOn else Icons.Filled.FlashlightOff,
+                    contentDescription = if (isFlashOn.value) "Flashlight is on" else "Flashlight is off",
+                    modifier = Modifier.size(40.dp),
+                    tint = if (isFlashOn.value) Color.Yellow.copy(alpha = 0.6f) else MaterialTheme.colors.onSurface.copy(alpha = 0.6f)
+                )
+                Spacer(modifier = Modifier.height(16.dp)) // Space between icon and button
                 Button(onClick = {
-                    isFlashOn = !isFlashOn
-                    flashlightResult.value = toggleFlashLight(context, isFlashOn)
+                    isFlashOn.value = !isFlashOn.value
+                    flashlightResult.value = toggleFlashLight(context, isFlashOn.value)
                     if (flashlightResult.value.startsWith("Cannot find Flashlight")) {
-                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                            Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
-                            Log.i("MyTag:CameraTest1", "nextTestRoute: $nextTestRoute")
-                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-                            val nextPath = nextTestRoute.drop(1)
-                            val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
-                            Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
-
-                            var nextRouteWithArguments = "aaaa"
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
-                            } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
-                            }
-
-                            navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
-                            onTestComplete()
-                        else
-                            navController.popBackStack()
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResult(
+                            state = state,
+                            onEvent = onEvent,
+                            "Flashlight Test 1",
+                            "Fail",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
+                        FailTestNavigator(
+                            context = context,
+                            onEvent = onEvent,
+                            state = state,
+                            navController = navController,
+                            testMode = testMode,
+                            navigateToNextTest = navigateToNextTest,
+                            nextTestRoute = nextTestRoute,
+                            currentTestItem = currentTestItem,
+                            deviceSpec = device_spec_pdf
+                        )
+//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+//                            Log.i("MyTag:FlashLightTest1", "pastRoute: $pastRoute")
+//                            Log.i("MyTag:FlashLightTest1", "nextTestRoute: $nextTestRoute")
+//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+//                            val nextPath = nextTestRoute.drop(1)
+//                            val nextPathString = nextPath.joinToString(separator = "->")
+//                            Log.i("MyTag:FlashLightTest1", "nextPath: $nextPath")
+//                            Log.i("MyTag:FlashLightTest1", "nextPathString: $nextPathString")
+//
+//                            var nextRouteWithArguments = ""
+//                            if (nextPathString.isNotEmpty()) {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                            } else {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}"
+//                            }
+//
+//                            navController.navigate(nextRouteWithArguments)
+//                        }
+//                        else
+//                            navController.popBackStack()
                     }
 
                 }) {
-                    Text(text = if (isFlashOn) "Turn off Flashlight" else "Turn on Flashlight")
+                    Text(text = if (isFlashOn.value) "Turn off Flashlight" else "Turn on Flashlight")
                 }
 
                 Text(text = flashlightResult.value)

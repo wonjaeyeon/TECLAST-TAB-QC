@@ -31,10 +31,10 @@ interface TestResultDao {
     suspend fun countTestResultByItemName(itemName: String): Int
 
     @Query("SELECT * FROM testResult WHERE itemName = :itemName LIMIT 1")
-    suspend fun getTestResultByItemName(itemName: String): TestResult
+    suspend fun getTestResultByItemName(itemName: String): TestResult?
 
 
-    @Query("SELECT itemName FROM testResult GROUP BY itemName HAVING COUNT(*) > 2")
+    @Query("SELECT itemName FROM testResult GROUP BY itemName HAVING COUNT(*) >= 2")
     suspend fun getItemNamesWithMoreThanTwoEntries(): List<String>
 
     @Query("SELECT id FROM testResult WHERE itemName = :itemName ORDER BY testDate DESC LIMIT -1 OFFSET 1")

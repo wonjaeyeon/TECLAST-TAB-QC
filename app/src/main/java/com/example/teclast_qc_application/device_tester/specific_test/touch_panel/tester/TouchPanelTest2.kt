@@ -12,8 +12,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -26,6 +24,9 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.DialogAPIInterface
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.TestAPIDialog
 import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -40,20 +41,18 @@ fun TouchPanelTest2(
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
-    runningTestMode: Boolean = false,
-    testMode: String = "StandardMode",
-    onTestComplete: () -> Unit = {},
+    testMode: String = "",
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
     val trail = remember { mutableStateListOf<Offset>() }
-    val touchCount = remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
     val offsetX = remember { mutableStateOf(0f) }
     val offsetY = remember { mutableStateOf(0f) }
     var size by remember { mutableStateOf(Size.Zero) }
     var isFinished by remember { mutableStateOf(false) }
     val hasAddedResult = remember { mutableStateOf(false) }  // State to track navigation status
+    val showDialog = remember { mutableStateOf(false) }
 
     // Initialize checkpoints
     val checkpoints = remember {
@@ -73,8 +72,21 @@ fun TouchPanelTest2(
             "pointLC" to false,
             "pointRC" to false,
             "pointCC" to false,
+        )
+    }
 
-            )
+
+    // Initially set the test result to "Fail"
+    LaunchedEffect(key1 = "initialTestResult") {
+        onEvent(TestResultEvent.SaveTestResult)
+        AddTestResult(
+            state = state,
+            onEvent = onEvent,
+            itemName = "Touch Panel Test 2",
+            testResult = "Fail",
+            testDate = Date().toString()
+        )
+        onEvent(TestResultEvent.SaveTestResult)
     }
 
     val onTouchThresholdReached: () -> Unit = {
@@ -101,17 +113,15 @@ fun TouchPanelTest2(
                 Log.i("MyTag:TouchPanelTest2", "nextPath: $nextPath")
                 Log.i("MyTag:TouchPanelTest2", "nextPathString: $nextPathString")
 
-                var nextRouteWithArguments = "aaaa"
+                var nextRouteWithArguments = ""
                 if (nextPathString.isNotEmpty()) {
-                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                 } else {
                     nextRouteWithArguments = "${nextTestRoute[0]}"
                 }
 
                 navController.navigate(nextRouteWithArguments)
-            } else if (runningTestMode)
-                onTestComplete()
-            else
+            } else
                 navController.popBackStack()
             isFinished = true
 
@@ -139,16 +149,30 @@ fun TouchPanelTest2(
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+                    NavigationPopButton(
+                        navController = navController, testMode = testMode
+                    )
+                },
+                actions = {
+                    DialogAPIInterface(
+                        testMode = testMode,
+                        showDialog = showDialog
+                    )
                 }
             )
         }
     ) {
+        TestAPIDialog(
+            testMode = testMode,
+            state = state,
+            onEvent = onEvent,
+            context = context,
+            navController = navController,
+            nextTestRoute = nextTestRoute,
+            showDialog = showDialog
+        )
+
+
         Box(
             Modifier.fillMaxSize()
                 .onSizeChanged { size = it.toSize() }

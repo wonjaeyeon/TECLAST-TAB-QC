@@ -2,7 +2,7 @@ package com.example.teclast_qc_application.device_tester.main_screen_sub.test_fi
 
 import android.os.Build
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Assignment
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.ElectricBolt
 import androidx.compose.material.icons.filled.SmartDisplay
 import androidx.compose.runtime.Composable
@@ -13,7 +13,7 @@ fun filterTestMode(): List<Pair<String, ImageVector>> {
     var device_firmware_name = Build.DISPLAY
 
     var test_mode_list = listOf(
-        Pair("Standard Mode", Icons.Filled.Assignment),
+        Pair("Standard Mode", Icons.AutoMirrored.Filled.Assignment),
         Pair("Fast Mode", Icons.Filled.ElectricBolt)
     )
 

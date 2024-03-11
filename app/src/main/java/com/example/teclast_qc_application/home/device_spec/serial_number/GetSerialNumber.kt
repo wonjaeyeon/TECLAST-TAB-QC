@@ -54,6 +54,10 @@ fun getDeviceSerialNumber_v2(): String {
         serial = ""
     }
 
+    if(serial == ""){
+        serial = "unknown"
+    }
+
     return serial
 }
 

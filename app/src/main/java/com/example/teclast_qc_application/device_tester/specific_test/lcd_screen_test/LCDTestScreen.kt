@@ -57,7 +57,7 @@ fun LcdScreenTest(context: Context, navController: NavController, ) {
             ) {
                 // LCD Screen Test t1 Button
                 Button(onClick = {
-                    navController.navigate("lcd_screen_test_t1_screen/notNextTest"){
+                    navController.navigate("lcd_screen_test_t1_screen/notNextTest/NotTestMode"){
 
                     }
                 }) {
@@ -66,7 +66,7 @@ fun LcdScreenTest(context: Context, navController: NavController, ) {
 
                 // LCD Screen Test t2 Button
                 Button(onClick = {
-                    navController.navigate("lcd_screen_test_t2_screen/notNextTest"){
+                    navController.navigate("lcd_screen_test_t2_screen/notNextTest/NotTestMode"){
 
                     }
                 }) {

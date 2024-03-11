@@ -6,6 +6,8 @@ import android.content.Intent
 import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -57,6 +58,8 @@ fun WifiTestScreen(
     // get reference to the coroutine scope
     val coroutineScope = rememberCoroutineScope()
 
+    val isButtonEnabled = remember { mutableStateOf(true) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -83,7 +86,7 @@ fun WifiTestScreen(
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp).verticalScroll(rememberScrollState())
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -160,12 +163,21 @@ fun WifiTestScreen(
 //                    Text(text = "Data Receive Test")
 //                }
 //
-                Button(onClick = {
-                    // launch the client function in the coroutine
-                    coroutineScope.launch {
-                        receivedMessage.value = viewModel.startClient()
-                    }
-                }) {
+                Button(
+                    onClick = {
+                        isButtonEnabled.value = false
+                        // launch the client function in the coroutine
+                        coroutineScope.launch {
+                            try {
+                                receivedMessage.value = viewModel.startClient()
+                                isButtonEnabled.value = true
+                            } catch (e: Exception) {
+                                receivedMessage.value = "$e"
+                            }
+                        }
+                    },
+                    enabled = isButtonEnabled.value
+                ) {
                     Text("Receive Data(BROADCAST SERVER TEST)")
                 }
 
@@ -177,6 +189,7 @@ fun WifiTestScreen(
                     modifier = Modifier.padding(top = 16.dp)
                 )
 
+                Spacer(modifier = Modifier.padding(top = 40.dp))
 
                 Button(onClick = {
                     // launch the client function in the coroutine
@@ -231,7 +244,9 @@ class YourViewModel : ViewModel() {
                 val receivedMessage = String(packet.data, 0, packet.length)
                 println("Received message: $receivedMessage from: ${packet.address}:${packet.port}")
                 return@withContext receivedMessage
+
             }
         }
     }
 }
+

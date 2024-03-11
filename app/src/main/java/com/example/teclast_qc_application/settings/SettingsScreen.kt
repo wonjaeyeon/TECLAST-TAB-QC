@@ -7,9 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Brush
-import androidx.compose.material.icons.filled.Mail
-import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
@@ -42,9 +40,9 @@ fun SettingsScreen(
 //            "device_info_db_screen"
 //        ),
         ListItem(
-            3,
-            "Test Result DB(for Beta Test)",
-            "Only User With Authority Allowed",
+            2,
+            "Test Result Database",
+            "Most Recent Test Result",
             Icons.Filled.Storage,
             "test_result_db_screen"
         ),
@@ -55,6 +53,22 @@ fun SettingsScreen(
 //            Icons.Filled.Construction,
 //            "emergency_tool_kit_screen"
 //        ),
+        ListItem(
+            3,
+            "App Version",
+            "v 1.0.0",
+            Icons.Filled.PhoneIphone,
+            "app_version_screen"
+        ),
+
+        ListItem(
+            4,
+            "Open Source License",
+            "Distributed License Information List",
+            Icons.Filled.CollectionsBookmark,
+            "open_source_license_screen"
+        ),
+
         ListItem(
             5,
             "Developer Profile",

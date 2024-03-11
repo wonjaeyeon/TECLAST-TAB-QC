@@ -11,6 +11,7 @@ fun TestReportList(
     context: Context,
     onEvent: (TestResultEvent) -> Unit,
 ): List<Pair<String, String>> {
+
     return listOf(
         "CPU" to CheckTestResultbyItem(state, onEvent, "CPU"),
         "GPU" to CheckTestResultbyItem(state, onEvent, "GPU"),

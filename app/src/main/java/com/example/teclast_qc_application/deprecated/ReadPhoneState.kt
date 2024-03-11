@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.home.read_phone_state
+package com.example.teclast_qc_application.deprecated
 
 //@Composable
 //fun requestPhoneStatePermission(onPermissionGranted: () -> Unit) {

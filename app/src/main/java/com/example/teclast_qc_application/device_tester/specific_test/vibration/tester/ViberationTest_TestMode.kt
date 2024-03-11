@@ -7,8 +7,6 @@ import android.os.Vibrator
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,6 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.example.teclast_qc_application.home.device_report.DeviceSpecReportList
 import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -29,26 +30,21 @@ fun VibrationTestTestMode(
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
-    runningTestMode: Boolean = false,
-    testMode: String = "StandardMode",
-    onTestComplete: () -> Unit = {},
+    testMode: String = "",
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     var vibrationResult = remember { mutableStateOf("Ready for Test") }
+    val currentTestItem = "Vibration Test 1"
+    val device_spec_pdf = DeviceSpecReportList(context)
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Vibration Test") },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+                    NavigationPopButton(navController = navController, testMode = testMode)
                 },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
@@ -85,16 +81,15 @@ fun VibrationTestTestMode(
                             Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
                             Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = "aaaa"
+                            var nextRouteWithArguments = ""
                             if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                             } else {
                                 nextRouteWithArguments = "${nextTestRoute[0]}"
                             }
 
                             navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
-                            onTestComplete()
+                        }
                         else
                             navController.popBackStack()
                     }) {
@@ -112,28 +107,38 @@ fun VibrationTestTestMode(
                             Date().toString()
                         )
                         onEvent(TestResultEvent.SaveTestResult)
-                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")
-                            Log.i("MyTag:VibrationTest1", "nextTestRoute: $nextTestRoute")
-                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-                            val nextPath = nextTestRoute.drop(1)
-                            val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
-                            Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
-
-                            var nextRouteWithArguments = "aaaa"
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
-                            } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
-                            }
-
-                            navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
-                            onTestComplete()
-                        else
-                            navController.popBackStack()
+                        FailTestNavigator(
+                            context = context,
+                            onEvent = onEvent,
+                            state = state,
+                            navController = navController,
+                            testMode = testMode,
+                            navigateToNextTest = navigateToNextTest,
+                            nextTestRoute = nextTestRoute,
+                            currentTestItem = currentTestItem,
+                            deviceSpec = device_spec_pdf
+                        )
+//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+//                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")
+//                            Log.i("MyTag:VibrationTest1", "nextTestRoute: $nextTestRoute")
+//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+//                            val nextPath = nextTestRoute.drop(1)
+//                            val nextPathString = nextPath.joinToString(separator = "->")
+//                            Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
+//                            Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
+//
+//                            var nextRouteWithArguments = ""
+//                            if (nextPathString.isNotEmpty()) {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                            } else {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}"
+//                            }
+//
+//                            navController.navigate(nextRouteWithArguments)
+//                        }
+//                        else
+//                            navController.popBackStack()
                     }) {
                     Text("Fail")
                 }
@@ -171,28 +176,38 @@ fun VibrationTestTestMode(
                             Date().toString()
                         )
                         onEvent(TestResultEvent.SaveTestResult)
-                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")
-                            Log.i("MyTag:VibrationTest1", "nextTestRoute: $nextTestRoute")
-                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-                            val nextPath = nextTestRoute.drop(1)
-                            val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
-                            Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
-
-                            var nextRouteWithArguments = "aaaa"
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
-                            } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
-                            }
-
-                            navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
-                            onTestComplete()
-                        else
-                            navController.popBackStack()
+                        FailTestNavigator(
+                            context = context,
+                            onEvent = onEvent,
+                            state = state,
+                            navController = navController,
+                            testMode = testMode,
+                            navigateToNextTest = navigateToNextTest,
+                            nextTestRoute = nextTestRoute,
+                            currentTestItem = currentTestItem,
+                            deviceSpec = device_spec_pdf
+                        )
+//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+//                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")
+//                            Log.i("MyTag:VibrationTest1", "nextTestRoute: $nextTestRoute")
+//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+//                            val nextPath = nextTestRoute.drop(1)
+//                            val nextPathString = nextPath.joinToString(separator = "->")
+//                            Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
+//                            Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
+//
+//                            var nextRouteWithArguments = ""
+//                            if (nextPathString.isNotEmpty()) {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                            } else {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}"
+//                            }
+//
+//                            navController.navigate(nextRouteWithArguments)
+//                        }
+//                        else
+//                            navController.popBackStack()
                     }
                 }) {
                     Text(text = "Vibrate")

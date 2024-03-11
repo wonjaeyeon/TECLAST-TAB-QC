@@ -5,9 +5,7 @@ import android.content.Context
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,12 +14,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
+import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import java.util.*
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter", "RememberReturnType")
 @Composable
-fun VibrationTestT1(context: Context, navController: NavController) {
+fun VibrationTestT1(
+    state: TestResultState,
+    onEvent: (TestResultEvent) -> Unit,
+    context: Context, navController: NavController
+) {
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
     var vibrationResult = remember { mutableStateOf("Ready for Test") }
 
@@ -38,6 +46,51 @@ fun VibrationTestT1(context: Context, navController: NavController) {
                     }
                 }
             )
+        },
+        floatingActionButton = {
+            Row(
+                modifier = Modifier.padding(16.dp).fillMaxWidth(),
+
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                FloatingActionButton(
+                    modifier = Modifier.padding(start = 16.dp),
+                    // add color to the background
+                    backgroundColor = Color(0xFF00FF00),
+
+                    onClick = { /* Handle success result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResult(
+                            state = state,
+                            onEvent = onEvent,
+                            "Vibration Test 1",
+                            "Success",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
+
+                        navController.popBackStack()
+                    }) {
+                    Text("Good")
+                }
+                FloatingActionButton(
+                    backgroundColor = Color(0xFFFF0000),
+                    onClick = { /* Handle fail result */
+                        onEvent(TestResultEvent.SaveTestResult)
+                        AddTestResult(
+                            state = state,
+                            onEvent = onEvent,
+                            "Vibration Test 1",
+                            "Fail",
+                            Date().toString()
+                        )
+                        onEvent(TestResultEvent.SaveTestResult)
+
+                        navController.popBackStack()
+                    }) {
+                    Text("Fail")
+                }
+            }
         },
         content = {
             Column(

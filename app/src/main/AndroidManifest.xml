@@ -43,6 +43,7 @@
     <uses-feature android:name="android.hardware.bluetooth" android:required="true"/>
     <uses-feature android:name="android.hardware.usb.host" android:required="true"/>
     <uses-feature android:name="android.hardware.telephony" android:required="false"/>
+
     <!--usb port별로 check -->
 <!--    <uses-feature android:name="android.hardware.usb.host" android:required="true" />-->
     <!-- App을 Recently Used List에서 지우기 위해 excludeFromRecents~ launch Mode 추가-->

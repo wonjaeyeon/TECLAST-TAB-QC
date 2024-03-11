@@ -4,16 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.DialogAPIInterface
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.TestAPIDialog
 import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -30,12 +32,12 @@ fun PhysicalButtonTestT1(
     navController: NavController,
     volumeUpPressed: MutableState<Boolean>,
     volumeDownPressed: MutableState<Boolean>,
-    runningTestMode: Boolean = false,
-    testMode: String = "StandardMode",
-    onTestComplete: () -> Unit = {},
+    testMode: String = "",
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
+
+    val showDialog = remember { mutableStateOf(false) }
 
     // Observe volumeUpPressed and volumeDownPressed.
     // If either is true, navigate to the previous screen.
@@ -61,17 +63,16 @@ fun PhysicalButtonTestT1(
                 Log.i("MyTag:PhysicalButtonTestT1", "nextPath: $nextPath")
                 Log.i("MyTag:PhysicalButtonTestT1", "nextPathString: $nextPathString")
 
-                var nextRouteWithArguments = "aaaa"
+                var nextRouteWithArguments = ""
                 if (nextPathString.isNotEmpty()) {
-                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                     Log.i("Check", "nextRouteWithArguments: $nextRouteWithArguments")
                 } else {
                     nextRouteWithArguments = "${nextTestRoute[0]}"
                 }
 
                 navController.navigate(nextRouteWithArguments)
-            } else if (runningTestMode)
-                onTestComplete()
+            }
             else {
                 Log.i("MyTag:PhysicalButtonTestT1", "delay(1000)")
                 delay(1000)
@@ -95,12 +96,15 @@ fun PhysicalButtonTestT1(
             TopAppBar(
                 title = { Text(text = "Physical Button Test 1") },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+                    NavigationPopButton(
+                        navController = navController, testMode = testMode
+                    )
+                },
+                actions = {
+                    DialogAPIInterface(
+                        testMode = testMode,
+                        showDialog = showDialog
+                    )
                 },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
@@ -108,6 +112,16 @@ fun PhysicalButtonTestT1(
         },
 
         ) {
+        TestAPIDialog(
+            testMode = testMode,
+            state = state,
+            onEvent = onEvent,
+            context = context,
+            navController = navController,
+            nextTestRoute = nextTestRoute,
+            showDialog = showDialog
+        )
+
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

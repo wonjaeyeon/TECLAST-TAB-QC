@@ -7,6 +7,14 @@ import androidx.compose.runtime.Composable
 import com.example.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber_v2
 import com.example.teclast_qc_application.home.device_spec.*
 
+
+//fun getDeviceSpecReportList(context: Context): List<Pair<String, String>>{
+//
+//    return DeviceSpecReportList(context)
+//}
+
+
+
 @Composable
 fun DeviceSpecReportList(
     context: Context,
@@ -14,8 +22,8 @@ fun DeviceSpecReportList(
     return listOf(
         "Serial" to getDeviceSerialNumber_v2(),
         "MAC Address" to getMac(context),
-        "IPv4" to getIPv4Addresses().toString(),
-        "IPv6" to getIPv6Addresses().toString(),
+        "IPv4" to getIPv4Addresses(),
+        "IPv6" to getIPv6Addresses(),
         "Brand" to Build.BRAND,
         "MODEL" to Build.MODEL,
         "ID" to Build.ID,

@@ -38,9 +38,8 @@ fun TouchPanelTest1(
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
-    runningTestMode: Boolean = false,
-    testMode: String = "StandardMode",
-    onTestComplete: () -> Unit = {},
+    testMode: String = "",
+    
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
@@ -72,16 +71,15 @@ fun TouchPanelTest1(
                 Log.i("MyTag:TouchPanelTest1", "nextPath: $nextPath")
                 Log.i("MyTag:TouchPanelTest1", "nextPathString: $nextPathString")
 
-                var nextRouteWithArguments = "aaaa"
+                var nextRouteWithArguments = ""
                 if (nextPathString.isNotEmpty()) {
-                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                 } else {
                     nextRouteWithArguments = "${nextTestRoute[0]}"
                 }
 
                 navController.navigate(nextRouteWithArguments)
-            } else if (runningTestMode)
-                onTestComplete()
+            }
             else
                 navController.popBackStack()
             hasNavigated.value = true

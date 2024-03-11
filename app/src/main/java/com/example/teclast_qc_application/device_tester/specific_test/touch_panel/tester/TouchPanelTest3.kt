@@ -3,8 +3,11 @@ package com.example.teclast_qc_application.device_tester.specific_test.touch_pan
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.gestures.rememberTransformableState
+import androidx.compose.foundation.gestures.transformable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -24,10 +27,11 @@ import androidx.navigation.NavController
 @Composable
 fun TouchPanelTest3(
     context: Context, navController: NavController,
-    runningTestMode: Boolean = false,
-    onTestComplete: () -> Unit = {},
+    
+    
     navigateToNextTest: Boolean = false,
-    nextTestRoute: MutableList<String> = mutableListOf<String>()
+    nextTestRoute: MutableList<String> = mutableListOf<String>(),
+    testMode: String = ""
 ) {
     val scaffoldState = rememberScaffoldState()
     // set up all transformation states
