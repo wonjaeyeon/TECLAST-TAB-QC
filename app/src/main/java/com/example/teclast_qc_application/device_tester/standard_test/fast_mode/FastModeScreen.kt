@@ -41,6 +41,26 @@ fun FastModeScreen(
         )
     }
 
+    val tests = mutableListOf<String>(
+        "battery_test_test_mode_screen",
+//        "wifi_test_test_mode_screen",
+//        "bluetooth_test_test_mode_screen",
+//        "usb_test_test_mode_screen",
+//        "touch_panel_test_t2_screen",
+//        "touch_panel_test_t4_screen",
+//        "physical_button_test_t1_screen",
+        "lcd_screen_test_t1_screen",
+        "lcd_screen_test_t2_screen",
+        "gps_test_t1_screen",
+        "g_sensor_test_t1_screen",
+        "camera_test_t1_screen",
+        "camera_test_t2_screen",
+        "audio_test_t1_screen",
+        "vibration_test_test_mode_screen",
+        "flash_light_test_test_mode_screen",
+        "standard_test_completed_screen"
+    )
+
     if (!testsCompleted) {
         LaunchedEffect(key1 = testsCompleted) {
             withContext(Dispatchers.IO) {
@@ -112,13 +132,12 @@ fun FastModeScreen(
     }
 
     if (testsCompleted == false) {
-        FastModeTestScreenScaffold(navController = navController, progress = progress, done = done, undone = undone) {
-        }
+        FastModeTestScreenScaffold(navController = navController, nextTestRoute = tests, progress = progress, done = done, undone = undone, content = {}, onEvent= onEvent, state = state, context = context)
     }
     if (testsCompleted) {
         FastModeScreen_2(
             state = state, onEvent = onEvent,
-            context = context, navController = navController
+            context = context, navController = navController, nextTestRoute = tests
         )
     }
 }

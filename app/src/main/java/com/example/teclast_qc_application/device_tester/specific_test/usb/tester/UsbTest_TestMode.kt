@@ -8,12 +8,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.DialogAPIInterface
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.TestAPIDialog
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.delay
@@ -28,9 +29,7 @@ fun UsbTestTestMode(
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
-    runningTestMode: Boolean = false,
-    testMode: String = "StandardMode",
-    onTestComplete: () -> Unit = {},
+    testMode: String = "",
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
@@ -39,6 +38,7 @@ fun UsbTestTestMode(
     val usbHostModeStatus = remember { mutableStateOf("USB Host Mode Off") }
     val usbDevicesStatus = remember { mutableStateOf("No USB devices connected.") }
     val hasNavigated = remember { mutableStateOf(false) }  // State to track navigation status
+    val showDialog = remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
         val job = coroutineScope.launch {
@@ -74,9 +74,9 @@ fun UsbTestTestMode(
                 Log.i("MyTag:UsbTest", "nextPath: $nextPath")
                 Log.i("MyTag:UsbTest", "nextPathString: $nextPathString")
 
-                var nextRouteWithArguments = "aaaa"
+                var nextRouteWithArguments = ""
                 if (nextPathString.isNotEmpty()) {
-                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                     Log.i("MyTag:UsbTest", "nextRouteWithArguments: $nextRouteWithArguments")
                 } else {
                     nextRouteWithArguments = "${nextTestRoute[0]}"
@@ -85,12 +85,11 @@ fun UsbTestTestMode(
 
                 navController.navigate(nextRouteWithArguments)
                 hasNavigated.value = true
-            } else if (runningTestMode) {
-                onTestComplete()
-                hasNavigated.value = true
-            } else
+            }  else{
                 navController.popBackStack()
-            hasNavigated.value = true
+                hasNavigated.value = true
+            }
+
 
             "Success : USB Device Detected"
         } else {
@@ -104,19 +103,34 @@ fun UsbTestTestMode(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Usb Test 1") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+//                navigationIcon = {
+//                    IconButton(onClick = { navController.popBackStack() }) {
+//                        Icon(
+//                            imageVector = Icons.Filled.ArrowBack,
+//                            contentDescription = "Back"
+//                        )
+//                    }
+//                },
+                actions = {
+                          DialogAPIInterface(
+                              testMode = testMode,
+                              showDialog = showDialog)
                 },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
             )
         }
     ) {
+        TestAPIDialog(
+            testMode = testMode,
+            state = state,
+            onEvent = onEvent,
+            context = context,
+            navController = navController,
+            nextTestRoute = nextTestRoute,
+            showDialog = showDialog
+        )
+
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally

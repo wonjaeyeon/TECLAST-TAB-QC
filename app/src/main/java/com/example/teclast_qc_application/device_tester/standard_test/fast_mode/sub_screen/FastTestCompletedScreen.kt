@@ -52,6 +52,7 @@ fun FastTestCompletedScreen(
             Spacer(modifier = Modifier.height(32.dp))
             Button(
                 onClick = {
+                    onEvent(TestResultEvent.ClearPreviousTestResults)
                     // Pop back to the root of the navigation stack, effectively clearing it.
                     navController.popBackStack(navController.graph.startDestinationId, false)
                 },
@@ -62,6 +63,7 @@ fun FastTestCompletedScreen(
             Spacer(modifier = Modifier.height(32.dp))
             Button(
                 onClick = {
+                    onEvent(TestResultEvent.ClearPreviousTestResults)
 //                    val activity: MainActivity = MainActivity()
 //                    // on below line we are finishing activity.
 //                    activity.finishAndRemoveTask()

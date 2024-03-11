@@ -20,11 +20,13 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.R
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.example.teclast_qc_application.home.device_report.DeviceSpecReportList
 import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
-
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -33,8 +35,9 @@ fun AudioTestT1(
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
-    runningTestMode: Boolean = false,
-    onTestComplete: () -> Unit = {},
+    
+    testMode: String = "",
+    
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
@@ -45,6 +48,8 @@ fun AudioTestT1(
     val rightMediaPlayer = MediaPlayer.create(context, R.raw.right_sound)
     rightMediaPlayer.setVolume(0f, 1f)
     val isRightPlaying = remember { mutableStateOf(false) }
+    val currentTestItem = "Audio Test 1"
+    val device_spec_pdf = DeviceSpecReportList(context = context)
 
     // Define a cleanup function
     fun cleanUpMediaPlayers() {
@@ -62,17 +67,24 @@ fun AudioTestT1(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Audio Test") },
+                title = { Text(text = "Audio Test 1") },
                 navigationIcon = {
-                    IconButton(onClick = {
-                        cleanUpMediaPlayers()
-                        navController.popBackStack()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
+                    if (testMode == "NotTestMode"){
+                        IconButton(onClick = {
+                            cleanUpMediaPlayers()
+                            navController.popBackStack()
+                        }) {
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
+                    } else{
+                        NavigationPopButton(
+                            navController = navController, testMode = testMode
                         )
                     }
+
                 },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
@@ -111,19 +123,18 @@ fun AudioTestT1(
                             Log.i("MyTag:AudioTest1", "nextPath: $nextPath")
                             Log.i("MyTag:AudioTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = "aaaa"
+                            var nextRouteWithArguments = ""
                             if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                             } else {
                                 nextRouteWithArguments = "${nextTestRoute[0]}"
                             }
                             cleanUpMediaPlayers()
+                            onEvent(TestResultEvent.SaveTestResult)
                             navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode) {
-                            cleanUpMediaPlayers()
-                            onTestComplete()
                         } else {
                             cleanUpMediaPlayers()
+                            onEvent(TestResultEvent.SaveTestResult)
                             navController.popBackStack()
                         }
                     }) {
@@ -141,34 +152,43 @@ fun AudioTestT1(
                             Date().toString()
                         )
                         onEvent(TestResultEvent.SaveTestResult)
-                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                            Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
-                            Log.i("MyTag:AudioTest1", "nextTestRoute: $nextTestRoute")
-                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-                            val nextPath = nextTestRoute.drop(1)
-                            val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:AudioTest1", "nextPath: $nextPath")
-                            Log.i("MyTag:AudioTest1", "nextPathString: $nextPathString")
-
-                            var nextRouteWithArguments = "aaaa"
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
-                            } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
-                            }
-                            cleanUpMediaPlayers()
-                            onEvent(TestResultEvent.SaveTestResult)
-                            navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode) {
-                            cleanUpMediaPlayers()
-                            onEvent(TestResultEvent.SaveTestResult)
-                            onTestComplete()
-                        } else {
-                            cleanUpMediaPlayers()
-                            onEvent(TestResultEvent.SaveTestResult)
-                            navController.popBackStack()
-                        }
+                        FailTestNavigator(
+                            context = context,
+                            onEvent = onEvent,
+                            state = state,
+                            navController = navController,
+                            testMode = testMode,
+                            navigateToNextTest = navigateToNextTest,
+                            nextTestRoute = nextTestRoute,
+                            currentTestItem = currentTestItem,
+                            deviceSpec = device_spec_pdf
+                        )
+                        cleanUpMediaPlayers()
+                        onEvent(TestResultEvent.SaveTestResult)
+//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
+//                            Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
+//                            Log.i("MyTag:AudioTest1", "nextTestRoute: $nextTestRoute")
+//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+//                            val nextPath = nextTestRoute.drop(1)
+//                            val nextPathString = nextPath.joinToString(separator = "->")
+//                            Log.i("MyTag:AudioTest1", "nextPath: $nextPath")
+//                            Log.i("MyTag:AudioTest1", "nextPathString: $nextPathString")
+//
+//                            var nextRouteWithArguments = ""
+//                            if (nextPathString.isNotEmpty()) {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                            } else {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}"
+//                            }
+//                            cleanUpMediaPlayers()
+//                            onEvent(TestResultEvent.SaveTestResult)
+//                            navController.navigate(nextRouteWithArguments)
+//                        } else {
+//                            cleanUpMediaPlayers()
+//                            onEvent(TestResultEvent.SaveTestResult)
+//                            navController.popBackStack()
+//                        }
                     }) {
                     Text("Fail")
                 }

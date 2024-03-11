@@ -33,7 +33,8 @@ fun ColorThemeModeScreen(context: Context, navController: NavController,darkThem
                     }
                 }
             )
-        }
+        },
+        backgroundColor = MaterialTheme.colors.primary,
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -46,7 +47,9 @@ fun ColorThemeModeScreen(context: Context, navController: NavController,darkThem
             Text("Select your preferred theme mode:", style = MaterialTheme.typography.h6)
 
             // Example buttons for theme selection
-            Button(onClick = {
+            Button(
+colors = ButtonDefaults.buttonColors(backgroundColor = Color.LightGray),
+                onClick = {
             if(darkTheme.value) {
                 // Set Theme Mode to Dark
                 darkTheme.value = false
@@ -57,7 +60,9 @@ fun ColorThemeModeScreen(context: Context, navController: NavController,darkThem
                 Text("Light Theme")
             }
 
-            Button(onClick = { /* Set Theme Mode to Dark */
+            Button(
+                colors = ButtonDefaults.buttonColors(backgroundColor = Color.DarkGray),
+                onClick = { /* Set Theme Mode to Dark */
             if (darkTheme.value) {
                 // Set Theme Mode to Dark
             } else {

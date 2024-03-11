@@ -4,14 +4,18 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.view.WindowManager
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 
@@ -46,10 +50,19 @@ fun AutoSleepTestT1(context: Context, navController: NavController) {
             )
         },
         content = {
-            Column {
+            Column(
+                modifier = Modifier.fillMaxSize(), // Fill the parent size to allow centering
+                verticalArrangement = Arrangement.Center, // Center content vertically
+                horizontalAlignment = Alignment.CenterHorizontally // Center content horizontally
+            ) {
                 Text("Keep the screen on while this screen is visible?")
                 Text("If turned on, the screen will not turn off automatically.")
-                Text("Screen Awake: ${keepAwake.value}")
+                Spacer(modifier = Modifier.height(20.dp))
+                Text(
+                    "Screen Awake: " + if (keepAwake.value) "Turn On" else "Turn Off",
+                    style = MaterialTheme.typography.body1.copy(fontSize = 20.sp) // Custom text size
+                )
+                Spacer(modifier = Modifier.height(20.dp))
                 Switch(
                     checked = keepAwake.value,
                     onCheckedChange = { isChecked ->

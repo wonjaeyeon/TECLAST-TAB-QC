@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -64,7 +63,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
 
                 //make a button for Touch test T1
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t1_screen/notNextTest") {
+                    navController.navigate("touch_panel_test_t1_screen/notNextTest/NotTestMode") {
 
                     }
                 }) {
@@ -82,7 +81,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
 
                 //make a button for Touch test T2
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t2_screen/notNextTest") {
+                    navController.navigate("touch_panel_test_t2_screen/notNextTest/NotTestMode") {
 
 
                     }
@@ -101,9 +100,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
 
                 //make a button for Touch test T3
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t3_screen/notNextTest") {
-
-
+                    navController.navigate("touch_panel_test_t3_screen/notNextTest/NotTestMode") {
                     }
                 }) {
                     Text(text = "Touch Test T3(Pinch and Zoom)")
@@ -119,7 +116,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
 
                 // make a button for Touch test T4
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t4_screen/notNextTest") {
+                    navController.navigate("touch_panel_test_t4_screen/notNextTest/NotTestMode") {
 
 
                     }
@@ -134,7 +131,7 @@ fun TouchPanelTestScreen(context: Context, navController: NavController) {
                     modifier = Modifier.padding(top = 16.dp)
                 )
                 Button(onClick = {
-                    navController.navigate("touch_panel_test_t5_screen/notNextTest")
+                    navController.navigate("touch_panel_test_t5_screen")
                 }) {
                     Text(text = "Touch Test T5(Copy and Paste)")
                 }

@@ -38,6 +38,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
+import com.example.teclast_qc_application.navigation.navigationGraph
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultDatabase
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -142,7 +143,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         // when deleting Database, uncomment below
         // deleteDatabase("testResult.db")
-
 
         setContent {
             val context = LocalContext.current

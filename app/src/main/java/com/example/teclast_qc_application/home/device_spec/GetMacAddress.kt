@@ -40,5 +40,8 @@ private fun getMacAddress(context: Context): String {
 fun getMac(context: Context): String {
     val manager = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
     val info = manager.connectionInfo
+    if (info.macAddress == "" || info.macAddress.equals("02:00:00:00:00:00")) {
+        return "unknown"
+    }
     return info.macAddress.uppercase()
 }

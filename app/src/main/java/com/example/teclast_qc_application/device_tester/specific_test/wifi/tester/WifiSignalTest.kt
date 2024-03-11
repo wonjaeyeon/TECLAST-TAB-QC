@@ -2,6 +2,8 @@ package com.example.teclast_qc_application.device_tester.specific_test.wifi.test
 
 import android.content.Context
 import android.net.wifi.WifiManager
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -18,11 +20,12 @@ fun getWifiSignalStrength(context: Context): Int {
 fun wifiSignalStrengthTest(
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
-    context: Context
+    context: Context,
+    RequiredSignalStrength: MutableState<Int> = mutableStateOf(20)
 ): String {
     val wifiSignalStrength = getWifiSignalStrength(context)
     var result = ""
-    if (wifiSignalStrength < 20) {
+    if (wifiSignalStrength < RequiredSignalStrength.value) {
         onEvent(TestResultEvent.SaveTestResult)
         AddTestResult(state = state, onEvent = onEvent, "Wifi TEST 2", "Fail", Date().toString())
         onEvent(TestResultEvent.SaveTestResult)

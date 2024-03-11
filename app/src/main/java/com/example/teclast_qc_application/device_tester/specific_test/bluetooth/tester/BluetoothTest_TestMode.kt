@@ -8,7 +8,6 @@ import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Bluetooth
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
@@ -16,6 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.DialogAPIInterface
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.TestAPIDialog
 import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -32,9 +33,9 @@ fun BluetoothTestTestMode(
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
-    runningTestMode: Boolean = false,
-    testMode: String = "StandardMode",
-    onTestComplete: () -> Unit = {},
+
+    testMode: String = "",
+
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf()
 ) {
@@ -43,7 +44,7 @@ fun BluetoothTestTestMode(
     val bluetoothConnectedDevices = remember { mutableStateOf(BluetoothTestT2_v4(context)) }
     val hasNavigated = remember { mutableStateOf(false) }  // State to track navigation status
     val hasAddedTestResult = remember { mutableStateOf(false) }  // State to track result addition status
-
+    val showDialog = remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
         val job = coroutineScope.launch {
@@ -79,9 +80,9 @@ fun BluetoothTestTestMode(
                     Log.i("MyTag:BluetoothTest", "nextPath: $nextPath")
                     Log.i("MyTag:BluetoothTest", "nextPathString: $nextPathString")
 
-                    var nextRouteWithArguments = "aaaa"
+                    var nextRouteWithArguments = ""
                     if (nextPathString.isNotEmpty()) {
-                        nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                        nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                         Log.i("MyTag:BluetoothTest", "nextRouteWithArguments: $nextRouteWithArguments")
                     } else {
                         nextRouteWithArguments = "${nextTestRoute[0]}"
@@ -100,20 +101,6 @@ fun BluetoothTestTestMode(
                     }
 
                     navController.navigate(nextRouteWithArguments)
-                    hasNavigated.value = true
-                } else if (runningTestMode) {
-                    onTestComplete()
-                    if (!hasNavigated.value) {
-                        onEvent(TestResultEvent.SaveTestResult)
-                        AddTestResult(
-                            state = state,
-                            onEvent = onEvent,
-                            "Battery Test 2",
-                            "Success",
-                            Date().toString()
-                        )
-                        onEvent(TestResultEvent.SaveTestResult)
-                    }
                     hasNavigated.value = true
                 } else {
                     if (!hasNavigated.value) {
@@ -156,19 +143,35 @@ fun BluetoothTestTestMode(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Bluetooth Test") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+//                navigationIcon = {
+//                    IconButton(onClick = { navController.popBackStack() }) {
+//                        Icon(
+//                            imageVector = Icons.Filled.ArrowBack,
+//                            contentDescription = "Back"
+//                        )
+//                    }
+//                },
+                actions = {
+                    DialogAPIInterface(
+                        testMode = testMode,
+                        showDialog = showDialog
+                    )
                 },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
             )
         }
     ) {
+        TestAPIDialog(
+            testMode = testMode,
+            state = state,
+            onEvent = onEvent,
+            context = context,
+            navController = navController,
+            nextTestRoute = nextTestRoute,
+            showDialog = showDialog
+        )
+
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally

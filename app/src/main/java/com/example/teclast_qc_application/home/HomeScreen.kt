@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.FindInPage
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Save
 import androidx.compose.runtime.*
@@ -17,17 +17,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.teclast_qc_application.home.device_report.DeviceSpecReportList
-import com.example.teclast_qc_application.home.pdf_export.generatePDF
+import com.example.teclast_qc_application.home.pdf_export.generate_pdf.generatePDF
 import com.example.teclast_qc_application.home.pdf_export.getDirectory
 import com.example.teclast_qc_application.home.test_report.TestReportList
 import com.example.teclast_qc_application.test_result.test_results_db.DeleteAllTestResultDialog
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import java.io.File
 
 @Composable
-fun HomeScreen2(state: TestResultState, context: Context, onEvent: (TestResultEvent) -> Unit) {
-
+fun HomeScreen2(
+    state: TestResultState,
+    context: Context,
+    onEvent: (TestResultEvent) -> Unit,
+    navController: NavController
+) {
 
     Box(
         modifier = Modifier
@@ -50,7 +59,7 @@ fun HomeScreen2(state: TestResultState, context: Context, onEvent: (TestResultEv
                 color = MaterialTheme.colors.onPrimary
 
             )
-            ShowDeviceSpecs2(state = state,context =context, onEvent = onEvent)
+            ShowDeviceSpecs2(state = state, context = context, onEvent = onEvent, navController = navController)
         }
     }
 
@@ -59,10 +68,15 @@ fun HomeScreen2(state: TestResultState, context: Context, onEvent: (TestResultEv
 
 
 @Composable
-fun ShowDeviceSpecs2(state: TestResultState, context: Context, onEvent: (TestResultEvent) -> Unit) {
+fun ShowDeviceSpecs2(
+    state: TestResultState,
+    context: Context,
+    onEvent: (TestResultEvent) -> Unit,
+    navController: NavController
+) {
     val tableData_DeviceSpec = DeviceSpecReportList(context)
 
-    val tableData_StateReport = TestReportList(state = state,context =context, onEvent = onEvent)
+    val tableData_StateReport = TestReportList(state = state, context = context, onEvent = onEvent)
     var selectedOption = "Device Specs"
     var selectedTableData = tableData_DeviceSpec
     var column2Text = "State Report"
@@ -73,6 +87,9 @@ fun ShowDeviceSpecs2(state: TestResultState, context: Context, onEvent: (TestRes
 
     val showDeleteAlertDialog = remember { mutableStateOf(false) }
 
+    val DeviceSpec_for_pdf = DeviceSpecReportList(context)
+
+
     // The LazyColumn will be our table. Notice the use of the weights below
     // The Column will be our table. Notice the use of the weights below
     Column(Modifier.fillMaxSize().padding(16.dp)) {
@@ -82,10 +99,27 @@ fun ShowDeviceSpecs2(state: TestResultState, context: Context, onEvent: (TestRes
             Spacer(modifier = Modifier.weight(1f))
             IconButton(
                 onClick = {
-                    generatePDF(context, getDirectory(context))
-                    if (selectedOption == "Test Report") {
-                        Toast.makeText(context, "Report Saved", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Generating Report", Toast.LENGTH_SHORT).show()
+                    try {
+                        CoroutineScope(Dispatchers.IO).async {
+                            generatePDF(
+                                context = context,
+                                directory = getDirectory(context),
+                                state = state,
+                                onEvent = onEvent,
+                                deviceSpec = DeviceSpec_for_pdf
+                            )
+                            // After PDF generation, show the toast on the main thread
+                        }
+
+                    } catch (e: Exception) {
+                        Toast.makeText(context, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
+                    //generatePDFWithBitmap(context, getDirectory(context))
+
+
+                    Toast.makeText(context, "Report Saved", Toast.LENGTH_SHORT).show()
+
                 }) {
                 Icon(
                     Icons.Rounded.Save,
@@ -97,15 +131,41 @@ fun ShowDeviceSpecs2(state: TestResultState, context: Context, onEvent: (TestRes
                 IconButton(onClick = {
                     showDeleteAlertDialog.value = true
                 }) {
-                    Icon(Icons.Rounded.Delete, contentDescription = "Delete Report",
-                        tint = MaterialTheme.colors.onSecondary)
+                    Icon(
+                        Icons.Rounded.Delete, contentDescription = "Delete Report",
+                        tint = MaterialTheme.colors.onSecondary
+                    )
 
                 }
             }
 
-            IconButton(onClick = { /*TODO*/ }) {
-                Icon(Icons.Filled.Share, contentDescription = "Localized description",
-                    tint = MaterialTheme.colors.onSecondary)
+//            IconButton(onClick = { /*TODO*/ }) {
+//                Icon(
+//                    Icons.Filled.Share, contentDescription = "Localized description",
+//                    tint = MaterialTheme.colors.onSecondary
+//                )
+//            }
+
+            IconButton(
+                onClick = {
+                    var checkPDFExist = File(getDirectory(context), "Test_Report.pdf").exists()
+                    if (checkPDFExist) {
+                        try{
+                        navController.navigate("pdf_view_screen")}
+                        catch (e:Exception){
+                            File(getDirectory(context), "Test_Report.pdf").delete()
+                            Toast.makeText(context, "Failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(context, "No Report Found", Toast.LENGTH_SHORT).show()
+                    }
+                },
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.FindInPage,
+                    contentDescription = "Localized description",
+                    tint = MaterialTheme.colors.onPrimary
+                )
             }
         }
 
@@ -137,10 +197,14 @@ fun ShowDeviceSpecs2(state: TestResultState, context: Context, onEvent: (TestRes
             }
         }
         if (showDeleteAlertDialog.value) {
-            DeleteAllTestResultDialog(context = context, state = state, onEvent = onEvent,  showDeleteAlertDialog = showDeleteAlertDialog)
+            DeleteAllTestResultDialog(
+                context = context,
+                state = state,
+                onEvent = onEvent,
+                showDeleteAlertDialog = showDeleteAlertDialog
+            )
         }
     }
-
 }
 
 @Composable
@@ -155,7 +219,7 @@ fun RowScope.TableCell(
             .weight(weight)
             .fillMaxHeight() // Ensuring that TableCell fills the maximum available height
             .padding(8.dp),
-        color = if(text.uppercase() == "PASS") Color.Green else if(text.uppercase() == "FAIL") Color.Red else MaterialTheme.colors.onPrimary
+        color = if (text.uppercase() == "PASS") Color.Green else if (text.uppercase() == "FAIL") Color.Red else MaterialTheme.colors.onPrimary
     )
 }
 

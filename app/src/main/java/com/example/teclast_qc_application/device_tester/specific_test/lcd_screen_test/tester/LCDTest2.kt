@@ -7,8 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,6 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.example.teclast_qc_application.home.device_report.DeviceSpecReportList
 import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -29,9 +30,7 @@ fun LcdTest2(
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
-    runningTestMode: Boolean = false,
-    testMode: String = "StandardMode",
-    onTestComplete: () -> Unit = {},
+    testMode: String = "",
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
@@ -41,6 +40,9 @@ fun LcdTest2(
 
     var colorIndex by remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
+    val currentTestItem = "LCD Test 2"
+    val device_spec_pdf = DeviceSpecReportList(context)
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -49,12 +51,9 @@ fun LcdTest2(
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+                    NavigationPopButton(
+                        navController = navController, testMode = testMode
+                    )
                 }
             )
         },
@@ -89,16 +88,15 @@ fun LcdTest2(
                             Log.i("MyTag:LCDTest2", "nextPath: $nextPath")
                             Log.i("MyTag:LCDTest2", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = "aaaa"
+                            var nextRouteWithArguments = ""
                             if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                             } else {
                                 nextRouteWithArguments = "${nextTestRoute[0]}"
                             }
 
                             navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
-                            onTestComplete()
+                        }
                         else
                             navController.popBackStack()
                     }) {
@@ -116,28 +114,38 @@ fun LcdTest2(
                             Date().toString()
                         )
                         onEvent(TestResultEvent.SaveTestResult)
-                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest2
-                            Log.i("MyTag:LCDTest2", "pastRoute: $pastRoute")
-                            Log.i("MyTag:LCDTest2", "nextTestRoute: $nextTestRoute")
-                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-                            val nextPath = nextTestRoute.drop(1)
-                            val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:LCDTest2", "nextPath: $nextPath")
-                            Log.i("MyTag:LCDTest2", "nextPathString: $nextPathString")
-
-                            var nextRouteWithArguments = "aaaa"
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
-                            } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
-                            }
-
-                            navController.navigate(nextRouteWithArguments)
-                        } else if (runningTestMode)
-                            onTestComplete()
-                        else
-                            navController.popBackStack()
+                        FailTestNavigator(
+                            context = context,
+                            onEvent = onEvent,
+                            state = state,
+                            navController = navController,
+                            testMode = testMode,
+                            navigateToNextTest = navigateToNextTest,
+                            nextTestRoute = nextTestRoute,
+                            currentTestItem = currentTestItem,
+                            deviceSpec = device_spec_pdf
+                        )
+//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
+//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest2
+//                            Log.i("MyTag:LCDTest2", "pastRoute: $pastRoute")
+//                            Log.i("MyTag:LCDTest2", "nextTestRoute: $nextTestRoute")
+//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
+//                            val nextPath = nextTestRoute.drop(1)
+//                            val nextPathString = nextPath.joinToString(separator = "->")
+//                            Log.i("MyTag:LCDTest2", "nextPath: $nextPath")
+//                            Log.i("MyTag:LCDTest2", "nextPathString: $nextPathString")
+//
+//                            var nextRouteWithArguments = ""
+//                            if (nextPathString.isNotEmpty()) {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                            } else {
+//                                nextRouteWithArguments = "${nextTestRoute[0]}"
+//                            }
+//
+//                            navController.navigate(nextRouteWithArguments)
+//                        }
+//                        else
+//                            navController.popBackStack()
                     }) {
                     Text("Fail")
                 }
@@ -173,16 +181,16 @@ fun LcdTest2(
 //
 //                                Log.i("MyTag", "nextPath: $nextPath")
 //                                Log.i("MyTag", "nextPathString: $nextPathString")
-//                                var nextRouteWithArguments = "aaaa"
+//                                var nextRouteWithArguments = ""
 //                                if (nextPathString.isNotEmpty()) {
-//                                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+//                                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
 //                                } else {
 //                                    nextRouteWithArguments = "${nextTestRoute[0]}"
 //                                }
 //
 //                                navController.navigate(nextRouteWithArguments)
 //                            } else if (runningTestMode)
-//                                onTestComplete()
+//                                
 //                            else
 //                                navController.popBackStack()
 //                        }

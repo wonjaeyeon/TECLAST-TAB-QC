@@ -9,14 +9,15 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.DialogAPIInterface
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.example.teclast_qc_application.device_tester.standard_test.api_kit.TestAPIDialog
 import com.example.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -79,14 +80,14 @@ fun TouchPanelTest4(
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     context: Context, navController: NavController,
-    runningTestMode: Boolean = false,
-    onTestComplete: () -> Unit = {},
+    testMode : String = "",
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
     val scaffoldState = rememberScaffoldState()
     val pointerIds = remember { mutableStateListOf<Long>() }
     val pointerPositions = remember { mutableStateMapOf<Long, Offset>() }
+    val showDialog = remember { mutableStateOf(false) }
 
     // Initially set the test result to "Fail"
     LaunchedEffect(key1 = "initialTestResult") {
@@ -108,17 +109,27 @@ fun TouchPanelTest4(
                 title = { Text(text = "Touch Test T4") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
+                actions = {
+                    DialogAPIInterface(
+                        testMode = testMode,
+                        showDialog = showDialog
+                    )
+                },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
+                    NavigationPopButton(navController = navController, testMode = testMode)
                 }
             )
         }
     ) {
+        TestAPIDialog(
+            testMode = testMode,
+            state = state,
+            onEvent = onEvent,
+            context = context,
+            navController = navController,
+            nextTestRoute = nextTestRoute,
+            showDialog = showDialog
+        )
 
         AndroidView(factory = { context ->
             MultiTouchView(context, object : OnMultiTouchListener {
@@ -143,16 +154,15 @@ fun TouchPanelTest4(
                         Log.i("MyTag:TouchPanelTest4", "nextPath: $nextPath")
                         Log.i("MyTag:TouchPanelTest4", "nextPathString: $nextPathString")
 
-                        var nextRouteWithArguments = "aaaa"
+                        var nextRouteWithArguments = ""
                         if (nextPathString.isNotEmpty()) {
-                            nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString"
+                            nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
                         } else {
                             nextRouteWithArguments = "${nextTestRoute[0]}"
                         }
 
                         navController.navigate(nextRouteWithArguments)
-                    } else if (runningTestMode)
-                        onTestComplete()
+                    }
                     else
                         navController.popBackStack()
                 }

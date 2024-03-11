@@ -20,6 +20,11 @@ fun getIPv4Addresses(): String {
     } catch (ex: Exception) {
         ex.printStackTrace()
     }
+
+    if (ipv4Addresses.isEmpty()) {
+        return "unknown"
+    }
+
     return ipv4Addresses[0]
 }
 
@@ -41,5 +46,10 @@ fun getIPv6Addresses(): String {
     } catch (ex: Exception) {
         ex.printStackTrace()
     }
+
+    if (ipv6Addresses.isEmpty()) {
+        return "unknown"
+    }
+
     return ipv6Addresses[0]
 }

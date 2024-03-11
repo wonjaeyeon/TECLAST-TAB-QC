@@ -55,7 +55,7 @@ fun AudioTestScreen(state: TestResultState,
             ) {
                 // Audio Screen Test t1 Button
                 Button(onClick = {
-                    navController.navigate("audio_test_t1_screen/notNextTest"){
+                    navController.navigate("audio_test_t1_screen/notNextTest/NotTestMode"){
 //                        popUpTo("touch_panel_test_screen"){
 //                            inclusive = true
 //

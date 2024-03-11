@@ -22,7 +22,7 @@ import kotlinx.coroutines.withContext
 @Composable
 fun FastModeScreen_2(
     state: TestResultState,
-    onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavHostController
+    onEvent: (TestResultEvent) -> Unit, context: Context, navController: NavHostController, nextTestRoute: MutableList<String>
 ) {
     var progress by remember { mutableStateOf(4/7f) }
     var testsCompleted by remember { mutableStateOf(false) }
@@ -39,25 +39,7 @@ fun FastModeScreen_2(
     // 매우 긴 nextTestRoute를 던져주고 이걸 딱딱 나눠서 보도록 하면 된다. 즉 호출 함수는 그냥 첫 함수인 거고 나머지 뒤에 따라오는 함수들은 내가 정한 nextTestRoute에 따라 따라오는 것이다.
     // nextTestRoute : "~~~~~~screen//~~~~~~~screen//~~~~~~screen//end" 이러면서 맨 앞에 처리된 라우터 새끼들은 싹 다 쳐내는 것이다. 그리고 체크해서 만약에 end면 그냥 함수 navigate.pop 써서 끝내버리면 된다.
 
-    val tests = mutableListOf<String>(
-        "battery_test_test_mode_screen",
-        "wifi_test_test_mode_screen",
-//        "bluetooth_test_test_mode_screen",
-//        "usb_test_test_mode_screen",
-        "touch_panel_test_t2_screen",
-        "touch_panel_test_t4_screen",
-        "lcd_screen_test_t1_screen",
-        "lcd_screen_test_t2_screen",
-        "physical_button_test_t1_screen",
-        "gps_test_t1_screen",
-        "g_sensor_test_t1_screen",
-        "camera_test_t1_screen",
-        "camera_test_t2_screen",
-        "audio_test_t1_screen",
-        "vibration_test_test_mode_screen",
-        "flash_light_test_test_mode_screen",
-        "fast_test_completed_screen"
-    )
+
     if (!testsCompleted) {
         LaunchedEffect(key1 = testsCompleted) {
             withContext(Dispatchers.IO) {
@@ -83,17 +65,17 @@ fun FastModeScreen_2(
                     romTestResult1 = romTest1(state = state, onEvent = onEvent)
                 }
                 progress += 1f / (done.size + undone.size)
-                done.add("7. rom test 1")
-                undone.remove("7. rom test 1")
-                Log.i("StandardModeScreen", "7. romTest1() is called : $romTestResult1 : Percentage : $progress")
+                done.add("6. ROM test 1")
+                undone.remove("6. ROM test 1")
+                Log.i("StandardModeScreen", "6. ROM test 1 is called : $romTestResult1 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
 
                 var cpuTestResult3 = ""
                 progress += 1f / (done.size + undone.size)
-                done.add("3. CPU BURNIN")
-                undone.remove("3. CPU BURNIN")
+                done.add("2. CPU BURNIN")
+                undone.remove("2. CPU BURNIN")
                 runBlocking {
                     cpuTestResult3 = CpuBurnInTest(state = state, onEvent = onEvent, 500L, 16700,this) // fail when 500L/16800
                 }
@@ -109,9 +91,9 @@ fun FastModeScreen_2(
                     gpuTestResult2 = gpu3DTest(state = state, onEvent = onEvent)
                 }
                 progress += 1f / (done.size + undone.size)
-                done.add("5. gpu test 2")
-                undone.remove("5. gpu test 2")
-                Log.i("StandardModeScreen", "5. gpuTest2() is called : $gpuTestResult2 : Percentage : $progress")
+                done.add("4. GPU test 2")
+                undone.remove("4. GPU test 2")
+                Log.i("StandardModeScreen", "4. GPU test 2 is called : $gpuTestResult2 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
@@ -124,13 +106,13 @@ fun FastModeScreen_2(
     }
 
     if (testsCompleted == false) {
-        FastModeTestScreenScaffold(navController = navController, progress = progress, done = done, undone = undone) {
-        }
+        FastModeTestScreenScaffold(navController = navController, nextTestRoute = nextTestRoute, progress = progress, done = done, undone = undone ,content = {}, onEvent= onEvent, state = state, context = context)
+
     }
     if (testsCompleted) {
         BatteryTestTestMode(
             state = state, onEvent = onEvent,
-            context = context, navController = navController, navigateToNextTest = true, nextTestRoute = tests
+            context = context, navController = navController, navigateToNextTest = true, nextTestRoute = nextTestRoute, testMode = "FastMode"
         )
     }
 }
