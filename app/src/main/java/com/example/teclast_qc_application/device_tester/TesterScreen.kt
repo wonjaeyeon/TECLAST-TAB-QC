@@ -1,4 +1,5 @@
-package com.example.teclast_qc_application.device_tester
+package com.teclast_korea.teclast_qc_application.device_tester
+
 import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -76,7 +77,8 @@ fun TriStateToggle2() : String{
         shape = RoundedCornerShape(24.dp),
         elevation = 4.dp,
         modifier = Modifier
-            .wrapContentSize()
+            .wrapContentSize(),
+                color = MaterialTheme.colors.primary
     ) {
         Row {
             states.forEach { text->

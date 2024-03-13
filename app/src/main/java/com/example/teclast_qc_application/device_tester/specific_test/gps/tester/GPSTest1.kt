@@ -1,9 +1,7 @@
 package com.example.teclast_qc_application.device_tester.specific_test.gps.tester
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -19,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
 import com.example.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
@@ -231,19 +228,21 @@ fun GPSTestT1(
     navController: NavController,
     testMode: String = "",
     navigateToNextTest: Boolean = false,
-    nextTestRoute: MutableList<String> = mutableListOf<String>()
+    nextTestRoute: MutableList<String> = mutableListOf<String>(),
+    locationClient: LocationClient // Assuming you have an instance passed here
 ) {
     val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     val isGPSEnabled = remember { mutableStateOf(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) }
     val location = remember { mutableStateOf<Location?>(null) }
-    val hasPermission = remember {
-        mutableStateOf(
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        )
-    }
+//    val hasPermission = remember {
+//        mutableStateOf(
+//            ContextCompat.checkSelfPermission(
+//                context,
+//                Manifest.permission.ACCESS_FINE_LOCATION
+//            ) == PackageManager.PERMISSION_GRANTED
+//        )
+//    }
+    val hasPermission = remember { context.hasLocationPermission() }
     val currentTestItem = "GPS Test 1"
     val device_spec_pdf = DeviceSpecReportList(context)
 
@@ -273,8 +272,20 @@ fun GPSTestT1(
     }
 
     LaunchedEffect(key1 = true) {
-        if (hasPermission.value) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10f, locationListener)
+//        if (hasPermission.value) {
+//            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10f, locationListener)
+//        }
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        isGPSEnabled.value = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+    }
+
+
+    LaunchedEffect(key1 = hasPermission) {
+        if (hasPermission) {
+            locationClient.getLocationUpdates(5000L).collect { loc ->
+                location.value = loc
+                // Check GPS enabled status inside collect if needed
+            }
         }
     }
 

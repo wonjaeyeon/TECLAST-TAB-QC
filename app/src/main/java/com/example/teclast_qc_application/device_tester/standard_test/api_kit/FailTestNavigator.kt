@@ -2,16 +2,9 @@ package com.example.teclast_qc_application.device_tester.standard_test.api_kit
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.home.pdf_export.generate_pdf.generatePDF
-import com.example.teclast_qc_application.home.pdf_export.getDirectory
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import java.io.File
 
 
 fun FailTestNavigator(
@@ -25,35 +18,31 @@ fun FailTestNavigator(
     currentTestItem: String,
     deviceSpec: List<Pair<String, String>>
 ) {
-    val endTestMode = listOf("FastMode", "T-OrderMode")
+    val endTestMode = listOf("FastMode", "TOrderMode","SCSPROMode")
     val nextTestMode = listOf("StandardMode")
     val backTestMode = listOf("NotTestMode")
 
 
 
     if (testMode in endTestMode) {
-        val deviceSpec = deviceSpec
-        val File = File(getDirectory(context), "Test_Report.pdf")
-        if (File.exists()) {
-            File.delete()
-        }
-        Toast.makeText(context, "Test Is Stopped", Toast.LENGTH_SHORT).show()
         onEvent(TestResultEvent.SaveTestResult)
+//        val testResult = state.testResults.filter { it.itemName.contains(currentTestItem) }
+//        while (testResult.isEmpty()){
+//
+//        AddTestResult(
+//            state = state,
+//            onEvent = onEvent,
+//            currentTestItem,
+//            "Fail",
+//            Date().toString()
+//        )
+//        onEvent(TestResultEvent.SaveTestResult)}
         onEvent(TestResultEvent.ClearPreviousTestResults)
-        CoroutineScope(Dispatchers.IO).async {
-            // Generate PDF
-            Toast.makeText(context, "Generating Report", Toast.LENGTH_SHORT).show()
-
-            generatePDF(
-                context = context,
-                directory = getDirectory(context),
-                state = state,
-                onEvent = onEvent,
-                deviceSpec = deviceSpec,
-                testMode = testMode,
-            )
-            Toast.makeText(context, "Report Saved", Toast.LENGTH_SHORT).show()
-        }
+        // show me the current DB data
+//        Log.i(
+//            "FailTestNavigator_TestDB",
+//            TestReportList(context = context, state = state, onEvent = onEvent).toString()
+//        )
         navController.navigate("fast_test_fail_screen/$testMode")
     } else if (testMode in nextTestMode) {
         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {

@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen
+package com.example.teclast_qc_application.device_tester.standard_test.t_order_mode.sub_screen
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -19,13 +19,13 @@ import com.example.teclast_qc_application.test_result.test_results_db.TestResult
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun FastModeTestScreenScaffold(
+fun TOrderModeTestScreenScaffold(
     navController: NavHostController,
     nextTestRoute: MutableList<String>,
     progress: Float,
     done: List<String>,
     undone: List<String>,
-    titleText: String = "Fast Mode Test",
+    titleText: String = "T-Order Mode Test",
     content: @Composable () -> Unit,
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
@@ -50,7 +50,7 @@ fun FastModeTestScreenScaffold(
 //                }
                 actions = {
                     DialogAPIInterface(
-                        testMode = "FastMode",
+                        testMode = "TOrderMode",
                         showDialog = showDialog
                     )
                 },
@@ -59,7 +59,7 @@ fun FastModeTestScreenScaffold(
     ) {
 
         TestAPIDialog(
-            testMode = "FastMode",
+            testMode = "TOrderMode",
             state = state,
             onEvent = onEvent,
             context = context,

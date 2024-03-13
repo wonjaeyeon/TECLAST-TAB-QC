@@ -20,7 +20,7 @@ import com.example.teclast_qc_application.test_result.test_results_db.TestResult
 
 @Composable
 fun DialogAPIInterface(testMode: String, showDialog: MutableState<Boolean>) {
-    if (testMode == "FastMode") {
+    if (testMode == "FastMode" || testMode.lowercase().contains("torder")) {
 
         IconButton(onClick = {
             showDialog.value = true
@@ -83,7 +83,7 @@ fun TestAPIDialog(
             deviceSpec = deviceSpec,
             testMode = testMode
         )
-    } else if (testMode.contains("torder")) {
+    } else if (testMode.lowercase().contains("torder")) {
         // Do nothing
         QuitTestDialog(
             context = context,

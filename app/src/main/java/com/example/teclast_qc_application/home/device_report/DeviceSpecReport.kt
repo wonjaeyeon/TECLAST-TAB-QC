@@ -38,6 +38,8 @@ fun DeviceSpecReportList(
         "RAM" to MemoryInfo(context),
         //"Internal Storage(without system)" to usedStorageInfo(context),
         "Internal Storage(without system)" to usedStorageInfo(context),
+        "Battery Voltage" to getBatteryVoltage(context),
+        "Battery Temperature" to getBatteryTemperature(context),
         "Battery Capacity" to getBatteryCapacity(context),
         "NFC" to context.packageManager.hasSystemFeature(PackageManager.FEATURE_NFC).toString(),
         "Bluetooth version" to getBluetoothVersion(),

@@ -89,8 +89,7 @@ fun VibrationTestTestMode(
                             }
 
                             navController.navigate(nextRouteWithArguments)
-                        }
-                        else
+                        } else
                             navController.popBackStack()
                     }) {
                     Text("Good")
@@ -176,17 +175,19 @@ fun VibrationTestTestMode(
                             Date().toString()
                         )
                         onEvent(TestResultEvent.SaveTestResult)
-                        FailTestNavigator(
-                            context = context,
-                            onEvent = onEvent,
-                            state = state,
-                            navController = navController,
-                            testMode = testMode,
-                            navigateToNextTest = navigateToNextTest,
-                            nextTestRoute = nextTestRoute,
-                            currentTestItem = currentTestItem,
-                            deviceSpec = device_spec_pdf
-                        )
+//                        FailTestNavigator(
+//                            context = context,
+//                            onEvent = onEvent,
+//                            state = state,
+//                            navController = navController,
+//                            testMode = testMode,
+//                            navigateToNextTest = navigateToNextTest,
+//                            nextTestRoute = nextTestRoute,
+//                            currentTestItem = currentTestItem,
+//                            deviceSpec = device_spec_pdf
+//                        )
+
+
 //                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
 //                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
 //                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")

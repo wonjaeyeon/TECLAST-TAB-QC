@@ -37,6 +37,8 @@ fun VibrationTestT1(
         topBar = {
             TopAppBar(
                 title = { Text(text = "Vibration Test") },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+                contentColor = MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(

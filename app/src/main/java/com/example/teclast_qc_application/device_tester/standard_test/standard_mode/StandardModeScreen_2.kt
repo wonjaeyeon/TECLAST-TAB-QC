@@ -28,7 +28,7 @@ fun StandardModeScreen_2(
     var testsCompleted by remember { mutableStateOf(false) }
 
     // var done is empty list
-    val done = remember { mutableStateListOf<String>("1. CPU Buffer", "3. GPU test", "5. RAM test 1", "8. battery test 1") }
+    val done = remember { mutableStateListOf<String>("1. CPU Buffer", "3. GPU test 1", "5. RAM test 1", "8. battery test 1") }
     val undone = remember {
         mutableStateListOf(
             "2. CPU BURNIN",

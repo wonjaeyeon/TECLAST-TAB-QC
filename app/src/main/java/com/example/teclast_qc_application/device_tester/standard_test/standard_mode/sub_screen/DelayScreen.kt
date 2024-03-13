@@ -2,10 +2,7 @@ package com.example.teclast_qc_application.device_tester.standard_test.standard_
 
 import android.annotation.SuppressLint
 import android.content.Context
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -80,6 +77,8 @@ fun StandardModeTestScreenScaffold(
                     .align(Alignment.CenterHorizontally)
                     .fillMaxWidth(2 / 3f), color = Color.Green
             )
+
+            Spacer(modifier = Modifier.padding(16.dp))
 
             Text(text = "done : ${done.joinToString(", ")}")
             Text(text = "undone : ${undone.joinToString(", ")}")

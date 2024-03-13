@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.settings.sub_screen.OpenSource_License
+package com.example.teclast_qc_application.settings.sub_screen.open_source_license
 
 import android.content.Context
 import androidx.compose.foundation.Image

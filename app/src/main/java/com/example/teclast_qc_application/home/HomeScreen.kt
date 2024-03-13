@@ -102,12 +102,16 @@ fun ShowDeviceSpecs2(
                     Toast.makeText(context, "Generating Report", Toast.LENGTH_SHORT).show()
                     try {
                         CoroutineScope(Dispatchers.IO).async {
+                            val testReportList =TestReportList(context = context, state = state, onEvent = onEvent)
+
                             generatePDF(
                                 context = context,
                                 directory = getDirectory(context),
                                 state = state,
                                 onEvent = onEvent,
-                                deviceSpec = DeviceSpec_for_pdf
+                                deviceSpec = DeviceSpec_for_pdf,
+                                testMode = "unknown",
+                                testReportList = testReportList,
                             )
                             // After PDF generation, show the toast on the main thread
                         }

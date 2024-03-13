@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.specific_test.gps.tester
+package com.example.teclast_qc_application.deprecated
 
 //import android.content.Intent
 //import android.location.LocationManager

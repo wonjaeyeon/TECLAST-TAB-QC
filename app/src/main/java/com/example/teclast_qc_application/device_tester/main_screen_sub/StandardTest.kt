@@ -1,6 +1,7 @@
 package com.example.teclast_qc_application.device_tester.main_screen_sub
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -30,8 +31,11 @@ fun StandardTest(context: Context, navController: NavHostController) {
             val button = buttons[index]
             ButtonWithJYEffect(
                 onClick = {
+                    Log.i("CheckingNameLogic", "${button.first}")
+                    button.first.replace("-", "")
+                    Log.i("CheckingNameLogic2", "${button.first}")
                     try {
-                        navController.navigate("${button.first.lowercase().replace(" ", "_")}_screen")
+                        navController.navigate("${button.first.replace("-", " ").lowercase().replace(" ", "_")}_screen")
                     }
                     catch (e: Exception){
 

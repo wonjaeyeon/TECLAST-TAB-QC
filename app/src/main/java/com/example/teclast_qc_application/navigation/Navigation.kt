@@ -13,7 +13,7 @@ import com.example.teclast_qc_application.BottomNavItem
 import com.example.teclast_qc_application.HomeScreen2
 import com.example.teclast_qc_application.LogScreen
 import com.example.teclast_qc_application.MainActivity
-import com.example.teclast_qc_application.device_tester.TesterScreen2
+import com.example.teclast_qc_application.device_tester.standard_test.fast_mode.FastModeScreen
 import com.example.teclast_qc_application.device_tester.specific_test.audio.AudioTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.audio.tester.AudioTestT1
 import com.example.teclast_qc_application.device_tester.specific_test.auto_sleep.AutoSleepTestScreen
@@ -33,7 +33,9 @@ import com.example.teclast_qc_application.device_tester.specific_test.flash_ligh
 import com.example.teclast_qc_application.device_tester.specific_test.g_sensor.GSensorTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.g_sensor.tester.GSensorTestT1
 import com.example.teclast_qc_application.device_tester.specific_test.gps.GPSTestScreen
+import com.example.teclast_qc_application.device_tester.specific_test.gps.tester.DefaultLocationClient
 import com.example.teclast_qc_application.device_tester.specific_test.gps.tester.GPSTestT1
+import com.example.teclast_qc_application.device_tester.specific_test.gps.tester.LocationClient
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.GpuTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.lcd_screen_test.LcdScreenTest
 import com.example.teclast_qc_application.device_tester.specific_test.lcd_screen_test.tester.LcdTest1
@@ -52,20 +54,24 @@ import com.example.teclast_qc_application.device_tester.specific_test.vibration.
 import com.example.teclast_qc_application.device_tester.specific_test.vibration.tester.VibrationTestTestMode
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.WifiTestScreen
 import com.example.teclast_qc_application.device_tester.specific_test.wifi.tester.WifiTestTestMode
-import com.example.teclast_qc_application.device_tester.standard_test.fast_mode.FastModeScreen
 import com.example.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen.FastTestCompletedScreen
 import com.example.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen.FastTestFailedScreen
 import com.example.teclast_qc_application.device_tester.standard_test.standard_mode.StandardModeScreen
 import com.example.teclast_qc_application.device_tester.standard_test.standard_mode.sub_screen.StandardTestCompletedScreen
+import com.example.teclast_qc_application.device_tester.standard_test.t_order_mode.TOrderModeScreen
+import com.example.teclast_qc_application.device_tester.standard_test.t_order_mode.sub_screen.TOrderTestCompletedScreen
+import com.example.teclast_qc_application.device_tester.standard_test.t_order_mode.sub_screen.TOrderTestFailedScreen
 import com.example.teclast_qc_application.home.pdf_export.view_pdf.ComposePDFViewer
 import com.example.teclast_qc_application.log_reports.SubLogScreen
 import com.example.teclast_qc_application.settings.SettingsScreen
-import com.example.teclast_qc_application.settings.sub_screen.OpenSource_License.OpenSourceLicenseScreen
 import com.example.teclast_qc_application.settings.sub_screen.app_version.AppVersionScreen
 import com.example.teclast_qc_application.settings.sub_screen.color_theme.ColorThemeModeScreen
+import com.example.teclast_qc_application.settings.sub_screen.open_source_license.OpenSourceLicenseScreen
 import com.example.teclast_qc_application.settings.sub_screen.test_result.TestResultDBScreen
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
+import com.google.android.gms.location.LocationServices
+import com.teclast_korea.teclast_qc_application.device_tester.TesterScreen2
 import kotlin.reflect.KFunction1
 
 @RequiresApi(34)
@@ -828,6 +834,12 @@ fun navigationGraph(
             val nextTestRoute = backStackEntry.arguments?.getString("nextTestRoute")
             val testMode =
                 backStackEntry.arguments?.getString("testMode") ?: "NotTestMode" // default value is "NotNextTest"
+            val locationClient: LocationClient by lazy {
+                DefaultLocationClient(
+                    context = context,
+                    client = LocationServices.getFusedLocationProviderClient(context)
+                )
+            }
 
             if (nextTestRoute == "notNextTest") {
                 GPSTestT1(
@@ -835,7 +847,8 @@ fun navigationGraph(
                     onEvent = onEvent,
                     context = context,
                     navController = navController,
-                    testMode = testMode
+                    testMode = testMode,
+                    locationClient = locationClient
                 )
             } else {
                 //split nextTestRoute to get the test name
@@ -849,7 +862,8 @@ fun navigationGraph(
                     navController = navController,
                     navigateToNextTest = true,
                     nextTestRoute = nextTestNameList,
-                    testMode = testMode
+                    testMode = testMode,
+                    locationClient = locationClient
                 )
             }
         }
@@ -920,6 +934,24 @@ fun navigationGraph(
             )
         }
 
+        // this is just for emergency
+        composable("standard_test_completed_screen/{emergency}/{testMode}", arguments = listOf(
+            navArgument("emergency") {
+                type = NavType.StringType
+            },
+            navArgument("testMode") {
+                type = NavType.StringType
+            })
+        ) {
+            StandardTestCompletedScreen(
+                context = context,
+                state = state,
+                navController = navController,
+                onEvent = onEvent,
+                onExitApp = onExitApp
+            )
+        }
+
         //Fast Mode Test
         composable("fast_mode_screen") {
             FastModeScreen(state = state, onEvent = onEvent, context = context, navController = navController)
@@ -932,11 +964,31 @@ fun navigationGraph(
         composable("fast_test_completed_screen") {
             FastTestCompletedScreen(
                 context = context,
+                state = state,
                 navController = navController,
                 onEvent = onEvent,
                 onExitApp = onExitApp
             )
         }
+
+        //just for emergency
+        composable("fast_test_completed_screen/{emergency}/{testMode}", arguments = listOf(
+            navArgument("emergency") {
+                type = NavType.StringType
+            },
+            navArgument("testMode") {
+                type = NavType.StringType
+            })
+        ) {
+            FastTestCompletedScreen(
+                context = context,
+                state = state,
+                navController = navController,
+                onEvent = onEvent,
+                onExitApp = onExitApp
+            )
+        }
+
 
         composable("fast_test_fail_screen/{testMode}",
             arguments = listOf(navArgument("testMode") { type = NavType.StringType })
@@ -968,6 +1020,60 @@ fun navigationGraph(
                 //deviceSpec = deviceSpec,
             )
         }
+
+
+
+        ///////////////////////////////////////
+        //TOrder Mode Test
+        composable("t_order_mode_screen") {
+            TOrderModeScreen(state = state, onEvent = onEvent, context = context, navController = navController)
+        }
+
+
+        composable("t_order_test_completed_screen") {
+            TOrderTestCompletedScreen(
+                context = context,
+                state = state,
+                navController = navController,
+                onEvent = onEvent,
+                onExitApp = onExitApp
+            )
+        }
+
+        //just for emergency
+        composable("t_order_test_completed_screen/{emergency}/{testMode}", arguments = listOf(
+            navArgument("emergency") {
+                type = NavType.StringType
+            },
+            navArgument("testMode") {
+                type = NavType.StringType
+            })
+        ) {
+            TOrderTestCompletedScreen(
+                context = context,
+                state = state,
+                navController = navController,
+                onEvent = onEvent,
+                onExitApp = onExitApp
+            )
+        }
+
+
+        composable("t_order_test_fail_screen/{testMode}",
+            arguments = listOf(navArgument("testMode") { type = NavType.StringType })
+        ) {backStackEntry ->
+            //  NOTE : 이 코드는 4번이나 반복되는 코드다.
+            TOrderTestFailedScreen(
+                context = context,
+                navController = navController,
+                onEvent = onEvent,
+                state = state,
+                onExitApp = onExitApp,
+                //deviceSpec = deviceSpec,
+            )
+        }
+
+
 
 
 
