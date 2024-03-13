@@ -41,15 +41,15 @@ suspend fun gpuTest1(state: TestResultState,
             val error = egl.eglGetError()
             if (error != EGL10.EGL_SUCCESS) {
 
-                AddTestResult(state = state, onEvent = onEvent, "GPU TEST", "Fail", Date().toString())
-                "Error: EGL error code $error"
+                AddTestResult(state = state, onEvent = onEvent, "GPU TEST 1", "Fail", Date().toString())
+                "GPU TEST 1: Fail. EGL error code $error"
             } else {
-                AddTestResult(state = state, onEvent = onEvent, "GPU TEST", "Success", Date().toString())
-                "GPU TEST: Success"
+                AddTestResult(state = state, onEvent = onEvent, "GPU TEST 1", "Success", Date().toString())
+                "GPU TEST 1: Success"
             }
         } catch (error: Exception) {
-            AddTestResult(state = state, onEvent = onEvent, "GPU TEST", "Fail", Date().toString())
-            "Error: ${error.message}"
+            AddTestResult(state = state, onEvent = onEvent, "GPU TEST 1", "Fail", Date().toString())
+            "GPU TEST 1: Fail. Error : ${error.message}"
         }
     }
 }

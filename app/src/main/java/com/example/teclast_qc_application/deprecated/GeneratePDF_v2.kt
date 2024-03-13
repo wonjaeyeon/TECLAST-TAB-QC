@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.home.pdf_export.generate_pdf
+package com.example.teclast_qc_application.deprecated
 
 //import android.content.Context
 //import android.graphics.Bitmap

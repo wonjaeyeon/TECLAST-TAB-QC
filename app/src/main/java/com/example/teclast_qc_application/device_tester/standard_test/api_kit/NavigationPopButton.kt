@@ -17,8 +17,7 @@ fun NavigationPopButton(navController: NavController, testMode: String = "NotTes
                 contentDescription = "Back",
             )
         }
-    }
-    else if (testMode == "StandardMode"){
+    } else if (testMode == "StandardMode") {
         // Do nothing
 //        IconButton( onClick = {},
 //            enabled = false
@@ -28,8 +27,7 @@ fun NavigationPopButton(navController: NavController, testMode: String = "NotTes
 //                contentDescription = "Back",
 //            )
 //        }
-    }
-    else if (testMode == "FastMode"){
+    } else if (testMode == "FastMode") {
         // Do nothing
 //        IconButton( onClick = {},
 //            enabled = false
@@ -39,8 +37,9 @@ fun NavigationPopButton(navController: NavController, testMode: String = "NotTes
 //                contentDescription = "Back",
 //            )
 //        }
-    }
-    else {
+    } else if (testMode.lowercase().contains("torder")) {
+        // Do nothing
+    } else {
         // Do nothing
     }
 }

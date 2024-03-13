@@ -1,6 +1,9 @@
 package com.example.teclast_qc_application.home.device_spec
 
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
 import androidx.compose.runtime.Composable
 import java.lang.reflect.Method
 
@@ -26,4 +29,37 @@ fun getBatteryCapacity(context: Context): String {
     }
 
     return batteryCapacity
+}
+
+
+
+
+fun getBatteryVoltage(context: Context): String {
+    val batteryStatus: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { filter ->
+        context.registerReceiver(null, filter)
+    }
+
+    val voltage = batteryStatus?.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1) ?: -1
+    return if (voltage != -1) {
+        "$voltage mV"
+    } else {
+        "unknown"
+    }
+}
+
+
+fun getBatteryTemperature(context: Context): String {
+    val batteryStatus: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { filter ->
+        context.registerReceiver(null, filter)
+    }
+
+    // Battery temperature is returned in tenths of a degree Celsius.
+    val temperatureTenths = batteryStatus?.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) ?: -1
+
+    return if (temperatureTenths != -1) {
+        val temperatureCelsius = temperatureTenths / 10.0
+        "$temperatureCelsius °C"
+    } else {
+        "unknown"
+    }
 }

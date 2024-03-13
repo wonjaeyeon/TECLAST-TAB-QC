@@ -15,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import com.example.teclast_qc_application.R
-import com.example.teclast_qc_application.home.test_report.TestReportList
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.io.File
@@ -125,7 +124,8 @@ fun generatePDF(
     onEvent: (TestResultEvent) -> Unit,
     deviceSpec: List<Pair<String, String>>,
     testMode: String = "Not Found",
-    showToast: Boolean = false
+    showToast: Boolean = false,
+    testReportList: List<Pair<String, String>>
 ) {
     val pageHeight = 1600
     val pageWidth = 1200
@@ -144,7 +144,6 @@ fun generatePDF(
         "TestMode" to testMode,
         "Date" to date,
     )
-    val testReportList = TestReportList(context = context, state = state, onEvent = onEvent)
     Log.i("testReportList - generatePDF", testReportList.toString())
 
     var yPos = 40f
@@ -218,7 +217,16 @@ fun generatePDF(
 
 
     // Drawing QC Inspection's Name and Date
-    drawTextAndCheckPage("QC TEST Report_${deviceSpec[0].second}", 160f, forceYPose = 100f, titleSize = TitleSize.BIG)
+    if (deviceSpec[0].second == "" || deviceSpec[0].second == "unknown") {
+        drawTextAndCheckPage("QC TEST Report", 160f, forceYPose = 100f, titleSize = TitleSize.BIG)
+    } else {
+        drawTextAndCheckPage(
+            "QC TEST Report_${deviceSpec[0].second}",
+            160f,
+            forceYPose = 100f,
+            titleSize = TitleSize.BIG
+        )
+    }
 
     yPos += 100 // Adjust yPos after drawing the title
 

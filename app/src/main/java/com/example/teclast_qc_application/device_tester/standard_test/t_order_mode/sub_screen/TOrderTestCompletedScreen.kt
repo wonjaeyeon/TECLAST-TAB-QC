@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen
+package com.example.teclast_qc_application.device_tester.standard_test.t_order_mode.sub_screen
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -32,7 +32,7 @@ import java.io.File
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun FastTestCompletedScreen(
+fun TOrderTestCompletedScreen(
     context: Context,
     state: TestResultState,
     navController: NavHostController,
@@ -108,7 +108,7 @@ fun FastTestCompletedScreen(
                             onEvent(TestResultEvent.ClearPreviousTestResults)
                             // Pop back to the root of the navigation stack, effectively clearing it.
                             Log.i(
-                                "FastTestCompletedScreen_TestDB",
+                                "TOrderTestCompletedScreen_TestDB",
                                 TestReportList(context = context, state = state, onEvent = onEvent).toString()
                             ) // TODO : this is the safest place and most logical place : 괜히 디스코드 인스타 꼼수 따라하지 말자.
 
@@ -134,7 +134,7 @@ fun FastTestCompletedScreen(
                                     state = state,
                                     onEvent = onEvent,
                                     deviceSpec = device_spec_pdf,
-                                    testMode = "FastMode",
+                                    testMode = "TOrderMode",
                                     testReportList = testReportList,
                                 )
                                 currentLoadingPage.value += 1.0
@@ -161,7 +161,7 @@ fun FastTestCompletedScreen(
                             onEvent(TestResultEvent.ClearPreviousTestResults)
                             // Pop back to the root of the navigation stack, effectively clearing it.
                             Log.i(
-                                "FastTestFailScreen_TestDB",
+                                "TOrderTestFailScreen_TestDB",
                                 TestReportList(context = context, state = state, onEvent = onEvent).toString()
                             ) // TODO : this is the safest place and most logical place : 괜히 디스코드 인스타 꼼수 따라하지 말자.
 
@@ -187,7 +187,7 @@ fun FastTestCompletedScreen(
                                     state = state,
                                     onEvent = onEvent,
                                     deviceSpec = device_spec_pdf,
-                                    testMode = "FastMode",
+                                    testMode = "TOrderMode",
                                     testReportList = testReportList,
                                 )
                                 currentLoadingPage.value += 1.0

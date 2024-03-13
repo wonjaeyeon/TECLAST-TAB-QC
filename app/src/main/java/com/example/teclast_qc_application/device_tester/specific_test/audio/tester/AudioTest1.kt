@@ -48,20 +48,43 @@ fun AudioTestT1(
     val rightMediaPlayer = MediaPlayer.create(context, R.raw.right_sound)
     rightMediaPlayer.setVolume(0f, 1f)
     val isRightPlaying = remember { mutableStateOf(false) }
+
+    val leftMediaPlayerReleased = remember { mutableStateOf(false) }
+    val rightMediaPlayerReleased = remember { mutableStateOf(false) }
+
     val currentTestItem = "Audio Test 1"
     val device_spec_pdf = DeviceSpecReportList(context = context)
 
+
     // Define a cleanup function
+//    fun cleanUpMediaPlayers() {
+//        if (leftMediaPlayer.isPlaying) {
+//            leftMediaPlayer.pause()
+//        }
+//        leftMediaPlayer.release()
+//
+//        if (rightMediaPlayer.isPlaying) {
+//            rightMediaPlayer.pause()
+//        }
+//        rightMediaPlayer.release()
+//    }
+
     fun cleanUpMediaPlayers() {
-        if (leftMediaPlayer.isPlaying) {
+        if (!leftMediaPlayerReleased.value && leftMediaPlayer.isPlaying) {
             leftMediaPlayer.pause()
         }
-        leftMediaPlayer.release()
+        if (!leftMediaPlayerReleased.value) {
+            leftMediaPlayer.release()
+            leftMediaPlayerReleased.value = true
+        }
 
-        if (rightMediaPlayer.isPlaying) {
+        if (!rightMediaPlayerReleased.value && rightMediaPlayer.isPlaying) {
             rightMediaPlayer.pause()
         }
-        rightMediaPlayer.release()
+        if (!rightMediaPlayerReleased.value) {
+            rightMediaPlayer.release()
+            rightMediaPlayerReleased.value = true
+        }
     }
 
     Scaffold(
@@ -103,6 +126,8 @@ fun AudioTestT1(
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
+                        cleanUpMediaPlayers()
+
                         onEvent(TestResultEvent.SaveTestResult)
                         AddTestResult(
                             state = state,
@@ -143,6 +168,8 @@ fun AudioTestT1(
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
+                        cleanUpMediaPlayers()
+
                         onEvent(TestResultEvent.SaveTestResult)
                         AddTestResult(
                             state = state,

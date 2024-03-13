@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.standard_test.fast_mode
+package com.example.teclast_qc_application.device_tester.standard_test.t_order_mode
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,7 +10,7 @@ import com.example.teclast_qc_application.device_tester.specific_test.cpu.tester
 import com.example.teclast_qc_application.device_tester.specific_test.gpu.tester.gpu3DTest
 import com.example.teclast_qc_application.device_tester.specific_test.rom.tester.romTest1
 import com.example.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
-import com.example.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen.FastModeTestScreenScaffold
+import com.example.teclast_qc_application.device_tester.standard_test.t_order_mode.sub_screen.TOrderModeTestScreenScaffold
 import com.example.teclast_qc_application.home.device_report.DeviceSpecReportList
 import com.example.teclast_qc_application.test_result.test_results_db.CheckTestResultbyItem
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
@@ -20,9 +20,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
+
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun FastModeScreen_2(
+fun TOrderModeScreen_2(
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
@@ -34,7 +35,7 @@ fun FastModeScreen_2(
 
     // var done is empty list
     val done =
-        remember { mutableStateListOf<String>("1. CPU Buffer", "3. GPU test 1", "5. RAM test 1", "7. battery test 1") }
+        remember { mutableStateListOf<String>("1. CPU Buffer", "3. GPU test 1", "5. RAM test 1", "8. battery test 1") }
     val undone = remember {
         mutableStateListOf(
             "2. CPU BURNIN",
@@ -46,7 +47,6 @@ fun FastModeScreen_2(
     val doneTests = listOf("CPU BURNIN TEST", "GPU TEST 2", "ROM TEST")
     val device_spec_pdf = DeviceSpecReportList(context = context)
     val isAnyTestFailed = remember { mutableStateOf(false) }
-    val hasCheckedEveryTest = remember { mutableStateOf(false) }
     // 매우 긴 nextTestRoute를 던져주고 이걸 딱딱 나눠서 보도록 하면 된다. 즉 호출 함수는 그냥 첫 함수인 거고 나머지 뒤에 따라오는 함수들은 내가 정한 nextTestRoute에 따라 따라오는 것이다.
     // nextTestRoute : "~~~~~~screen//~~~~~~~screen//~~~~~~screen//end" 이러면서 맨 앞에 처리된 라우터 새끼들은 싹 다 쳐내는 것이다. 그리고 체크해서 만약에 end면 그냥 함수 navigate.pop 써서 끝내버리면 된다.
 
@@ -54,9 +54,9 @@ fun FastModeScreen_2(
     if (!testsCompleted) {
         LaunchedEffect(key1 = testsCompleted) {
             withContext(Dispatchers.IO) {
-                Log.i("FastModeScreen_2", "Test Started")
+                Log.i("TOrderModeScreen", "Test Started")
                 onEvent(TestResultEvent.StartTest)
-                Log.i("FastModeScreen_2", "Test DataBase is Ready")
+                Log.i("TOrderModeScreen", "Test DataBase is Ready")
 
                 // Cpu Test
                 delay(100L)
@@ -66,7 +66,7 @@ fun FastModeScreen_2(
 //                progress += 1f / (done.size + undone.size)
 //                done.add("2. CPU TEST 1")
 //                undone.remove("2. CPU TEST 1")
-//                Log.i("FastModeScreen_2", "2. cpuTest1() is called : $cpuTestResult2 : Percentage : $progress")
+//                Log.i("TOrderModeScreen", "2. cpuTest1() is called : $cpuTestResult2 : Percentage : $progress")
 //                delay(100L)
 //                onEvent(TestResultEvent.SaveTestResult)
 //                delay(100L)
@@ -78,7 +78,7 @@ fun FastModeScreen_2(
                 progress += 1f / (done.size + undone.size)
                 done.add("6. ROM test 1")
                 undone.remove("6. ROM test 1")
-                Log.i("FastModeScreen_2", "6. ROM test 1 is called : $romTestResult1 : Percentage : $progress")
+                Log.i("TOrderModeScreen", "6. ROM test 1 is called : $romTestResult1 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
@@ -88,15 +88,10 @@ fun FastModeScreen_2(
                 done.add("2. CPU BURNIN")
                 undone.remove("2. CPU BURNIN")
                 runBlocking {
-                    cpuTestResult3 = CpuBurnInTest(
-                        state = state,
-                        onEvent = onEvent,
-                        500L,
-                        16800,
-                        this
-                    ) // fail when 500L/16800 // pass when 500L/16700
+                    cpuTestResult3 =
+                        CpuBurnInTest(state = state, onEvent = onEvent, 500L, 16700, this) // fail when 500L/16800
                 }
-                Log.i("FastModeScreen_2", "3. CpuBurnInTest() is called : $cpuTestResult3 : Percentage : $progress")
+                Log.i("TOrderModeScreen", "3. CpuBurnInTest() is called : $cpuTestResult3 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
@@ -109,7 +104,7 @@ fun FastModeScreen_2(
                 progress += 1f / (done.size + undone.size)
                 done.add("4. GPU test 2")
                 undone.remove("4. GPU test 2")
-                Log.i("FastModeScreen_2", "4. GPU test 2 is called : $gpuTestResult2 : Percentage : $progress")
+                Log.i("TOrderModeScreen", "4. GPU test 2 is called : $gpuTestResult2 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
@@ -122,7 +117,7 @@ fun FastModeScreen_2(
     }
 
     if (testsCompleted == false) {
-        FastModeTestScreenScaffold(
+        TOrderModeTestScreenScaffold(
             navController = navController,
             nextTestRoute = nextTestRoute,
             progress = progress,
@@ -137,13 +132,12 @@ fun FastModeScreen_2(
     }
     if (testsCompleted) {
 
-
-        if (!isAnyTestFailed.value && !hasCheckedEveryTest.value) {
+        if (!isAnyTestFailed.value) {
             doneTests.forEach { doneTest ->
                 run {
-                    Log.i("FastModeScreen_2", "Done Test: $doneTest")
+                    Log.i("TOrderModeScreen", "Done Test: $doneTest")
                     if (CheckTestResultbyItem(state = state, onEvent = onEvent, itemName = doneTest) == "FAIL") {
-                        Log.i("FastModeScreen_2", "Done Test: $doneTest is Failed")
+                        Log.i("TOrderModeScreen", "Done Test: $doneTest is Failed")
                         FailTestNavigator(
                             context = context,
                             onEvent = onEvent,
@@ -157,16 +151,13 @@ fun FastModeScreen_2(
                         )
                         isAnyTestFailed.value = true
                     } else {
-                        Log.i("FastModeScreen_2", "Done Test: $doneTest is Passed")
+                        Log.i("TOrderModeScreen", "Done Test: $doneTest is Passed")
 
                     }
                 }
             }
-            hasCheckedEveryTest.value = true
         }
-
         if (!isAnyTestFailed.value) {
-            Log.i("FastModeScreen_2", "every test in FastModeScreen_2 is passed")
             BatteryTestTestMode(
                 state = state,
                 onEvent = onEvent,
@@ -174,14 +165,9 @@ fun FastModeScreen_2(
                 navController = navController,
                 navigateToNextTest = true,
                 nextTestRoute = nextTestRoute,
-                testMode = "FastMode"
+                testMode = "TOrderMode"
             )
         }
-
-//        BatteryTestTestMode(
-//            state = state, onEvent = onEvent,
-//            context = context, navController = navController, navigateToNextTest = true, nextTestRoute = nextTestRoute, testMode = "FastMode"
-//        )
     }
 }
 

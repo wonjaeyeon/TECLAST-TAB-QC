@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.teclast_qc_application.home.pdf_export.generate_pdf.generatePDF
 import com.example.teclast_qc_application.home.pdf_export.getDirectory
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.example.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -54,23 +53,28 @@ fun QuitTestDialog(
                     showDeleteAlertDialog.value = false
                     onEvent(TestResultEvent.SaveTestResult)
                     onEvent(TestResultEvent.ClearPreviousTestResults)
-                    Toast.makeText(context, "Generating Report", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "Generating Report", Toast.LENGTH_SHORT).show()
 //                    try {
 //                        CoroutineScope(Dispatchers.IO).async {
-                    generatePDF(
-                        context = context,
-                        directory = getDirectory(context),
-                        state = state,
-                        onEvent = onEvent,
-                        deviceSpec = deviceSpec,
-                        testMode = testMode,
-                    )
+
+//                    val testReportList = TestReportList(context = context, state = state, onEvent = onEvent)
+//
+//                    generatePDF(
+//                        context = context,
+//                        directory = getDirectory(context),
+//                        state = state,
+//                        onEvent = onEvent,
+//                        deviceSpec = deviceSpec,
+//                        testMode = testMode,
+//                        testReportList = testReportList,
+//                    )
+
 //                        }
 //                    } catch (e: Exception) {
 //                        Toast.makeText(context, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
 //                    }
 
-                    Toast.makeText(context, "Report Saved", Toast.LENGTH_SHORT).show()
+ //                   Toast.makeText(context, "Report Saved", Toast.LENGTH_SHORT).show()
                     navController.navigate("fast_test_fail_screen/$testMode")
                 }
             ) {

@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.specific_test.gps.tester
+package com.example.teclast_qc_application.deprecated
 
 //import androidx.compose.runtime.mutableStateOf
 //import androidx.lifecycle.ViewModel

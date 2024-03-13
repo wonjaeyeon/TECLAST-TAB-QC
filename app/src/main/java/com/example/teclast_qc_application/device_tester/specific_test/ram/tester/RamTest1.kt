@@ -25,13 +25,13 @@ fun ramTest1(
         for (i in originalData.indices) {
             if (originalData[i] != verifyTestData[i]) {
                 AddTestResult(state = state, onEvent = onEvent, "RAM TEST", "Fail", Date().toString())
-                return "RAM TEST: Failed"
+                return "RAM TEST: Fail"
             }
         }
         AddTestResult(state = state, onEvent = onEvent, "RAM TEST", "Success", Date().toString())
         "RAM TEST: Success"
     } catch (error: Exception) {
         AddTestResult(state = state, onEvent = onEvent, "RAM TEST", "Fail", Date().toString())
-        "Error: ${error.message}"
+        "RAM TEST: Fail : Error: ${error.message}"
     }
 }

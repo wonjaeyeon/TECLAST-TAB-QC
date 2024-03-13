@@ -37,7 +37,7 @@ package com.example.teclast_qc_application.deprecated
 //            "1. CPU Buffer",
 //            //"2. CPU TEST 1",
 //            "2. CPU BURNIN",
-//            "3. GPU test",
+//            "3. GPU test 1",
 //            "4. GPU test 2",
 //            "5. RAM test 1",
 //            "6. ROM test 1",

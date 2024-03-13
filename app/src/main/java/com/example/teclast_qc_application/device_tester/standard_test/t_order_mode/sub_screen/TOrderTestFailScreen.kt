@@ -1,4 +1,4 @@
-package com.example.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen
+package com.example.teclast_qc_application.device_tester.standard_test.t_order_mode.sub_screen
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,7 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.TaskAlt
+import androidx.compose.material.icons.filled.Unpublished
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -32,29 +32,35 @@ import java.io.File
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun FastTestCompletedScreen(
+fun TOrderTestFailedScreen(
     context: Context,
-    state: TestResultState,
     navController: NavHostController,
     onEvent: (TestResultEvent) -> Unit,
-    onExitApp: () -> Unit
+    state: TestResultState,
+    onExitApp: () -> Unit,
 ) {
+
     val isLoading = remember { mutableStateOf(false) }
     val currentLoadingPage = remember { mutableDoubleStateOf(0.0) }
     val pageCount = remember { mutableDoubleStateOf(5.0) }
 
     val device_spec_pdf = DeviceSpecReportList(context)
 
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Test Completed") },
+                title = { Text(text = "Test Failed") },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 contentColor = MaterialTheme.colors.onPrimary,
 
                 )
         }
     ) {
+//        Log.i(
+//            "FailTestFailScreen_TestDB-inScaffold",
+//            TestReportList(context = context, state = state, onEvent = onEvent).toString()
+//        )
         onEvent(TestResultEvent.SaveTestResult)
         onEvent(TestResultEvent.ClearPreviousTestResults)
         onEvent(TestResultEvent.SaveTestResult)
@@ -92,12 +98,12 @@ fun FastTestCompletedScreen(
                         .fillMaxSize()
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.TaskAlt,
-                        contentDescription = "Completed",
-                        tint = Color.Green,
+                        imageVector = Icons.Filled.Unpublished,
+                        contentDescription = "Failed",
+                        tint = Color.Red,
                         modifier = Modifier.size(120.dp)
                     )
-                    Text(text = "Test Finished", style = MaterialTheme.typography.h4)
+                    Text(text = "Test Failed", style = MaterialTheme.typography.h4)
                     Spacer(modifier = Modifier.height(32.dp))
                     Button(
                         onClick = {
@@ -108,14 +114,13 @@ fun FastTestCompletedScreen(
                             onEvent(TestResultEvent.ClearPreviousTestResults)
                             // Pop back to the root of the navigation stack, effectively clearing it.
                             Log.i(
-                                "FastTestCompletedScreen_TestDB",
+                                "TOrderTestFailScreen_TestDB",
                                 TestReportList(context = context, state = state, onEvent = onEvent).toString()
                             ) // TODO : this is the safest place and most logical place : 괜히 디스코드 인스타 꼼수 따라하지 말자.
 
                             currentLoadingPage.value += 1.0
 
                             CoroutineScope(Dispatchers.IO).launch {
-
 
                                 val File = File(getDirectory(context), "Test_Report.pdf")
                                 if (File.exists()) {
@@ -134,7 +139,7 @@ fun FastTestCompletedScreen(
                                     state = state,
                                     onEvent = onEvent,
                                     deviceSpec = device_spec_pdf,
-                                    testMode = "FastMode",
+                                    testMode = "TOrderMode",
                                     testReportList = testReportList,
                                 )
                                 currentLoadingPage.value += 1.0
@@ -161,7 +166,7 @@ fun FastTestCompletedScreen(
                             onEvent(TestResultEvent.ClearPreviousTestResults)
                             // Pop back to the root of the navigation stack, effectively clearing it.
                             Log.i(
-                                "FastTestFailScreen_TestDB",
+                                "TOrderTestFailScreen_TestDB",
                                 TestReportList(context = context, state = state, onEvent = onEvent).toString()
                             ) // TODO : this is the safest place and most logical place : 괜히 디스코드 인스타 꼼수 따라하지 말자.
 
@@ -187,7 +192,7 @@ fun FastTestCompletedScreen(
                                     state = state,
                                     onEvent = onEvent,
                                     deviceSpec = device_spec_pdf,
-                                    testMode = "FastMode",
+                                    testMode = "TOrderMode",
                                     testReportList = testReportList,
                                 )
                                 currentLoadingPage.value += 1.0
