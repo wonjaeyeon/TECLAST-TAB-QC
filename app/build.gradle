@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.android.gms.oss-licenses-plugin'
 }
 
 android {
@@ -13,11 +14,11 @@ android {
 //            keyPassword compose_version
 //        }
 //    }
-    namespace 'com.example.teclast_qc_application'
+    namespace 'com.teclast_korea.teclast_qc_application'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.teclast_qc_application"
+        applicationId "com.teclast_korea.teclast_qc_application"
         minSdk 28
         targetSdk 34
         versionCode 1
@@ -57,6 +58,9 @@ android {
 }
 
 dependencies {
+
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.1'
+
 
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.ar.sceneform:filament-android:1.17.1'
