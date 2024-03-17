@@ -1,7 +1,6 @@
 package com.teclast_korea.teclast_qc_application.settings
 
 import android.content.Context
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,7 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.teclast_korea.teclast_qc_application.BuildConfig
 
 
 @Composable
@@ -58,7 +57,7 @@ fun SettingsScreen(
         ListItem(
             3,
             "App Version",
-            "v 1.0.0",
+            "v ${BuildConfig.VERSION_NAME}",
             Icons.Filled.PhoneIphone,
             "app_version_screen"
         ),
@@ -66,7 +65,7 @@ fun SettingsScreen(
         ListItem(
             4,
             "Open Source License",
-            "Distributed License Information List",
+            "Open Source License Information List",
             Icons.Filled.CollectionsBookmark,
             "open_source_license_screen"
         ),
@@ -105,7 +104,7 @@ fun SettingsScreen(
 //            ) {
 //                Text("contract screen", color = Color.Green)
 //            }
-            MyList(listItems = listItems, navController = navController, context = context)
+            SettingsItemList(listItems = listItems, navController = navController, context = context)
 
 
         }
@@ -113,7 +112,7 @@ fun SettingsScreen(
 }
 
 @Composable
-fun MyList(listItems: List<ListItem>, navController: NavHostController, context: Context) {
+fun SettingsItemList(listItems: List<ListItem>, navController: NavHostController, context: Context) {
     LazyColumn {
         items(listItems) { item ->
             ListItem(item, navController, context)
@@ -125,16 +124,16 @@ fun MyList(listItems: List<ListItem>, navController: NavHostController, context:
 fun ListItem(item: ListItem, navController: NavHostController, context: Context) {
     Button(
         onClick = {
-            if (item.title == "Open Source License") {
-                val intent = Intent(context, OssLicensesMenuActivity::class.java)
-                context.startActivity(intent)
-            } else {
+//            if (item.title == "Open Source License") {
+//                val intent = Intent(context, OssLicensesMenuActivity::class.java)
+//                context.startActivity(intent)
+//            } else {
                 try {
                     navController.navigate(item.navigationId)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-            }
+           // }
 
         },
         elevation = ButtonDefaults.elevation(0.dp, 0.dp, 0.dp)
