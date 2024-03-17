@@ -145,11 +145,10 @@ fun CameraTest2(
                             Log.i("MyTag:CameraTest2", "nextPath: $nextPath")
                             Log.i("MyTag:CameraTest2", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = nextRoute
+                                nextRoute
                             }
 
                             navController.navigate(nextRouteWithArguments)
@@ -211,7 +210,7 @@ fun CameraTest2(
     ) {
         AndroidView(
             modifier = Modifier.fillMaxSize().pointerInteropFilter { event ->
-                scaleGestureDetector?.onTouchEvent(event)
+                scaleGestureDetector.onTouchEvent(event)
                 true
             },
             factory = { _ -> previewView }

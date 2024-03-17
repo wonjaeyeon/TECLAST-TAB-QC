@@ -88,11 +88,10 @@ fun LcdTest2(
                             Log.i("MyTag:LCDTest2", "nextPath: $nextPath")
                             Log.i("MyTag:LCDTest2", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = nextRoute
+                                nextRoute
                             }
 
                             navController.navigate(nextRouteWithArguments)

@@ -145,11 +145,10 @@ fun AudioTestT1(
                             //Log.i("MyTag:AudioTest1", "nextPath: $nextPath")
                             //Log.i("MyTag:AudioTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = nextRoute
+                                nextRoute
                             }
                             cleanUpMediaPlayers()
                             onEvent(TestResultEvent.SaveTestResult)

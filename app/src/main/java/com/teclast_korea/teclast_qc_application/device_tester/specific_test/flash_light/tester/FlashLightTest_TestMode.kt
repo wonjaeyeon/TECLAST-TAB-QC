@@ -82,11 +82,10 @@ fun FlashLightTestTestMode(
                             Log.i("MyTag:FlashLightTest1", "nextPath: $nextPath")
                             Log.i("MyTag:FlashLightTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = nextRoute
+                                nextRoute
                             }
 
                             navController.navigate(nextRouteWithArguments)

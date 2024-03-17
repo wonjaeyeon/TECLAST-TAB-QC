@@ -161,11 +161,10 @@ fun GSensorTestT1(
                             Log.i("MyTag:G-SensorTest1", "nextPath: $nextPath")
                             Log.i("MyTag:G-SensorTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = nextRoute
+                                nextRoute
                             }
 
                             navController.navigate(nextRouteWithArguments)

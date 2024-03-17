@@ -89,7 +89,7 @@ fun CameraTest1(
         }
     }
 
-    var scaleGestureDetector: ScaleGestureDetector? = null
+    var scaleGestureDetector: ScaleGestureDetector?
 
 
     scaleGestureDetector = ScaleGestureDetector(context, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -147,11 +147,10 @@ fun CameraTest1(
                             Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
                             Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = nextRoute
+                                nextRoute
                             }
 
                             navController.navigate(nextRouteWithArguments)
@@ -213,7 +212,7 @@ fun CameraTest1(
     ) {
         AndroidView(
             modifier = Modifier.fillMaxSize().pointerInteropFilter { event ->
-                scaleGestureDetector?.onTouchEvent(event)
+                scaleGestureDetector.onTouchEvent(event)
                 true
             },
             factory = { _ -> previewView }
