@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.home.pdf_export.generate_pdf.generatePDF
 import com.teclast_korea.teclast_qc_application.home.pdf_export.getDirectory
 import com.teclast_korea.teclast_qc_application.home.test_report.TestReportList
@@ -43,7 +43,7 @@ fun FastTestCompletedScreen(
     val currentLoadingPage = remember { mutableDoubleStateOf(0.0) }
     val pageCount = remember { mutableDoubleStateOf(5.0) }
 
-    val device_spec_pdf = DeviceSpecReportList(context)
+    val device_spec_pdf = deviceSpecReportList(context)
 
     Scaffold(
         topBar = {

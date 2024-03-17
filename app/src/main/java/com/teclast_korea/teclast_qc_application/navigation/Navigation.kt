@@ -158,7 +158,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "battery_test_test_mode_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                ////Log.i("nextTestName2", nextTestNameList.toString())
 
                 BatteryTestTestMode(
                     state = state,
@@ -208,7 +208,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "usb_test_test_mode_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 UsbTestTestMode(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -252,7 +252,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "wifi_test_test_mode_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 WifiTestTestMode(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -297,7 +297,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "bluetooth_test_test_mode_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 BluetoothTestTestMode(
                     state = state, onEvent = onEvent, context = context,
                     navController = navController,
@@ -340,7 +340,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "touch_panel_test_t1_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest1(
                     state = state,
                     onEvent = onEvent,
@@ -379,7 +379,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "touch_panel_test_t2_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest2(
                     state = state,
                     onEvent = onEvent,
@@ -415,7 +415,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "touch_panel_test_t3_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest3(
                     context = context,
                     navController = navController,
@@ -449,7 +449,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "touch_panel_test_t4_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest4(
                     state = state,
                     onEvent = onEvent,
@@ -497,7 +497,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "physical_button_test_t1_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 PhysicalButtonTestT1(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -543,7 +543,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "lcd_screen_test_t1_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 LcdTest1(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -582,7 +582,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "lcd_screen_test_t2_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 LcdTest2(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -713,7 +713,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "audio_test_t1_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 AudioTestT1(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -763,7 +763,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "vibration_test_test_mode_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 VibrationTestTestMode(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -809,7 +809,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "flash_light_test_test_mode_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 FlashLightTestTestMode(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -857,7 +857,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "gps_test_t1_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 GPSTestT1(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -901,7 +901,7 @@ fun navigationGraph(
                 val nextTestName = nextTestRoute!!.split("->")
                 val nextTestNameList = nextTestName!!.toMutableList()
                 nextTestNameList.add(0, "g_sensor_test_t1_screen")
-                Log.i("nextTestName2", nextTestNameList.toString())
+                //Log.i("nextTestName2", nextTestNameList.toString())
                 GSensorTestT1(
                     state = state, onEvent = onEvent,
                     context = context,
@@ -969,7 +969,7 @@ fun navigationGraph(
 //            val nextTestRoute = backStackEntry.arguments?.getString("nextTestRoute")
 //            val nextTestName = nextTestRoute!!.split("->")
 //            val nextTestNameList = nextTestName!!.toMutableList()
-//            Log.i("nextTestName2", nextTestNameList.toString())
+//            //Log.i("nextTestName2", nextTestNameList.toString())
 //            FastModeScreen_2(
 //                state = state,
 //                onEvent = onEvent,
@@ -1014,7 +1014,7 @@ fun navigationGraph(
             arguments = listOf(navArgument("testMode") { type = NavType.StringType })
         ) { backStackEntry ->
             //  NOTE : 이 코드는 4번이나 반복되는 코드다. + 결과도 다르게 저장된다. 좀 희한하다.
-//            val deviceSpec = DeviceSpecReportList(
+//            val deviceSpec = deviceSpecReportList(
 //                context = context
 //            )
 //            val File = File(getDirectory(context), "Test_Report.pdf")

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -68,7 +68,7 @@ fun GSensorTestT1(
     val accelerometer = remember { sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) }
     val sensorValues = remember { mutableStateOf(listOf(0f, 0f, 0f)) }
     val currentTestItem = "G-Sensor Test 1"
-    val device_spec_pdf = DeviceSpecReportList(context)
+    val device_spec_pdf = deviceSpecReportList(context)
 
     val sensorListener = remember {
         object : SensorEventListener {
@@ -163,9 +163,9 @@ fun GSensorTestT1(
 
                             var nextRouteWithArguments = ""
                             if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                                nextRouteWithArguments = nextRoute
                             }
 
                             navController.navigate(nextRouteWithArguments)
@@ -210,9 +210,9 @@ fun GSensorTestT1(
 //
 //                            var nextRouteWithArguments = ""
 //                            if (nextPathString.isNotEmpty()) {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
 //                            } else {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}"
+//                                nextRouteWithArguments = nextRoute
 //                            }
 //
 //                            navController.navigate(nextRouteWithArguments)

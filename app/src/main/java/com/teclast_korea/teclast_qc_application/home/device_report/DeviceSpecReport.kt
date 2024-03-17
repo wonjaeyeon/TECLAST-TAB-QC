@@ -8,15 +8,8 @@ import com.teclast_korea.teclast_qc_application.calendar.read_phone_state.getDev
 import com.teclast_korea.teclast_qc_application.home.device_spec.*
 
 
-//fun getDeviceSpecReportList(context: Context): List<Pair<String, String>>{
-//
-//    return DeviceSpecReportList(context)
-//}
-
-
-
 @Composable
-fun DeviceSpecReportList(
+fun deviceSpecReportList(
     context: Context,
 ): List<Pair<String, String>> {
     return listOf(

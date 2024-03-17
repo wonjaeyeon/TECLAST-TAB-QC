@@ -69,9 +69,9 @@ fun FailTestNavigator(
 
             var nextRouteWithArguments = ""
             if (nextPathString.isNotEmpty()) {
-                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
             } else {
-                nextRouteWithArguments = "${nextTestRoute[0]}"
+                nextRouteWithArguments = nextRoute
             }
 
             navController.navigate(nextRouteWithArguments)
