@@ -1,6 +1,8 @@
 package com.teclast_korea.teclast_qc_application.settings.sub_screen.open_source_license
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,25 +15,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.BuildConfig
 import com.teclast_korea.teclast_qc_application.R
-import com.teclast_korea.teclast_qc_application.settings.sub_screen.open_source_license.oss_data.LDRepository
-import com.teclast_korea.teclast_qc_application.settings.sub_screen.open_source_license.oss_data.LicenseDescription
-import com.teclast_korea.teclast_qc_application.settings.sub_screen.open_source_license.oss_data.OSLRepository
-import com.teclast_korea.teclast_qc_application.settings.sub_screen.open_source_license.oss_data.OpenSourceLicenseInfo
+import com.teclast_korea.teclast_qc_application.settings.sub_screen.open_source_license.copyright_list.OSLRepository
+import com.teclast_korea.teclast_qc_application.settings.sub_screen.open_source_license.copyright_list.OpenSourceLicenseInfo
 
 @Composable
 fun OpenSourceLicenseScreen(context: Context, navController: NavController) {
 
     val appVersion = BuildConfig.VERSION_NAME
-    val OSLRepository = OSLRepository()
-    val getAllData = OSLRepository.getAllData()
-    val LDRepository = LDRepository()
-    val getAllLicenseDescription = LDRepository.getAllData()
+    val oslRepository = OSLRepository()
+    val getAllData = oslRepository.getAllLicenseInfo()
     val getAllLicenseInfo = getAllData.map { it.License }.distinct()
     val AllLicenseToString = getAllLicenseInfo.joinToString(", ")
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -55,12 +55,13 @@ fun OpenSourceLicenseScreen(context: Context, navController: NavController) {
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            //horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
                     modifier = Modifier.fillMaxWidth()
                 ) {
 //                    // Replace this with your app's icon using painterResource if available
@@ -77,14 +78,26 @@ fun OpenSourceLicenseScreen(context: Context, navController: NavController) {
                         color = MaterialTheme.colors.onPrimary,
                         modifier = Modifier.weight(1f)
                     )
-
-
                 }
-                Spacer(modifier = Modifier.height(16.dp)) // Adds some space after the title row
-                ShowLicensesButton(LocalContext.current)
 
+                Spacer(modifier = Modifier.height(16.dp)) // Adds some space after the title row
+                Text(
+                    textAlign = TextAlign.Start,
+                    text = "This application is Copyright ⓒ Teclast Korea and Wonjaeyeon developer. All rights reserved.",
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.onPrimary
+                    // Add more text properties as needed
+                )
+                Spacer(modifier = Modifier.height(16.dp)) // Adds some space after the title row
                 Text(
                     text = "This software includes the work that is distributed in $AllLicenseToString",
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colors.onPrimary
+                    // Add more text properties as needed
+                )
+                Spacer(modifier = Modifier.height(16.dp)) // Adds some space after the title row
+                Text(
+                    text = "The following sets forth attribution notices for third party software that may be contained in portions of this application.",
                     style = MaterialTheme.typography.body1,
                     color = MaterialTheme.colors.onPrimary
                     // Add more text properties as needed
@@ -94,98 +107,83 @@ fun OpenSourceLicenseScreen(context: Context, navController: NavController) {
                     color = MaterialTheme.colors.onPrimary,
                     thickness = 2.dp
                 )
-
-            }
-            items(getAllData.size) { index ->
-                CustomItem(openSourceLicenseInfo = getAllData[index])
-
-            }
-
-            items(getAllLicenseDescription.size) { index ->
                 Spacer(modifier = Modifier.height(16.dp)) // Adds some space after the title row
-                Divider(
-                    color = MaterialTheme.colors.onPrimary,
-                    thickness = 2.dp
-                )
-                LDItems(licenseDescription = getAllLicenseDescription[index])
+                ShowLicensesButton(LocalContext.current)
+
+//                Spacer(modifier = Modifier.height(16.dp)) // Adds some space after the title row
+//                ShowLicensesButton_2(LocalContext.current)
+
             }
+
+            items(getAllData.size) { index ->
+                CustomItem(context = context, openSourceLicenseInfo = getAllData[index])
+
+            }
+
 
         }
     }
 }
 
 @Composable
-fun CustomItem(openSourceLicenseInfo: OpenSourceLicenseInfo) {
+fun CustomItem(context: Context,openSourceLicenseInfo: OpenSourceLicenseInfo) {
+    Button(
+        onClick = {
 
-    Row(
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+            try {
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse(openSourceLicenseInfo.link)
+                }
+                context.startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            // }
+
+        },
+        elevation = ButtonDefaults.elevation(0.dp, 0.dp, 0.dp)
     ) {
 
-
-        Icon(
-            imageVector = Icons.Filled.CollectionsBookmark,
-            contentDescription = "",
-            tint = MaterialTheme.colors.onPrimary
-        )
-
-        Column(
+        Row(
             modifier = Modifier
-                .padding(horizontal = 20.dp)
-                .weight(1f)
-        ) {
-            Text(
-                text = openSourceLicenseInfo.Name,
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onPrimary
-            )
-            Text(
-                text = openSourceLicenseInfo.License,
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.onSurface
-            )
-            Text(
-                text = openSourceLicenseInfo.copyright,
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.onSurface
-            )
-            Text(
-                text = openSourceLicenseInfo.link,
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.onSurface
-            )
-        }
-
-    }
-}
-
-@Composable
-fun LDItems(licenseDescription: LicenseDescription) {
-
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 20.dp)
+                .padding(16.dp)
                 .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = licenseDescription.License,
-                style = MaterialTheme.typography.h6,
-                color = MaterialTheme.colors.onPrimary
+
+
+            Icon(
+                imageVector = Icons.Filled.CollectionsBookmark,
+                contentDescription = "",
+                tint = MaterialTheme.colors.onPrimary
             )
-            Text(
-                text = licenseDescription.Description,
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.onSurface
-            )
-            Text(
-                text = licenseDescription.link,
-                style = MaterialTheme.typography.body2,
-                color = MaterialTheme.colors.onSurface
-            )
+
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .weight(1f)
+            ) {
+                Text(
+                    text = openSourceLicenseInfo.Name,
+                    style = MaterialTheme.typography.h6,
+                    color = MaterialTheme.colors.onPrimary
+                )
+                Text(
+                    text = openSourceLicenseInfo.License,
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.onSurface
+                )
+                Text(
+                    text = openSourceLicenseInfo.copyright,
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.onSurface
+                )
+                Text(
+                    text = openSourceLicenseInfo.link,
+                    style = MaterialTheme.typography.body2,
+                    color = MaterialTheme.colors.onSurface
+                )
+            }
         }
-
-
+    }
 }
