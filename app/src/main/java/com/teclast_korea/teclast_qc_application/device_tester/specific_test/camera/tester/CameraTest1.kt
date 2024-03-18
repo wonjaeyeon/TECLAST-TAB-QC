@@ -183,27 +183,7 @@ fun CameraTest1(
                             currentTestItem = currentTestItem,
                             deviceSpec = device_spec_pdf
                         )
-//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-//                            Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
-//                            Log.i("MyTag:CameraTest1", "nextTestRoute: $nextTestRoute")
-//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-//                            val nextPath = nextTestRoute.drop(1)
-//                            val nextPathString = nextPath.joinToString(separator = "->")
-//                            Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
-//                            Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
-//
-//                            var nextRouteWithArguments = ""
-//                            if (nextPathString.isNotEmpty()) {
-//                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
-//                            } else {
-//                                nextRouteWithArguments = nextRoute
-//                            }
-//
-//                            navController.navigate(nextRouteWithArguments)
-//                        }
-//                        else
-//                            navController.popBackStack()
+
                     }) {
                     Text("Fail")
                 }

@@ -1,5 +1,6 @@
 package com.teclast_korea.teclast_qc_application.device_tester.specific_test.gps.tester
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
@@ -7,6 +8,8 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -24,6 +27,9 @@ import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecRep
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -41,15 +47,29 @@ fun GPSTestT1(
     val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     val isGPSEnabled = remember { mutableStateOf(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) }
     val location = remember { mutableStateOf<Location?>(null) }
-//    val hasPermission = remember {
-//        mutableStateOf(
-//            ContextCompat.checkSelfPermission(
-//                context,
-//                Manifest.permission.ACCESS_FINE_LOCATION
-//            ) == PackageManager.PERMISSION_GRANTED
-//        )
-//    }
-    val hasPermission = remember { context.hasLocationPermission() }
+
+    // Prepare the ActivityResultLauncher for permission request
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        // Check if all permissions are granted
+        val allPermissionsGranted = permissions.entries.all { it.value }
+        if (allPermissionsGranted) {
+            // Permissions granted, update hasPermission and proceed with location updates
+            CoroutineScope(Dispatchers.IO).launch {
+            locationClient.getLocationUpdates(5000L).collect { loc ->
+                location.value = loc
+                Log.i("GPSTest1", "Location update received: Lat=${loc.latitude}, Lon=${loc.longitude}")
+                // Check GPS enabled status inside collect if needed
+            }}
+        } else {
+            // Handle permission denial here
+        }
+    }
+
+
+    var hasPermission = remember { context.hasLocationPermission() }
+
     val currentTestItem = "GPS Test 1"
     val device_spec_pdf = deviceSpecReportList(context)
 
@@ -79,6 +99,19 @@ fun GPSTestT1(
     }
 
     LaunchedEffect(key1 = true) {
+        if (!hasPermission) {
+            // Permissions are not granted, request them
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                )
+            )
+        } else {
+            // Permissions are granted, start location updates
+        }
+
+
 //        if (hasPermission.value) {
 //            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10f, locationListener)
 //        }
@@ -88,10 +121,25 @@ fun GPSTestT1(
 
 
     LaunchedEffect(key1 = hasPermission) {
+        Log.i("GPSTest1", "hasPermission: $hasPermission")
+//        if (hasPermission) {
+//            Log.i("GPSTest1", "Requesting location updates")
+//            locationClient.getLocationUpdates(5000L).collect { loc ->
+//                location.value = loc
+//                // Check GPS enabled status inside collect if needed
+//            }
+//        }
         if (hasPermission) {
-            locationClient.getLocationUpdates(5000L).collect { loc ->
-                location.value = loc
-                // Check GPS enabled status inside collect if needed
+            Log.i("GPSTest1", "Requesting location updates")
+            try {
+                locationClient.getLocationUpdates(5000L).collect { loc ->
+                    location.value = loc
+                    Log.i("GPSTest1", "Location update received: Lat=${loc.latitude}, Lon=${loc.longitude}")
+                    // Check GPS enabled status inside collect if needed
+                }
+            } catch (e: Exception) {
+                Log.e("GPSTest1", "Error requesting location updates", e)
+                // 필요한 경우 여기에서 사용자에게 피드백을 제공하거나 상태를 업데이트하세요.
             }
         }
     }
@@ -126,6 +174,21 @@ fun GPSTestT1(
                 } ?: Text(text = "Location not available")
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(onClick = {
+                    hasPermission = context.hasLocationPermission()
+                    if (hasPermission) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                        locationClient.getLocationUpdates(5000L).collect { loc ->
+                            location.value = loc
+                        }}
+                    }
+                    else {
+                        requestPermissionLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                            )
+                        )
+                    }
                     isGPSEnabled.value = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 }) {
                     Text(text = "Refresh Status")
