@@ -1,6 +1,8 @@
 package com.teclast_korea.teclast_qc_application.settings.sub_screen.app_version
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -50,32 +52,39 @@ fun AppVersionScreen(context: Context, navController: NavController) {
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
 //                    // Replace this with your app's icon using painterResource if available
-                    Image(
-                        painter = painterResource(R.mipmap.ic_launcher_foreground),
-                        contentDescription = "App Icon",
-                        modifier = Modifier.size(48.dp) // Adjust the size as needed
-                    )
-                    Spacer(modifier = Modifier.width(16.dp)) // Adds space between icon and text
-                    Text(
-                        text = "TECLAST KOREA QC APP $appVersion",
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colors.onPrimary,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+                        Image(
+                            painter = painterResource(R.mipmap.ic_launcher_foreground),
+                            contentDescription = "App Icon",
+                            modifier = Modifier.size(48.dp) // Adjust the size as needed
+                        )
+                        Spacer(modifier = Modifier.width(16.dp)) // Adds space between icon and text
+                        Text(
+                            text = "TECLAST KOREA QC APP $appVersion",
+                            style = MaterialTheme.typography.h5,
+                            color = MaterialTheme.colors.onPrimary,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(16.dp)) // Adds some space after the title row
+                Divider(
+                    color = MaterialTheme.colors.onPrimary,
+                    thickness = 2.dp
+                )
                 Spacer(modifier = Modifier.height(16.dp)) // Adds some space after the title row
 
-            }
-            items(getAllData.size) { index ->
-                CustomItem(versionInfo = getAllData[index])
+                }
+                items(getAllData.size) { index ->
+                    CustomItem(context = context, versionInfo = getAllData[index])
+                }
+
             }
 
-        }
     }
 }
 
@@ -83,7 +92,8 @@ fun AppVersionScreen(context: Context, navController: NavController) {
 data class VersionInfo(
     val id: Int,
     val Discription: String,
-    val version: String
+    val version: String,
+    val link: String,
 )
 
 class PersonRepository {
@@ -92,15 +102,29 @@ class PersonRepository {
             VersionInfo(
                 id = 0,
                 Discription = "First Release",
-                version = "v 1.0.0"
+                version = "v 1.0.0",
+                link = "https://teclastkoreaqcapp.notion.site/TECLAST_QC_APP_v1-0-0-ee3b764bd7a3464981f558938da33492?pvs=4"
             ),
         )
     }
 }
 
 @Composable
-fun CustomItem(versionInfo: VersionInfo) {
+fun CustomItem(context: Context, versionInfo: VersionInfo) {
 
+    Button(
+        onClick = {
+            try {
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse(versionInfo.link)
+                }
+                context.startActivity(intent)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        },
+        elevation = ButtonDefaults.elevation(0.dp, 0.dp, 0.dp)
+    ) {
     Row(
         modifier = Modifier
             .padding(16.dp)
@@ -127,7 +151,7 @@ fun CustomItem(versionInfo: VersionInfo) {
                 color = MaterialTheme.colors.onSurface
             )
         }
-
+    }
     }
 }
 

@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.teclast_korea.teclast_qc_application.BuildConfig
 
 
 @Composable
@@ -56,8 +55,9 @@ fun SettingsScreen(
 //        ),
         ListItem(
             3,
-            "App Version",
-            "v ${BuildConfig.VERSION_NAME}",
+            "App Version Info",
+            //"v ${BuildConfig.VERSION_NAME}",
+            "Application Version & Detail Information",
             Icons.Filled.PhoneIphone,
             "app_version_screen"
         ),
