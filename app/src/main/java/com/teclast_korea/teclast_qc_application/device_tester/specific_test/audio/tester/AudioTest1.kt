@@ -3,7 +3,6 @@ package com.teclast_korea.teclast_qc_application.device_tester.specific_test.aud
 import android.annotation.SuppressLint
 import android.content.Context
 import android.media.MediaPlayer
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -22,7 +21,7 @@ import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.R
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -51,7 +50,7 @@ fun AudioTestT1(
     val rightMediaPlayerReleased = remember { mutableStateOf(false) }
 
     val currentTestItem = "Audio Test 1"
-    val device_spec_pdf = DeviceSpecReportList(context = context)
+    val device_spec_pdf = deviceSpecReportList(context = context)
 
 
     // Define a cleanup function
@@ -138,19 +137,18 @@ fun AudioTestT1(
 
                         if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
                             val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-                            Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
-                            Log.i("MyTag:AudioTest1", "nextTestRoute: $nextTestRoute")
+                            //Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
+                            //Log.i("MyTag:AudioTest1", "nextTestRoute: $nextTestRoute")
                             val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
                             val nextPath = nextTestRoute.drop(1)
                             val nextPathString = nextPath.joinToString(separator = "->")
-                            Log.i("MyTag:AudioTest1", "nextPath: $nextPath")
-                            Log.i("MyTag:AudioTest1", "nextPathString: $nextPathString")
+                            //Log.i("MyTag:AudioTest1", "nextPath: $nextPath")
+                            //Log.i("MyTag:AudioTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                                nextRoute
                             }
                             cleanUpMediaPlayers()
                             onEvent(TestResultEvent.SaveTestResult)
@@ -190,30 +188,7 @@ fun AudioTestT1(
                         )
                         cleanUpMediaPlayers()
                         onEvent(TestResultEvent.SaveTestResult)
-//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-//                            Log.i("MyTag:AudioTest1", "pastRoute: $pastRoute")
-//                            Log.i("MyTag:AudioTest1", "nextTestRoute: $nextTestRoute")
-//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-//                            val nextPath = nextTestRoute.drop(1)
-//                            val nextPathString = nextPath.joinToString(separator = "->")
-//                            Log.i("MyTag:AudioTest1", "nextPath: $nextPath")
-//                            Log.i("MyTag:AudioTest1", "nextPathString: $nextPathString")
-//
-//                            var nextRouteWithArguments = ""
-//                            if (nextPathString.isNotEmpty()) {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
-//                            } else {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}"
-//                            }
-//                            cleanUpMediaPlayers()
-//                            onEvent(TestResultEvent.SaveTestResult)
-//                            navController.navigate(nextRouteWithArguments)
-//                        } else {
-//                            cleanUpMediaPlayers()
-//                            onEvent(TestResultEvent.SaveTestResult)
-//                            navController.popBackStack()
-//                        }
+
                     }) {
                     Text("Fail")
                 }

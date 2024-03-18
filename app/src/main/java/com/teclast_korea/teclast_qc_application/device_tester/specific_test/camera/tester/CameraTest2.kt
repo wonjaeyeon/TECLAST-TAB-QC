@@ -29,7 +29,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -59,7 +59,7 @@ fun CameraTest2(
 
     val previewView = PreviewView(context)
     val currentTestItem = "Camera Test 2"
-    val device_spec_pdf = DeviceSpecReportList(context)
+    val device_spec_pdf = deviceSpecReportList(context)
 
 
     LaunchedEffect(cameraProviderFuture) {
@@ -145,11 +145,10 @@ fun CameraTest2(
                             Log.i("MyTag:CameraTest2", "nextPath: $nextPath")
                             Log.i("MyTag:CameraTest2", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                                nextRoute
                             }
 
                             navController.navigate(nextRouteWithArguments)
@@ -194,9 +193,9 @@ fun CameraTest2(
 //
 //                            var nextRouteWithArguments = ""
 //                            if (nextPathString.isNotEmpty()) {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
 //                            } else {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}"
+//                                nextRouteWithArguments = nextRoute
 //                            }
 //
 //                            navController.navigate(nextRouteWithArguments)
@@ -211,7 +210,7 @@ fun CameraTest2(
     ) {
         AndroidView(
             modifier = Modifier.fillMaxSize().pointerInteropFilter { event ->
-                scaleGestureDetector?.onTouchEvent(event)
+                scaleGestureDetector.onTouchEvent(event)
                 true
             },
             factory = { _ -> previewView }

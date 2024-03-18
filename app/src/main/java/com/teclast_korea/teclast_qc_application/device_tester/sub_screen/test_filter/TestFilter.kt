@@ -1,4 +1,4 @@
-package com.teclast_korea.teclast_qc_application.device_tester.main_screen_sub.test_filter
+package com.teclast_korea.teclast_qc_application.device_tester.sub_screen.test_filter
 
 import android.os.Build
 import androidx.compose.material.icons.Icons

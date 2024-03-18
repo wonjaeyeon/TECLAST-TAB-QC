@@ -87,10 +87,10 @@ fun WifiTestTestMode(
 
                     var nextRouteWithArguments = ""
                     if (nextPathString.isNotEmpty()) {
-                        nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                        nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                         Log.i("MyTag:WifiTest", "nextRouteWithArguments: $nextRouteWithArguments")
                     } else {
-                        nextRouteWithArguments = "${nextTestRoute[0]}"
+                        nextRouteWithArguments = nextRoute
                         Log.i("MyTag:WifiTest", "nextRouteWithArguments: $nextRouteWithArguments")
                     }
 

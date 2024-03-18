@@ -11,7 +11,7 @@ import com.teclast_korea.teclast_qc_application.device_tester.specific_test.gpu.
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.rom.tester.romTest1
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen.FastModeTestScreenScaffold
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.CheckTestResultbyItem
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -44,7 +44,7 @@ fun FastModeScreen_2(
     }
 
     val doneTests = listOf("CPU BURNIN TEST", "GPU TEST 2", "ROM TEST")
-    val device_spec_pdf = DeviceSpecReportList(context = context)
+    val device_spec_pdf = deviceSpecReportList(context = context)
     val isAnyTestFailed = remember { mutableStateOf(false) }
     val hasCheckedEveryTest = remember { mutableStateOf(false) }
     // 매우 긴 nextTestRoute를 던져주고 이걸 딱딱 나눠서 보도록 하면 된다. 즉 호출 함수는 그냥 첫 함수인 거고 나머지 뒤에 따라오는 함수들은 내가 정한 nextTestRoute에 따라 따라오는 것이다.

@@ -11,7 +11,7 @@ import com.teclast_korea.teclast_qc_application.device_tester.specific_test.gpu.
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.ram.tester.ramTest1
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.scspro_mode.sub_screen.SCSPROModeTestScreenScaffold
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.CheckTestResultbyItem
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -67,7 +67,7 @@ fun SCSPROModeScreen(
     )
 
     val doneTests = listOf("CPU BUFFER TEST", "GPU TEST 1", "RAM TEST", "Battery TEST 1")
-    val device_spec_pdf = DeviceSpecReportList(context = context)
+    val device_spec_pdf = deviceSpecReportList(context = context)
     val isAnyTestFailed = remember { mutableStateOf(false) }
     val hasCheckedEveryTest = remember { mutableStateOf(false) }
 

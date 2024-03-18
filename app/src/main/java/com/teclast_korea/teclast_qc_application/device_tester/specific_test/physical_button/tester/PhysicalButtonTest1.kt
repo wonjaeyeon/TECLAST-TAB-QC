@@ -65,10 +65,10 @@ fun PhysicalButtonTestT1(
 
                 var nextRouteWithArguments = ""
                 if (nextPathString.isNotEmpty()) {
-                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                    nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                     Log.i("Check", "nextRouteWithArguments: $nextRouteWithArguments")
                 } else {
-                    nextRouteWithArguments = "${nextTestRoute[0]}"
+                    nextRouteWithArguments = nextRoute
                 }
 
                 navController.navigate(nextRouteWithArguments)

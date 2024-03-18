@@ -1,7 +1,6 @@
 package com.teclast_korea.teclast_qc_application.device_tester.specific_test.flash_light
 
-//make a screen for cpu test
-//import com.example.teclast_qc_application.device_tester.testFunction.cpu.tester.getCurrentCpuUsage
+
 import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.background

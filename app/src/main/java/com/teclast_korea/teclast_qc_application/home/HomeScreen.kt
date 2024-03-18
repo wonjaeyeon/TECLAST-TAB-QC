@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.home.pdf_export.generate_pdf.generatePDF
 import com.teclast_korea.teclast_qc_application.home.pdf_export.getDirectory
 import com.teclast_korea.teclast_qc_application.home.test_report.TestReportList
@@ -74,7 +74,7 @@ fun ShowDeviceSpecs2(
     onEvent: (TestResultEvent) -> Unit,
     navController: NavController
 ) {
-    val tableData_DeviceSpec = DeviceSpecReportList(context)
+    val tableData_DeviceSpec = deviceSpecReportList(context)
 
     val tableData_StateReport = TestReportList(state = state, context = context, onEvent = onEvent)
     var selectedOption = "Device Specs"
@@ -87,7 +87,7 @@ fun ShowDeviceSpecs2(
 
     val showDeleteAlertDialog = remember { mutableStateOf(false) }
 
-    val DeviceSpec_for_pdf = DeviceSpecReportList(context)
+    val DeviceSpec_for_pdf = deviceSpecReportList(context)
 
 
     // The LazyColumn will be our table. Notice the use of the weights below

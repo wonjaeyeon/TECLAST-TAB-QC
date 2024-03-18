@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -38,7 +38,7 @@ fun LcdTest1(
     var colorIndex by remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
     val currentTestItem ="LCD Test 1"
-    val device_spec_pdf = DeviceSpecReportList(context)
+    val device_spec_pdf = deviceSpecReportList(context)
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -86,11 +86,10 @@ fun LcdTest1(
                             Log.i("MyTag:LCDTest1", "nextPath: $nextPath")
                             Log.i("MyTag:LCDTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                                nextRoute
                             }
 
                             navController.navigate(nextRouteWithArguments)
@@ -134,9 +133,9 @@ fun LcdTest1(
 //
 //                            var nextRouteWithArguments = ""
 //                            if (nextPathString.isNotEmpty()) {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
 //                            } else {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}"
+//                                nextRouteWithArguments = nextRoute
 //                            }
 //
 //                            navController.navigate(nextRouteWithArguments)
@@ -177,9 +176,9 @@ fun LcdTest1(
 //
 //                                var nextRouteWithArguments = ""
 //                                if (nextPathString.isNotEmpty()) {
-//                                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+//                                    nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
 //                                } else {
-//                                    nextRouteWithArguments = "${nextTestRoute[0]}"
+//                                    nextRouteWithArguments = nextRoute
 //                                }
 //
 //                                navController.navigate(nextRouteWithArguments)

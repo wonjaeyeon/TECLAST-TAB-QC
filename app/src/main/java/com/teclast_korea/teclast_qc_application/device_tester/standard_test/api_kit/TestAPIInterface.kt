@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 
@@ -59,7 +59,7 @@ fun TestAPIDialog(
     nextTestRoute: MutableList<String>,
     showDialog: MutableState<Boolean>,
 ) {
-    val deviceSpec = DeviceSpecReportList(context = context)
+    val deviceSpec = deviceSpecReportList(context = context)
     if (!showDialog.value) {
     }
     else if (testMode == "FastMode") {

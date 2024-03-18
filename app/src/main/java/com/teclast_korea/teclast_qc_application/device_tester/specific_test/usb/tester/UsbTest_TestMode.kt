@@ -76,10 +76,10 @@ fun UsbTestTestMode(
 
                 var nextRouteWithArguments = ""
                 if (nextPathString.isNotEmpty()) {
-                    nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                    nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                     Log.i("MyTag:UsbTest", "nextRouteWithArguments: $nextRouteWithArguments")
                 } else {
-                    nextRouteWithArguments = "${nextTestRoute[0]}"
+                    nextRouteWithArguments = nextRoute
                     Log.i("MyTag:UsbTest", "nextRouteWithArguments: $nextRouteWithArguments")
                 }
 

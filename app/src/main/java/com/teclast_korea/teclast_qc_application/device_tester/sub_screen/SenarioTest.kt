@@ -1,4 +1,4 @@
-package com.teclast_korea.teclast_qc_application.device_tester.main_screen_sub
+package com.teclast_korea.teclast_qc_application.device_tester.sub_screen
 
 import android.content.Context
 import androidx.compose.foundation.layout.*

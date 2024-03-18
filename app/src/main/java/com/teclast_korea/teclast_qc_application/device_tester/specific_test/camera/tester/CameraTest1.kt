@@ -29,7 +29,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.home.device_report.DeviceSpecReportList
+import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -61,7 +61,7 @@ fun CameraTest1(
 
     val previewView = PreviewView(context)
     val currentTestItem = "Camera Test 1"
-    val device_spec_pdf = DeviceSpecReportList(context)
+    val device_spec_pdf = deviceSpecReportList(context)
 
 
     LaunchedEffect(cameraProviderFuture) {
@@ -89,7 +89,7 @@ fun CameraTest1(
         }
     }
 
-    var scaleGestureDetector: ScaleGestureDetector? = null
+    var scaleGestureDetector: ScaleGestureDetector?
 
 
     scaleGestureDetector = ScaleGestureDetector(context, object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -147,11 +147,10 @@ fun CameraTest1(
                             Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
                             Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
 
-                            var nextRouteWithArguments = ""
-                            if (nextPathString.isNotEmpty()) {
-                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                            var nextRouteWithArguments = if (nextPathString.isNotEmpty()) {
+                                "$nextRoute/$nextPathString/$testMode"
                             } else {
-                                nextRouteWithArguments = "${nextTestRoute[0]}"
+                                nextRoute
                             }
 
                             navController.navigate(nextRouteWithArguments)
@@ -184,27 +183,7 @@ fun CameraTest1(
                             currentTestItem = currentTestItem,
                             deviceSpec = device_spec_pdf
                         )
-//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-//                            Log.i("MyTag:CameraTest1", "pastRoute: $pastRoute")
-//                            Log.i("MyTag:CameraTest1", "nextTestRoute: $nextTestRoute")
-//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-//                            val nextPath = nextTestRoute.drop(1)
-//                            val nextPathString = nextPath.joinToString(separator = "->")
-//                            Log.i("MyTag:CameraTest1", "nextPath: $nextPath")
-//                            Log.i("MyTag:CameraTest1", "nextPathString: $nextPathString")
-//
-//                            var nextRouteWithArguments = ""
-//                            if (nextPathString.isNotEmpty()) {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
-//                            } else {
-//                                nextRouteWithArguments = "${nextTestRoute[0]}"
-//                            }
-//
-//                            navController.navigate(nextRouteWithArguments)
-//                        }
-//                        else
-//                            navController.popBackStack()
+
                     }) {
                     Text("Fail")
                 }
@@ -213,7 +192,7 @@ fun CameraTest1(
     ) {
         AndroidView(
             modifier = Modifier.fillMaxSize().pointerInteropFilter { event ->
-                scaleGestureDetector?.onTouchEvent(event)
+                scaleGestureDetector.onTouchEvent(event)
                 true
             },
             factory = { _ -> previewView }

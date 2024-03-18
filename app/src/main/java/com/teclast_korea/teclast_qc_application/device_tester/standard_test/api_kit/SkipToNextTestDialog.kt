@@ -64,10 +64,10 @@ fun SkipToNextTestDialog(
                         val nextPathString = nextPath.joinToString(separator = "->")
                         var nextRouteWithArguments = ""
                         if (nextPathString.isNotEmpty()) {
-                            nextRouteWithArguments = "${nextTestRoute[0]}/$nextPathString/$testMode"
+                            nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                             Log.i("JumpToNextTest", "nextRouteWithArguments: $nextRouteWithArguments")
                         } else {
-                            nextRouteWithArguments = "${nextTestRoute[0]}"
+                            nextRouteWithArguments = nextRoute
                             Log.i("JumpToNextTest", "nextRouteWithArguments: $nextRouteWithArguments")
                         }
 
