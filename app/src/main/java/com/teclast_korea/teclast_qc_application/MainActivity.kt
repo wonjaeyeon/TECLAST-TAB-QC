@@ -82,6 +82,7 @@ class MainActivity : ComponentActivity() {
     val VolumeUpPressed = mutableStateOf(false)
     val VolumeDownPressed = mutableStateOf(false)
     val IsDarkTheme = mutableStateOf(true)
+    val IsBottomBarVisible = mutableStateOf(true)
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -121,12 +122,14 @@ class MainActivity : ComponentActivity() {
                 VolumeUpPressed.value = true
                 true
             }
+
             KeyEvent.KEYCODE_VOLUME_DOWN -> {
                 // Do something when the volume down button is pressed
                 Log.i("MainActivity", "Volume down pressed")
                 VolumeDownPressed.value = true
                 true
             }
+
             else -> {
                 super.onKeyDown(keyCode, event)
             }
@@ -148,9 +151,18 @@ class MainActivity : ComponentActivity() {
             val context = LocalContext.current
             requestForegroundPermission(context)
 
-            MyApplicationTheme (darkTheme = IsDarkTheme.value){
+            MyApplicationTheme(darkTheme = IsDarkTheme.value) {
                 val state by viewModel.state.collectAsState()
-                MainScreenView(context = this,state = state, onEvent = viewModel::onEvent, volumeUpPressed = VolumeUpPressed, volumeDownPressed = VolumeDownPressed, openSettings = this::openSettings, darkTheme = IsDarkTheme)
+                MainScreenView(
+                    context = this,
+                    state = state,
+                    onEvent = viewModel::onEvent,
+                    volumeUpPressed = VolumeUpPressed,
+                    volumeDownPressed = VolumeDownPressed,
+                    openSettings = this::openSettings,
+                    darkTheme = IsDarkTheme,
+                    isBottomBarVisible = IsBottomBarVisible
+                )
             }
 
             requestCameraPermission()
@@ -166,14 +178,19 @@ class MainActivity : ComponentActivity() {
 
     private fun requestCameraPermission() {
         when {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
                 // 권한이 이미 허용되어 있는 경우
             }
+
             ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) -> {
                 // 권한 요청에 대한 설명이 필요한 경우
                 // 사용자에게 권한 요청 이유를 설명한 후 권한 요청을 수행하세요
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
+
             else -> {
                 // 권한 요청
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
@@ -181,16 +198,21 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun requestReadPhonePermission(){
-        when{
-            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED -> {
+    private fun requestReadPhonePermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_PHONE_STATE
+            ) == PackageManager.PERMISSION_GRANTED -> {
                 // 권한이 이미 허용되어 있는 경우
             }
+
             ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE) -> {
                 // 권한 요청에 대한 설명이 필요한 경우
                 // 사용자에게 권한 요청 이유를 설명한 후 권한 요청을 수행하세요
                 requestPermissionLauncher.launch(Manifest.permission.READ_PHONE_STATE)
             }
+
             else -> {
                 // 권한 요청
                 requestPermissionLauncher.launch(Manifest.permission.READ_PHONE_STATE)
@@ -239,20 +261,44 @@ class MainActivity : ComponentActivity() {
 }
 
 
-
 @RequiresApi(34)
 @Composable
-fun MainScreenView(context: MainActivity, state: TestResultState, onEvent: KFunction1<TestResultEvent, Unit>, volumeUpPressed : MutableState<Boolean>, volumeDownPressed : MutableState<Boolean>, openSettings: () -> Unit, darkTheme: MutableState<Boolean>) {
+fun MainScreenView(
+    context: MainActivity,
+    state: TestResultState,
+    onEvent: KFunction1<TestResultEvent, Unit>,
+    volumeUpPressed: MutableState<Boolean>,
+    volumeDownPressed: MutableState<Boolean>,
+    openSettings: () -> Unit,
+    darkTheme: MutableState<Boolean>,
+    isBottomBarVisible: MutableState<Boolean>
+) {
     val navController = rememberNavController()
     Scaffold(
 
-        bottomBar = { BottomNavigation(navController = navController) }
+        bottomBar = {
+            if (isBottomBarVisible.value)
+                BottomNavigation(navController = navController)
+            else {
+
+            }
+        }
     ) {
 
 
-        Box(Modifier.padding(it)){
+        Box(Modifier.padding(it)) {
 
-            navigationGraph(context = context,navController = navController, state = state, onEvent = onEvent, volumeUpPressed = volumeUpPressed, volumeDownPressed = volumeDownPressed, openSettings = openSettings, darkTheme = darkTheme, onExitApp = {context.finishAndRemoveTask()})
+            navigationGraph(
+                context = context,
+                navController = navController,
+                state = state,
+                onEvent = onEvent,
+                volumeUpPressed = volumeUpPressed,
+                volumeDownPressed = volumeDownPressed,
+                openSettings = openSettings,
+                darkTheme = darkTheme,
+                isBottomBarVisible = isBottomBarVisible,
+                onExitApp = { context.finishAndRemoveTask() })
         }
     }
 }
@@ -329,7 +375,6 @@ sealed class BottomNavItem(
         SETTINGS
     )
 }
-
 
 
 //

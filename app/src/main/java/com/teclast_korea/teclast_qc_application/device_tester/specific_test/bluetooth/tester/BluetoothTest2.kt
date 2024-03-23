@@ -3,6 +3,7 @@ package com.teclast_korea.teclast_qc_application.device_tester.specific_test.blu
 import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
@@ -26,6 +27,8 @@ import androidx.navigation.NavController
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun BluetoothTestT2(navController: NavController, context: Context) {
+    val connectedGattDevices = remember { mutableStateListOf<BluetoothGatt>() }
+
     val bluetoothAdapter = context.getSystemService(BluetoothManager::class.java)?.adapter
     val devices = remember { mutableStateOf(listOf<BluetoothDevice>()) }
 
@@ -85,8 +88,26 @@ fun BluetoothTestT2(navController: NavController, context: Context) {
                         Text("Name: ${device.name}, Address: ${device.address}")
                     }
                 }
+
+
+//                Spacer(modifier = Modifier.padding(top = 40.dp))
+//
+//                Button(onClick = {
+//// Here, implement the disconnection logic
+//                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.BLUETOOTH_CONNECT) == PackageManager.PERMISSION_GRANTED) {
+//                        // Iterate and disconnect
+//                        connectedGattDevices.forEach { gatt ->
+//                            gatt.disconnect()
+//                            gatt.close() // Consider your use case for closing
+//                        }
+//                        connectedGattDevices.clear() // Clear the list after disconnecting
+//                    } else {
+//                        // Handle permission request or denial
+//                    }
+//                }) {
+//                    Text("Disconnect all devices")
+//                }
             }
         }
     )
 }
-

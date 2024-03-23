@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.NavigationPopButton
 import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
@@ -57,11 +57,12 @@ fun GPSTestT1(
         if (allPermissionsGranted) {
             // Permissions granted, update hasPermission and proceed with location updates
             CoroutineScope(Dispatchers.IO).launch {
-            locationClient.getLocationUpdates(5000L).collect { loc ->
-                location.value = loc
-                Log.i("GPSTest1", "Location update received: Lat=${loc.latitude}, Lon=${loc.longitude}")
-                // Check GPS enabled status inside collect if needed
-            }}
+                locationClient.getLocationUpdates(5000L).collect { loc ->
+                    location.value = loc
+                    Log.i("GPSTest1", "Location update received: Lat=${loc.latitude}, Lon=${loc.longitude}")
+                    // Check GPS enabled status inside collect if needed
+                }
+            }
         } else {
             // Handle permission denial here
         }
@@ -72,6 +73,7 @@ fun GPSTestT1(
 
     val currentTestItem = "GPS Test 1"
     val device_spec_pdf = deviceSpecReportList(context)
+    val isLoading = remember { mutableStateOf(false) }
 
     val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(loc: Location) {
@@ -109,6 +111,18 @@ fun GPSTestT1(
             )
         } else {
             // Permissions are granted, start location updates
+            try {
+                locationClient.getLocationUpdates(5000L).collect { loc ->
+                    location.value = loc
+                    Log.i("GPSTest1", "Location update received: Lat=${loc.latitude}, Lon=${loc.longitude}")
+
+                    // Check GPS enabled status inside collect if needed
+                }
+            } catch (e: Exception) {
+                Log.e("GPSTest1", "Error requesting location updates", e)
+                // 필요한 경우 여기에서 사용자에게 피드백을 제공하거나 상태를 업데이트하세요.
+            }
+
         }
 
 
@@ -132,13 +146,16 @@ fun GPSTestT1(
         if (hasPermission) {
             Log.i("GPSTest1", "Requesting location updates")
             try {
+                isLoading.value = true
                 locationClient.getLocationUpdates(5000L).collect { loc ->
                     location.value = loc
                     Log.i("GPSTest1", "Location update received: Lat=${loc.latitude}, Lon=${loc.longitude}")
                     // Check GPS enabled status inside collect if needed
+                    isLoading.value = false
                 }
             } catch (e: Exception) {
                 Log.e("GPSTest1", "Error requesting location updates", e)
+                isLoading.value = false
                 // 필요한 경우 여기에서 사용자에게 피드백을 제공하거나 상태를 업데이트하세요.
             }
         }
@@ -157,44 +174,66 @@ fun GPSTestT1(
                 contentColor = MaterialTheme.colors.onPrimary,
             )
         },
-        content = {Box(
-            modifier = Modifier
-                .fillMaxSize(), // Respect padding from Scaffold
-            contentAlignment = Alignment.Center // Align content to the center
+        content = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(), // Respect padding from Scaffold
+                contentAlignment = Alignment.Center // Align content to the center
 
-        ){
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-
-                modifier = Modifier.padding(16.dp)
             ) {
-                Text(text = if (isGPSEnabled.value) "GPS is enabled" else "GPS is disabled")
-                location.value?.let { loc ->
-                    Text(text = "Latitude: ${loc.latitude}, Longitude: ${loc.longitude}")
-                } ?: Text(text = "Location not available")
-                Spacer(modifier = Modifier.height(16.dp))
-                Button(onClick = {
-                    hasPermission = context.hasLocationPermission()
-                    if (hasPermission) {
-                        CoroutineScope(Dispatchers.IO).launch {
-                        locationClient.getLocationUpdates(5000L).collect { loc ->
-                            location.value = loc
-                        }}
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(text = if (isGPSEnabled.value) "GPS is enabled" else "GPS is disabled")
+                    location.value?.let { loc ->
+                        Text(text = "Latitude: ${loc.latitude}, Longitude: ${loc.longitude}")
+                    } ?: Text(text = "Location not available")
+                    Spacer(modifier = Modifier.height(16.dp))
+                    if (isLoading.value) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(50.dp),
+                            strokeWidth = 8.dp,
+                            color = Color.Green
+                        ) // Show loading indicator
+                        Spacer(modifier = Modifier.height(16.dp))
                     }
-                    else {
-                        requestPermissionLauncher.launch(
-                            arrayOf(
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.ACCESS_FINE_LOCATION,
-                            )
-                        )
+                    Button(
+                        enabled = !isLoading.value,
+                        onClick = {
+
+                            Log.i("Refresh Button", "Clicked" + isLoading.value)
+                            hasPermission = context.hasLocationPermission()
+                            if (hasPermission) {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    isLoading.value = true
+                                    locationClient.getLocationUpdates(5000L).collect { loc ->
+                                        location.value = loc
+                                        if (loc != null) {
+                                            Log.i("GPSTest1", "Location update received: Lat=${loc.latitude}, Lon=${loc.longitude}")
+                                            isLoading.value = false
+                                        }
+
+                                    }
+
+                                }
+                            } else {
+                                requestPermissionLauncher.launch(
+                                    arrayOf(
+                                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                                        Manifest.permission.ACCESS_FINE_LOCATION,
+                                    )
+                                )
+                            }
+                            isGPSEnabled.value = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+
+                        }) {
+                        Text(text = "Refresh Status")
                     }
-                    isGPSEnabled.value = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-                }) {
-                    Text(text = "Refresh Status")
                 }
             }
-        }},
+        },
         floatingActionButton = {
             Row(
                 modifier = Modifier.padding(16.dp).fillMaxWidth(),
@@ -233,8 +272,7 @@ fun GPSTestT1(
                             }
 
                             navController.navigate(nextRouteWithArguments)
-                        }
-                        else
+                        } else
                             navController.popBackStack()
                     }) {
                     Text("Good")

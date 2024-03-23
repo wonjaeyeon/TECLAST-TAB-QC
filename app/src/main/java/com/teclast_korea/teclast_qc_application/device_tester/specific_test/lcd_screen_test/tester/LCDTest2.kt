@@ -1,6 +1,7 @@
 package com.teclast_korea.teclast_qc_application.device_tester.specific_test.lcd_screen_test.tester
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.background
@@ -13,9 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.NavigationPopButton
 import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
@@ -32,7 +36,8 @@ fun LcdTest2(
     navController: NavController,
     testMode: String = "",
     navigateToNextTest: Boolean = false,
-    nextTestRoute: MutableList<String> = mutableListOf<String>()
+    nextTestRoute: MutableList<String> = mutableListOf<String>(),
+    isBottomBarVisible: MutableState<Boolean>
 ) {
     // 밝기 범위를 지정하고, 이를 흑백 색상으로 변환합니다.
     val brightnessLevels = listOf(0f, 0.25f, 0.5f, 0.75f, 1f)
@@ -43,16 +48,49 @@ fun LcdTest2(
     val currentTestItem = "LCD Test 2"
     val device_spec_pdf = deviceSpecReportList(context)
 
+    val activity = context as? Activity
+    val isNavigating = remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        isBottomBarVisible.value = false
+        activity?.let {
+            val windowInsetsController = WindowCompat.getInsetsController(it.window, it.window.decorView)
+            // Hide both the system bars and navigation bars
+            windowInsetsController?.hide(WindowInsetsCompat.Type.systemBars())
+            // Add the following line if you want to prevent the system bars from appearing when the user swipes from the edge.
+            windowInsetsController?.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+
+    // Observe changes in the NavController back stack to revert immersive mode when navigating away
+    DisposableEffect(isNavigating) {
+        isBottomBarVisible.value = true
+        onDispose {
+            activity?.let {
+                val windowInsetsController = WindowCompat.getInsetsController(it.window, it.window.decorView)
+                // Show system bars when leaving the composable
+                windowInsetsController?.show(WindowInsetsCompat.Type.systemBars())
+            }
+        }
+    }
+
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
                 title = { Text(text = "LCD Screen Test T2") },
-                backgroundColor = MaterialTheme.colors.primaryVariant,
-                contentColor = MaterialTheme.colors.onPrimary,
+                backgroundColor = colors[colorIndex],
+                contentColor = if (colorIndex >= 3) MaterialTheme.colors.primaryVariant else MaterialTheme.colors.onPrimary,
                 navigationIcon = {
                     NavigationPopButton(
-                        navController = navController, testMode = testMode
+                        navController = navController,
+                        testMode = testMode,
+                        addtitionalAction = {
+                            isNavigating.value = true
+                            isBottomBarVisible.value = true
+                        }
                     )
                 }
             )
@@ -69,6 +107,8 @@ fun LcdTest2(
                     backgroundColor = Color(0xFF00FF00),
 
                     onClick = { /* Handle success result */
+                        isNavigating.value = true
+                        isBottomBarVisible.value = true
                         onEvent(TestResultEvent.SaveTestResult)
                         AddTestResult(
                             state = state,
@@ -104,6 +144,8 @@ fun LcdTest2(
                 FloatingActionButton(
                     backgroundColor = Color(0xFFFF0000),
                     onClick = { /* Handle fail result */
+                        isNavigating.value = true
+                        isBottomBarVisible.value = true
                         onEvent(TestResultEvent.SaveTestResult)
                         AddTestResult(
                             state = state,

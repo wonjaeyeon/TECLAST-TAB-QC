@@ -55,17 +55,17 @@ import com.teclast_korea.teclast_qc_application.device_tester.specific_test.vibr
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.vibration.tester.VibrationTestTestMode
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.wifi.WifiTestScreen
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.wifi.tester.WifiTestTestMode
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.fast_mode.FastModeScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen.FastTestCompletedScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.fast_mode.sub_screen.FastTestFailedScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.scspro_mode.SCSPROModeScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.scspro_mode.sub_screen.SCSPROTestCompletedScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.scspro_mode.sub_screen.SCSPROTestFailedScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.standard_mode.StandardModeScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.standard_mode.sub_screen.StandardTestCompletedScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.t_order_mode.TOrderModeScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.t_order_mode.sub_screen.TOrderTestCompletedScreen
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.t_order_mode.sub_screen.TOrderTestFailedScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.fast_mode.FastModeScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.fast_mode.sub_screen.FastTestCompletedScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.fast_mode.sub_screen.FastTestFailedScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.scspro_mode.SCSPROModeScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.scspro_mode.sub_screen.SCSPROTestCompletedScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.scspro_mode.sub_screen.SCSPROTestFailedScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.standard_mode.StandardModeScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.standard_mode.sub_screen.StandardTestCompletedScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.t_order_mode.TOrderModeScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.t_order_mode.sub_screen.TOrderTestCompletedScreen
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.t_order_mode.sub_screen.TOrderTestFailedScreen
 import com.teclast_korea.teclast_qc_application.home.pdf_export.view_pdf.ComposePDFViewer
 import com.teclast_korea.teclast_qc_application.log_reports.SubLogScreen
 import com.teclast_korea.teclast_qc_application.settings.SettingsScreen
@@ -88,6 +88,7 @@ fun navigationGraph(
     volumeDownPressed: MutableState<Boolean>,
     openSettings: () -> Unit,
     darkTheme: MutableState<Boolean>,
+    isBottomBarVisible: MutableState<Boolean>,
     onExitApp: () -> Unit,
 ) {
 
@@ -536,7 +537,8 @@ fun navigationGraph(
             if (nextTestRoute == "notNextTest") {
                 LcdTest1(
                     state = state, onEvent = onEvent,
-                    context = context, navController = navController, testMode = testMode
+                    context = context, navController = navController, testMode = testMode,
+                    isBottomBarVisible = isBottomBarVisible
                 )
             } else {
                 //split nextTestRoute to get the test name
@@ -550,7 +552,8 @@ fun navigationGraph(
                     navController = navController,
                     navigateToNextTest = true,
                     nextTestRoute = nextTestNameList,
-                    testMode = testMode
+                    testMode = testMode,
+                    isBottomBarVisible = isBottomBarVisible
                 )
             }
         }
@@ -575,7 +578,8 @@ fun navigationGraph(
                     onEvent = onEvent,
                     context = context,
                     navController = navController,
-                    testMode = testMode
+                    testMode = testMode,
+                    isBottomBarVisible = isBottomBarVisible
                 )
             } else {
                 //split nextTestRoute to get the test name
@@ -589,7 +593,8 @@ fun navigationGraph(
                     navController = navController,
                     navigateToNextTest = true,
                     nextTestRoute = nextTestNameList,
-                    testMode = testMode
+                    testMode = testMode,
+                    isBottomBarVisible = isBottomBarVisible
                 )
             }
         }

@@ -21,12 +21,11 @@ fun filterTestMode(): List<Pair<String, ImageVector>> {
         test_mode_list = test_mode_list + Pair("T-Order Mode", Icons.Filled.SmartDisplay)
     }
 
-    //if (device_firmware_name.contains("scspro")) {
-    if(true){
+    if (device_firmware_name.contains("scspro")) {
         test_mode_list = test_mode_list + Pair("SCSPRO Mode", Icons.Filled.SmartDisplay)
     }
     //TODO : 이 로직은 현재 로컬 환경에서만 임의로 만든 로직이기에 업데이트가 불가능하고 다소 부족하다.
-    // 나중에 서버에 Request로 Model.display를 보내고, Response로 TestMode를 받아서 추가하는 방식으로 변경해야 한다.
+    // 나중에 서버에 Request Model.display를 보내고, Response로 TestMode를 받아서 추가하는 방식으로 변경해야 한다.
 
     return test_mode_list
 }

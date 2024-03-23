@@ -6,6 +6,9 @@ import android.os.Build
 import androidx.compose.runtime.Composable
 import com.teclast_korea.teclast_qc_application.calendar.read_phone_state.getDeviceSerialNumber_v2
 import com.teclast_korea.teclast_qc_application.home.device_spec.*
+import com.teclast_korea.teclast_qc_application.home.device_spec.battery.getBatteryCapacity
+import com.teclast_korea.teclast_qc_application.home.device_spec.battery.getBatteryTemperature
+import com.teclast_korea.teclast_qc_application.home.device_spec.battery.getBatteryVoltage
 
 
 @Composable
@@ -29,11 +32,13 @@ fun deviceSpecReportList(
         "CPU Spec" to getCpuInfo(),
         "Resolution" to context.resources.displayMetrics.run { "${widthPixels}x${heightPixels}" },
         "RAM" to MemoryInfo(context),
-        //"Internal Storage(without system)" to usedStorageInfo(context),
+        //"GPU" to getGpuInfo(),
         "Internal Storage(without system)" to usedStorageInfo(context),
+        //"Battery Spec" to getBatteryInfo(),
         "Battery Voltage" to getBatteryVoltage(context),
         "Battery Temperature" to getBatteryTemperature(context),
         "Battery Capacity" to getBatteryCapacity(context),
+        "Audio" to getAudioDeviceSpec(context),
         "NFC" to context.packageManager.hasSystemFeature(PackageManager.FEATURE_NFC).toString(),
         "Bluetooth version" to getBluetoothVersion(),
         "FINGERPRINT" to Build.FINGERPRINT,

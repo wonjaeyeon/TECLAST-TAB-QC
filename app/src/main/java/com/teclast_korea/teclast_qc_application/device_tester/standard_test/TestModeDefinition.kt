@@ -1,2 +1,0 @@
-package com.teclast_korea.teclast_qc_application.device_tester.standard_test
-

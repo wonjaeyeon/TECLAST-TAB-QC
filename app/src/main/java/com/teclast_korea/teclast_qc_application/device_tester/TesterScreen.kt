@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.teclast_korea.teclast_qc_application.device_tester.sub_screen.SenarioTest
 import com.teclast_korea.teclast_qc_application.device_tester.sub_screen.SpecificTest
-import com.teclast_korea.teclast_qc_application.device_tester.sub_screen.StandardTest
+import com.teclast_korea.teclast_qc_application.device_tester.sub_screen.TotalTest
 
 @Composable
 fun TesterScreen2(context: Context, navController: NavHostController) {
@@ -31,8 +31,8 @@ fun TesterScreen2(context: Context, navController: NavHostController) {
         Spacer(modifier = Modifier.height(12.dp))
         selectedOption = TriStateToggle2()
         Spacer(modifier = Modifier.height(8.dp))
-        if (selectedOption == "Standard Test") {
-            StandardTest(context, navController)
+        if (selectedOption == "Total Test") {
+            TotalTest(context, navController)
         }
         else if (selectedOption == "Specific Test") {
 
@@ -60,7 +60,7 @@ fun TesterScreen2(context: Context, navController: NavHostController) {
 @Composable
 fun TriStateToggle2() : String{
     val states = listOf(
-        "Standard Test",
+        "Total Test",
         "Specific Test",
         //"Scenario Test"
     )

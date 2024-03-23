@@ -3,18 +3,17 @@ package com.teclast_korea.teclast_qc_application.device_tester.specific_test.usb
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Usb
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.DialogAPIInterface
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.TestAPIDialog
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.DialogAPIInterface
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.TestAPIDialog
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.delay
@@ -137,7 +136,17 @@ fun UsbTestTestMode(
             ) {
                 Icon(Icons.Filled.Usb, contentDescription = "USB Status")
                 Text(text = "Model : ${android.os.Build.MODEL}")
-                Text(text = "Usb Host Mode : ${usbHostModeStatus.value}")
+                //Text(text = "Usb Host Mode : ${usbHostModeStatus.value}")
+                Spacer(modifier = Modifier.padding(vertical = 6.dp))
+                if(usbDevicesStatus.value.startsWith("Usb TEST : Success")) {
+                    Text(text = "Usb Host Mode On")
+                    Text(text = "Card Reader : Available")
+                } else
+                    {
+                        Text(text = "Usb Host Mode Off")
+                        Text(text = "Card Reader : Not Available")
+                    }
+                Spacer(modifier = Modifier.padding(vertical = 6.dp))
                 Text(text = usbMessage)
 
             }

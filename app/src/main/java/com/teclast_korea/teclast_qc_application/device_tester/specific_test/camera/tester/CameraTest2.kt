@@ -27,8 +27,8 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.FailTestNavigator
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.NavigationPopButton
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.NavigationPopButton
 import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent

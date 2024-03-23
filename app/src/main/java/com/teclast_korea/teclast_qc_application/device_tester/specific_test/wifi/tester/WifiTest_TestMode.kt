@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.DialogAPIInterface
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.TestAPIDialog
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.DialogAPIInterface
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.TestAPIDialog
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 import kotlinx.coroutines.delay
@@ -43,7 +43,6 @@ fun WifiTestTestMode(
         remember { mutableStateOf(wifiSignalStrengthTest(state, onEvent, context, targetWifiSignalStrength)) }
     val hasNavigated = remember { mutableStateOf(false) }  // State to track navigation status
     val showDialog = remember { mutableStateOf(false) }
-    Log.i("CurrentTestMode", testMode + " : WifiTest")
 
     DisposableEffect(Unit) {
         val job = coroutineScope.launch {

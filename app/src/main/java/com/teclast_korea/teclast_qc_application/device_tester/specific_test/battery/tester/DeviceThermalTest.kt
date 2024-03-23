@@ -1,9 +1,30 @@
 package com.teclast_korea.teclast_qc_application.device_tester.specific_test.battery.tester
 
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
 import android.os.Build
 import android.os.PowerManager
 import androidx.annotation.RequiresApi
+
+
+fun getBatteryTemperatureInTest(context: Context): String {
+    val batteryStatus: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { filter ->
+        context.registerReceiver(null, filter)
+    }
+
+    // Battery temperature is returned in tenths of a degree Celsius.
+    val temperatureTenths = batteryStatus?.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) ?: -1
+
+    return if (temperatureTenths != -1) {
+        val temperatureCelsius = temperatureTenths / 10.0
+        "$temperatureCelsius °C"
+    } else {
+        "unknown"
+    }
+}
+
 
 @RequiresApi(Build.VERSION_CODES.Q)
 fun checkDeviceThermalStatus(context: Context): String {

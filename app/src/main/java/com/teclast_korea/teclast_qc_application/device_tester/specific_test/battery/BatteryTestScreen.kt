@@ -24,7 +24,7 @@ import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.batteryTestT1
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.battery.tester.BatteryVoltageTest
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.battery.tester.batteryTestT2
-import com.teclast_korea.teclast_qc_application.device_tester.specific_test.battery.tester.checkDeviceThermalStatus
+import com.teclast_korea.teclast_qc_application.device_tester.specific_test.battery.tester.getBatteryTemperatureInTest
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 
@@ -41,7 +41,7 @@ fun BatteryTestScreen(
     // Create a mutable state for battery health result
     val batteryHealthResult = remember { mutableStateOf<String>("") }
     val batteryStateOfDevice = remember { mutableStateOf<String>("") }
-    val deviceThermalStateAfterTest = remember { mutableStateOf<String>("") }
+    val batteryThermalStateAfterTest = remember { mutableStateOf<String>("") }
     val batteryVoltageResult = remember { mutableStateOf<String>("") }
 
     Scaffold(topBar = {
@@ -99,13 +99,13 @@ fun BatteryTestScreen(
 
                 //make a button for device thermal test after battery test
                 Button(onClick = {
-                    deviceThermalStateAfterTest.value = checkDeviceThermalStatus(context = context)
+                    batteryThermalStateAfterTest.value = getBatteryTemperatureInTest(context = context)
                 }) {
-                    Text(text = "Device Thermal Test")
+                    Text(text = "Battery Thermal Test")
 
                 }
                 Text(
-                    text = deviceThermalStateAfterTest.value,
+                    text = batteryThermalStateAfterTest.value,
                     style = MaterialTheme.typography.body1,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colors.onPrimary,

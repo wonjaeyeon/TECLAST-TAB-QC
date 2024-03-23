@@ -15,8 +15,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.DialogAPIInterface
-import com.teclast_korea.teclast_qc_application.device_tester.standard_test.api_kit.TestAPIDialog
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.DialogAPIInterface
+import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.TestAPIDialog
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
