@@ -73,7 +73,7 @@ fun UsbTestTestMode(
                 Log.i("MyTag:UsbTest", "nextPath: $nextPath")
                 Log.i("MyTag:UsbTest", "nextPathString: $nextPathString")
 
-                var nextRouteWithArguments = ""
+                var nextRouteWithArguments: String
                 if (nextPathString.isNotEmpty()) {
                     nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                     Log.i("MyTag:UsbTest", "nextRouteWithArguments: $nextRouteWithArguments")
@@ -122,7 +122,6 @@ fun UsbTestTestMode(
     ) {
         TestAPIDialog(
             testMode = testMode,
-            state = state,
             onEvent = onEvent,
             context = context,
             navController = navController,

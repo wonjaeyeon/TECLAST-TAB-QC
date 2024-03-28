@@ -3,7 +3,7 @@ package com.teclast_korea.teclast_qc_application.device_tester.specific_test.wif
 import android.content.Context
 import android.net.wifi.WifiManager
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -16,16 +16,15 @@ fun getWifiSignalStrength(context: Context): Int {
     return WifiManager.calculateSignalLevel(info.rssi, 100)
 }
 
-@Suppress("DEPRECATION")
 fun wifiSignalStrengthTest(
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
-    RequiredSignalStrength: MutableState<Int> = mutableStateOf(20)
+    requiredSignalStrength: MutableState<Int> = mutableIntStateOf(20)
 ): String {
     val wifiSignalStrength = getWifiSignalStrength(context)
     var result = ""
-    if (wifiSignalStrength < RequiredSignalStrength.value) {
+    if (wifiSignalStrength < requiredSignalStrength.value) {
         onEvent(TestResultEvent.SaveTestResult)
         AddTestResult(state = state, onEvent = onEvent, "Wifi TEST 2", "Fail", Date().toString())
         onEvent(TestResultEvent.SaveTestResult)

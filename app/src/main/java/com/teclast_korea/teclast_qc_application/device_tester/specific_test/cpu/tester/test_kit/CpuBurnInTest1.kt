@@ -22,7 +22,7 @@ suspend fun CpuBurnInTest(
             }
         }
 
-        result = if (timeTaken != null && timeTaken <= timeoutMillis) {
+        result = if (timeTaken <= timeoutMillis) {
             AddTestResult(state = state, onEvent = onEvent, "CPU BURNIN TEST", "Success", Date().toString())
             "Test : Success : $timeTaken"
         } else {

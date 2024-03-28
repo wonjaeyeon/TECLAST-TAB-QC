@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,7 +52,7 @@ fun ComposePDFViewer(navController: NavController, context: Context) {
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
@@ -62,14 +62,14 @@ fun ComposePDFViewer(navController: NavController, context: Context) {
     ) {
         Box(modifier = Modifier.fillMaxSize()){
         PdfViewer(
-            modifier = Modifier.fillMaxSize(),
             file =  pdfFile,
+            modifier = Modifier.fillMaxSize(),
+            arrangement = Arrangement.spacedBy(0.dp),
             loadingListener = { loading, currentPage, maxPage ->
                 isLoading = loading
                 if (currentPage != null) currentLoadingPage = currentPage
                 if (maxPage != null) pageCount = maxPage
-            },
-            arrangement = Arrangement.spacedBy(0.dp)
+            }
         )
         if (isLoading) {
             Column(
@@ -108,21 +108,13 @@ fun ComposePDFViewer(navController: NavController, context: Context) {
 fun PdfViewer(
     file: File,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = Color(0xFF909090),
-    pageColor: Color = Color.White,
     listDirection: PdfListDirection = PdfListDirection.VERTICAL,
     arrangement: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(16.dp),
-    loadingListener: (
-        isLoading: Boolean,
-        currentPage: Int?,
-        maxPage: Int?,
-    ) -> Unit = { _, _, _ -> }
+    loadingListener: (isLoading: Boolean, currentPage: Int?, maxPage: Int?) -> Unit = { _, _, _ -> }
 ) {
     PdfViewer_2(
         pdfFile = file,
         modifier = modifier,
-        pageColor = pageColor,
-        backgroundColor = backgroundColor,
         listDirection = listDirection,
         arrangement = arrangement,
         loadingListener = loadingListener,
@@ -134,28 +126,20 @@ fun PdfViewer(
 fun PdfViewer_2(
     pdfFile: File,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = Color(0xFF909090),
-    pageColor: Color = Color.White,
     listDirection: PdfListDirection = PdfListDirection.VERTICAL,
     arrangement: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(16.dp),
-    loadingListener: (
-        isLoading: Boolean,
-        currentPage: Int?,
-        maxPage: Int?,
-    ) -> Unit = { _, _, _ -> }
+    loadingListener: (isLoading: Boolean, currentPage: Int?, maxPage: Int?) -> Unit = { _, _, _ -> }
 ) {
     PdfViewer_3(
         pdfFile = pdfFile,
         modifier = modifier,
-        backgroundColor = backgroundColor,
         listDirection = listDirection,
-        loadingListener = loadingListener,
-        arrangement = arrangement
+        arrangement = arrangement,
+        loadingListener = loadingListener
     ) { lazyState, imagem ->
         PaginaPDF(
             imagem = imagem,
-            lazyState = lazyState,
-            backgroundColor = pageColor
+            lazyState = lazyState
         )
     }
 }
@@ -165,14 +149,9 @@ fun PdfViewer_2(
 fun PdfViewer_3(
     pdfFile: File,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = Color(0xFF909090),
     listDirection: PdfListDirection = PdfListDirection.VERTICAL,
     arrangement: Arrangement.HorizontalOrVertical = Arrangement.spacedBy(16.dp),
-    loadingListener: (
-        isLoading: Boolean,
-        currentPage: Int?,
-        maxPage: Int?,
-    ) -> Unit = { _, _, _ -> },
+    loadingListener: (isLoading: Boolean, currentPage: Int?, maxPage: Int?) -> Unit = { _, _, _ -> },
     page: @Composable (LazyListState, ImageBitmap) -> Unit
 ) {
     val context = LocalContext.current
@@ -227,8 +206,7 @@ fun PdfViewer_3(
 @Composable
 private fun PaginaPDF(
     imagem: ImageBitmap,
-    lazyState: LazyListState,
-    backgroundColor: Color = Color.White
+    lazyState: LazyListState
 ) {
     Column {
         ZoomableImage(

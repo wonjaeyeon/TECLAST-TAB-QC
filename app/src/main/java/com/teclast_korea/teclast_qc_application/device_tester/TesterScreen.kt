@@ -14,14 +14,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.teclast_korea.teclast_qc_application.device_tester.sub_screen.SenarioTest
 import com.teclast_korea.teclast_qc_application.device_tester.sub_screen.SpecificTest
 import com.teclast_korea.teclast_qc_application.device_tester.sub_screen.TotalTest
 
 @Composable
 fun TesterScreen2(context: Context, navController: NavHostController) {
 
-    var selectedOption = "Standard Test"
+    var selectedOption: String
 
 
     Column(
@@ -36,11 +35,11 @@ fun TesterScreen2(context: Context, navController: NavHostController) {
         }
         else if (selectedOption == "Specific Test") {
 
-            SpecificTest(context, navController)
+            SpecificTest(navController)
         }
-        else if (selectedOption == "Seo Test") {
-            SenarioTest(context, navController)
-        }
+//        else if (selectedOption == "Seo Test") {
+//            SenarioTest(context, navController)
+//        }
         else {
             Row(
                 Modifier

@@ -8,7 +8,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +31,7 @@ fun CameraTestScreen(
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = androidx.compose.material.icons.Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
@@ -66,6 +67,16 @@ fun CameraTestScreen(
                     Text(text = "Front Camera Test")
                 }
 
+//                Spacer(modifier = Modifier.height(16.dp))
+//
+//
+//                Button(onClick = {
+//                    navController.navigate("camera_zoom_screen") {
+//
+//                    }
+//                }){
+//                    Text(text = "Camera Zoom Test")
+//                }
             }
         }
     }

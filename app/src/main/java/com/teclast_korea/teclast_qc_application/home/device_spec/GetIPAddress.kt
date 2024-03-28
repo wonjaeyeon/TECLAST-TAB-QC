@@ -13,7 +13,7 @@ fun getIPv4Addresses(): String {
             val inetAddresses = Collections.list(networkInterface.inetAddresses)
             for (inetAddress in inetAddresses) {
                 if (!inetAddress.isLoopbackAddress && inetAddress is Inet4Address) {
-                    ipv4Addresses.add(inetAddress.hostAddress)
+                    inetAddress.hostAddress?.let { ipv4Addresses.add(it) }
                 }
             }
         }
@@ -37,7 +37,7 @@ fun getIPv6Addresses(): String {
             for (inetAddress in inetAddresses) {
                 if (!inetAddress.isLoopbackAddress && inetAddress is Inet6Address) {
                     // IPv6 주소에서 '%' 이후의 문자 제거
-                    val address = inetAddress.hostAddress
+                    val address = inetAddress.hostAddress ?: return "unknown"
                     val validAddress = if (address.contains("%")) address.substring(0, address.indexOf('%')) else address
                     ipv6Addresses.add(validAddress)
                 }

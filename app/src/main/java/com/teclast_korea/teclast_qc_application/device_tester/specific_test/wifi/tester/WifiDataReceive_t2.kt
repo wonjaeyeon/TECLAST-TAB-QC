@@ -115,7 +115,7 @@ suspend fun fetchIpGeolocation() :String {
         }
     }
 
-    var requestResult: String = ""
+    var requestResult: String
 
     try {
         requestResult = withContext(Dispatchers.IO) {

@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -68,7 +67,7 @@ fun GSensorTestT1(
     val accelerometer = remember { sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) }
     val sensorValues = remember { mutableStateOf(listOf(0f, 0f, 0f)) }
     val currentTestItem = "G-Sensor Test 1"
-    val device_spec_pdf = deviceSpecReportList(context)
+    // val device_spec_pdf = deviceSpecReportList(context)
 
     val sensorListener = remember {
         object : SensorEventListener {
@@ -187,15 +186,12 @@ fun GSensorTestT1(
                         )
                         onEvent(TestResultEvent.SaveTestResult)
                         FailTestNavigator(
-                            context = context,
                             onEvent = onEvent,
-                            state = state,
-                            navController = navController,
                             testMode = testMode,
+                            navController = navController,
                             navigateToNextTest = navigateToNextTest,
                             nextTestRoute = nextTestRoute,
-                            currentTestItem = currentTestItem,
-                            deviceSpec = device_spec_pdf
+                            currentTestItem = currentTestItem
                         )
 //                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
 //                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1

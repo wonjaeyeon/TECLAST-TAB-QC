@@ -86,26 +86,11 @@ fun navigationGraph(
     onEvent: KFunction1<TestResultEvent, Unit>,
     volumeUpPressed: MutableState<Boolean>,
     volumeDownPressed: MutableState<Boolean>,
-    openSettings: () -> Unit,
     darkTheme: MutableState<Boolean>,
     isBottomBarVisible: MutableState<Boolean>,
     onExitApp: () -> Unit,
 ) {
-
-//    val navController = rememberNavController()
-//    val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
-//
-//// Listen for destination changes
-//    navController.addOnDestinationChangedListener { _, destination, _ ->
-//        // Check if we are returning to the desired destination
-//        if (destination.route == "touch_panel_test_screen") {
-//            savedStateHandle?.get<String>("testResult")?.let { testResult ->
-//                // Do something with the test result
-//            }
-//            savedStateHandle?.remove<String>("testResult")
-//        }
-//    }
-
+    
     NavHost(navController = navController, startDestination = BottomNavItem.Home.screenRoute) {
         composable(BottomNavItem.Home.screenRoute) {
             onEvent(TestResultEvent.SaveTestResult)
@@ -118,10 +103,10 @@ fun navigationGraph(
 
         }
         composable(BottomNavItem.Analysis.screenRoute) {
-            LogScreen(context = context, navController = navController)
+            LogScreen(navController = navController)
         }
         composable(BottomNavItem.Settings.screenRoute) {
-            SettingsScreen(context = context, navController = navController, darkTheme = darkTheme)
+            SettingsScreen(navController = navController, darkTheme = darkTheme)
         }
 
         composable("cpu_test_screen") {
@@ -157,7 +142,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "battery_test_test_mode_screen")
                 ////Log.i("nextTestName2", nextTestNameList.toString())
 
@@ -173,11 +158,11 @@ fun navigationGraph(
         }
 
         composable("ram_test_screen") {
-            RamTestScreen(state = state, onEvent = onEvent, context = context, navController = navController)
+            RamTestScreen(state = state, onEvent = onEvent, navController = navController)
         }
 
         composable("rom_test_screen") {
-            RomTestScreen(state = state, onEvent = onEvent, context = context, navController = navController)
+            RomTestScreen(state = state, onEvent = onEvent, navController = navController)
         }
 
         composable("usb_test_screen") {
@@ -207,7 +192,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "usb_test_test_mode_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 UsbTestTestMode(
@@ -251,7 +236,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "wifi_test_test_mode_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 WifiTestTestMode(
@@ -296,7 +281,7 @@ fun navigationGraph(
                 )
             } else {
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "bluetooth_test_test_mode_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 BluetoothTestTestMode(
@@ -310,7 +295,7 @@ fun navigationGraph(
         }
 
         composable("touch_panel_test_screen") {
-            TouchPanelTestScreen(context = context, navController = navController)
+            TouchPanelTestScreen(navController = navController)
         }
 
 
@@ -332,24 +317,22 @@ fun navigationGraph(
                 TouchPanelTest1(
                     state = state,
                     onEvent = onEvent,
-                    context = context,
                     navController = navController,
                     testMode = testMode
                 )
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "touch_panel_test_t1_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest1(
                     state = state,
                     onEvent = onEvent,
-                    context = context,
                     navController = navController,
+                    testMode = testMode,
                     navigateToNextTest = true,
-                    nextTestRoute = nextTestNameList,
-                    testMode = testMode
+                    nextTestRoute = nextTestNameList
                 )
             }
         }
@@ -378,7 +361,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "touch_panel_test_t2_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest2(
@@ -409,20 +392,16 @@ fun navigationGraph(
 
             if (nextTestRoute == "notNextTest") {
                 TouchPanelTest3(
-                    context = context, navController = navController, testMode = testMode
+                    navController = navController
                 )
             } else {
                 //split nextTestRoute to get the test name
-                val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestName = nextTestRoute.split("->")
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "touch_panel_test_t3_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest3(
-                    context = context,
-                    navController = navController,
-                    navigateToNextTest = true,
-                    nextTestRoute = nextTestNameList,
-                    testMode = testMode
+                    navController = navController
                 )
             }
         }
@@ -448,7 +427,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "touch_panel_test_t4_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 TouchPanelTest4(
@@ -468,7 +447,7 @@ fun navigationGraph(
         }
 
         composable("physical_button_test_screen") {
-            PhysicalButtonTestScreen(context = context, navController = navController)
+            PhysicalButtonTestScreen(navController = navController)
         }
 
         composable(
@@ -496,7 +475,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "physical_button_test_t1_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 PhysicalButtonTestT1(
@@ -517,7 +496,7 @@ fun navigationGraph(
         }
 
         composable("lcd_screen_test_screen") {
-            LcdScreenTest(context = context, navController = navController)
+            LcdScreenTest(navController = navController)
         }
 
         // argument "navigateToNextTest" is used to navigate to next test screen work perfectly
@@ -543,7 +522,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "lcd_screen_test_t1_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 LcdTest1(
@@ -584,7 +563,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "lcd_screen_test_t2_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 LcdTest2(
@@ -629,7 +608,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "camera_test_t1_screen")
                 Log.i("nextTestName2_Camera1", nextTestNameList.toString())
                 CameraTest1(
@@ -668,7 +647,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "camera_test_t2_screen")
                 Log.i("nextTestName2_Camera2", nextTestNameList.toString())
                 CameraTest2(
@@ -684,9 +663,6 @@ fun navigationGraph(
 
         composable("audio_test_screen") {
             AudioTestScreen(
-                state = state,
-                onEvent = onEvent,
-                context = context,
                 navController = navController
             ) // TODO : 이 UI 없에고 밑에와 통일 (따라서 그냥 Specific Test 들어가도 PASS FAIL 기록 가능하도록)
         }
@@ -716,7 +692,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "audio_test_t1_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 AudioTestT1(
@@ -731,7 +707,7 @@ fun navigationGraph(
         }
 
         composable("vibration_test_screen") {
-            VibrationTestScreen(context = context, navController = navController)
+            VibrationTestScreen(navController = navController)
         }
 
         composable("vibration_test_t1_screen") {
@@ -766,7 +742,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "vibration_test_test_mode_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 VibrationTestTestMode(
@@ -781,7 +757,7 @@ fun navigationGraph(
         }
 
         composable("flash_light_test_screen") {
-            FlashLightTestScreen(context = context, navController = navController)
+            FlashLightTestScreen(navController = navController)
         }
 
 //        composable("flash_light_test_t1_screen") {
@@ -812,7 +788,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "flash_light_test_test_mode_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 FlashLightTestTestMode(
@@ -826,7 +802,7 @@ fun navigationGraph(
             }
         }
         composable("gps_test_screen") {
-            GPSTestScreen(context = context, navController = navController)
+            GPSTestScreen(navController = navController)
         }
 
         composable(
@@ -860,7 +836,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "gps_test_t1_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 GPSTestT1(
@@ -876,7 +852,7 @@ fun navigationGraph(
         }
 
         composable("g_sensor_test_screen") {
-            GSensorTestScreen(context = context, navController = navController)
+            GSensorTestScreen(navController = navController)
         }
 
 
@@ -904,7 +880,7 @@ fun navigationGraph(
             } else {
                 //split nextTestRoute to get the test name
                 val nextTestName = nextTestRoute!!.split("->")
-                val nextTestNameList = nextTestName!!.toMutableList()
+                val nextTestNameList = nextTestName.toMutableList()
                 nextTestNameList.add(0, "g_sensor_test_t1_screen")
                 //Log.i("nextTestName2", nextTestNameList.toString())
                 GSensorTestT1(
@@ -919,11 +895,11 @@ fun navigationGraph(
         }
 
         composable("auto_sleep_test_screen") {
-            AutoSleepTestScreen(context = context, navController = navController)
+            AutoSleepTestScreen(navController = navController)
         }
 
         composable("auto_sleep_test_t1_screen") {
-            AutoSleepTestT1(context = context, navController = navController)
+            AutoSleepTestT1(navController = navController)
         }
 
         //Standard Test
@@ -1162,7 +1138,7 @@ fun navigationGraph(
         }
 
         composable("color_theme_mode_screen") {
-            ColorThemeModeScreen(context = context, navController = navController, darkTheme = darkTheme)
+            ColorThemeModeScreen(navController = navController, darkTheme = darkTheme)
         }
 
         composable("app_version_screen") {
@@ -1183,10 +1159,15 @@ fun navigationGraph(
             arguments = listOf(navArgument("command") { type = NavType.StringType })
         ) { backStackEntry ->
             SubLogScreen(
-                context = context,
                 navController = navController,
                 command = backStackEntry.arguments?.getString("command") ?: ""
             )
         }
+
+//        composable(
+//            "camera_zoom_screen"
+//        ){
+//            CameraPreviewScreen()
+//        }
     }
 }

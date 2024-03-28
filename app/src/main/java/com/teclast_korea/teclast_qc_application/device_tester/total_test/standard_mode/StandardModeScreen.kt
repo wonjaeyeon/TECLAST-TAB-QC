@@ -83,7 +83,7 @@ fun StandardModeScreen(
 
 
                 try {
-                    var gpuTestResult1 = ""
+                    var gpuTestResult1: String
                     runBlocking {
                         gpuTestResult1 = gpuTest1(state = state, onEvent = onEvent)
                     }
@@ -100,7 +100,7 @@ fun StandardModeScreen(
 
 
 
-                var ramTestResult1 = ""
+                var ramTestResult1: String
                 runBlocking {
                     ramTestResult1 = ramTest1(state = state, onEvent = onEvent)
                 }
@@ -113,8 +113,7 @@ fun StandardModeScreen(
                 delay(100L)
 
 
-                var batteryTestResult1 = ""
-                batteryTestResult1 = batteryTestT1(state = state, onEvent = onEvent, context = context)
+                val batteryTestResult1 = batteryTestT1(state = state, onEvent = onEvent, context = context)
                 progress += 1f / (done.size + undone.size)
                 done.add("7. Battery test 1")
                 undone.remove("7. Battery test 1")
@@ -132,7 +131,16 @@ fun StandardModeScreen(
     }
 
     if (testsCompleted == false) {
-        StandardModeTestScreenScaffold(navController = navController, nextTestRoute = tests, progress = progress, done = done, undone = undone, content = {}, onEvent= onEvent, state = state, context = context)
+        StandardModeTestScreenScaffold(
+            navController = navController,
+            nextTestRoute = tests,
+            progress = progress,
+            done = done,
+            undone = undone,
+            content = {},
+            onEvent= onEvent,
+            context = context
+        )
     }
     if (testsCompleted) {
         StandardModeScreen_2(

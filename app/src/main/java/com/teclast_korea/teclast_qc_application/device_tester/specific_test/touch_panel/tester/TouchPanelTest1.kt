@@ -1,7 +1,6 @@
 package com.teclast_korea.teclast_qc_application.device_tester.specific_test.touch_panel.tester
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -11,7 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -36,11 +35,10 @@ data class TouchPoint(val x: Float, val y: Float, val color: Color)
 fun TouchPanelTest1(
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
-    context: Context,
     navController: NavController,
     testMode: String = "",
-    
     navigateToNextTest: Boolean = false,
+
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
     val touchPoints = remember { mutableStateListOf<TouchPoint>() }
@@ -71,7 +69,7 @@ fun TouchPanelTest1(
                 Log.i("MyTag:TouchPanelTest1", "nextPath: $nextPath")
                 Log.i("MyTag:TouchPanelTest1", "nextPathString: $nextPathString")
 
-                var nextRouteWithArguments = ""
+                var nextRouteWithArguments: String
                 if (nextPathString.isNotEmpty()) {
                     nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                 } else {
@@ -109,7 +107,7 @@ fun TouchPanelTest1(
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }

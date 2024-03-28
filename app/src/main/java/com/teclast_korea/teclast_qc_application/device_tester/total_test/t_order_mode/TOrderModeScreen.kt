@@ -11,7 +11,6 @@ import com.teclast_korea.teclast_qc_application.device_tester.specific_test.gpu.
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.ram.tester.ramTest1
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.t_order_mode.sub_screen.TOrderModeTestScreenScaffold
-import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.CheckTestResultbyItem
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -67,7 +66,7 @@ fun TOrderModeScreen(
     )
 
     val doneTests = listOf("CPU BUFFER TEST", "GPU TEST 1", "RAM TEST", "Battery TEST 1")
-    val device_spec_pdf = deviceSpecReportList(context = context)
+    // val device_spec_pdf = deviceSpecReportList(context = context)
     val isAnyTestFailed = remember { mutableStateOf(false) }
     val hasCheckedEveryTest = remember { mutableStateOf(false) }
 
@@ -93,7 +92,7 @@ fun TOrderModeScreen(
 
 
                 try {
-                    var gpuTestResult1 = ""
+                    var gpuTestResult1: String
                     runBlocking {
                         gpuTestResult1 = gpuTest1(state = state, onEvent = onEvent)
                     }
@@ -109,7 +108,7 @@ fun TOrderModeScreen(
                 delay(100L)
 
 
-                var ramTestResult1 = ""
+                var ramTestResult1: String
                 runBlocking {
                     ramTestResult1 = ramTest1(state = state, onEvent = onEvent)
                 }
@@ -122,8 +121,7 @@ fun TOrderModeScreen(
                 delay(100L)
 
 
-                var batteryTestResult1 = ""
-                batteryTestResult1 = batteryTestT1(state = state, onEvent = onEvent, context = context)
+                val batteryTestResult1 = batteryTestT1(state = state, onEvent = onEvent, context = context)
                 progress += 1f / (done.size + undone.size)
                 done.add("8. battery test 1")
                 undone.remove("8. battery test 1")
@@ -149,7 +147,6 @@ fun TOrderModeScreen(
             undone = undone,
             content = {},
             onEvent = onEvent,
-            state = state,
             context = context
         )
     }
@@ -158,18 +155,15 @@ fun TOrderModeScreen(
             doneTests.forEach { doneTest ->
                 run {
                     Log.i("TOrderModeScreen", "Done Test: $doneTest")
-                    if (CheckTestResultbyItem(state = state, onEvent = onEvent, itemName = doneTest) == "FAIL") {
+                    if (CheckTestResultbyItem(state = state, itemName = doneTest) == "FAIL") {
                         Log.i("TOrderModeScreen", "Done Test: $doneTest is Failed")
                         FailTestNavigator(
-                            context = context,
                             onEvent = onEvent,
-                            state = state,
                             testMode = "TOrderMode",
                             navController = navController,
                             navigateToNextTest = false,
                             nextTestRoute = tests,
-                            currentTestItem = doneTest,
-                            deviceSpec = device_spec_pdf
+                            currentTestItem = doneTest
                         )
                         isAnyTestFailed.value = true
                     } else {

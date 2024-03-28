@@ -15,7 +15,6 @@ import androidx.navigation.NavHostController
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.DialogAPIInterface
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.TestAPIDialog
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -27,7 +26,6 @@ fun FastModeTestScreenScaffold(
     undone: List<String>,
     titleText: String = "Fast Mode Test",
     content: @Composable () -> Unit,
-    state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     context: Context
 ) {
@@ -60,7 +58,6 @@ fun FastModeTestScreenScaffold(
 
         TestAPIDialog(
             testMode = "FastMode",
-            state = state,
             onEvent = onEvent,
             context = context,
             navController = navController,

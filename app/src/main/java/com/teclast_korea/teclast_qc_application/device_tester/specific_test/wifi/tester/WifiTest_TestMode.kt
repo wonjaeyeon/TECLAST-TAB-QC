@@ -34,11 +34,11 @@ fun WifiTestTestMode(
     testMode: String = "",
     navigateToNextTest: Boolean = false,
     nextTestRoute: MutableList<String> = mutableListOf(),
-    targetWifiSignalStrength: MutableState<Int> = mutableStateOf(80)
+    targetWifiSignalStrength: MutableState<Int> = mutableIntStateOf(80)
 ) {
     val coroutineScope = rememberCoroutineScope()
     val wifiConnectedStatus = remember { mutableStateOf(wifiConnectionTest(state, onEvent, context)) }
-    val targetWifiSignalStrength = remember { targetWifiSignalStrength }
+    //val targetWifiSignalStrengthValue = remember { targetWifiSignalStrength }
     val wifiSignalStrength =
         remember { mutableStateOf(wifiSignalStrengthTest(state, onEvent, context, targetWifiSignalStrength)) }
     val hasNavigated = remember { mutableStateOf(false) }  // State to track navigation status
@@ -84,7 +84,7 @@ fun WifiTestTestMode(
                     Log.i("MyTag:WifiTest", "nextPath: $nextPath")
                     Log.i("MyTag:WifiTest", "nextPathString: $nextPathString")
 
-                    var nextRouteWithArguments = ""
+                    var nextRouteWithArguments: String
                     if (nextPathString.isNotEmpty()) {
                         nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                         Log.i("MyTag:WifiTest", "nextRouteWithArguments: $nextRouteWithArguments")
@@ -143,7 +143,6 @@ fun WifiTestTestMode(
 
         TestAPIDialog(
             testMode = testMode,
-            state = state,
             onEvent = onEvent,
             context = context,
             navController = navController,

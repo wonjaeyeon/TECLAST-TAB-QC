@@ -17,7 +17,7 @@ fun cpuTest1(
     limit: Int = 50000): String {
 
     var isPassed = false
-    var errorLine = ""
+    var errorLine: String
     try {
         val elapsedTime = measureTimeMillis {
             findPrimesUpTo(limit)

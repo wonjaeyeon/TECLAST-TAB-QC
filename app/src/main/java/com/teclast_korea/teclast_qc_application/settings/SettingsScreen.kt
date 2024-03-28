@@ -1,6 +1,5 @@
 package com.teclast_korea.teclast_qc_application.settings
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,7 +19,6 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun SettingsScreen(
-    context: Context,
     navController: NavHostController,
     darkTheme: MutableState<Boolean>
 ) {
@@ -104,7 +102,7 @@ fun SettingsScreen(
 //            ) {
 //                Text("contract screen", color = Color.Green)
 //            }
-            SettingsItemList(listItems = listItems, navController = navController, context = context)
+            SettingsItemList(listItems = listItems, navController = navController)
 
 
         }
@@ -112,16 +110,16 @@ fun SettingsScreen(
 }
 
 @Composable
-fun SettingsItemList(listItems: List<ListItem>, navController: NavHostController, context: Context) {
+fun SettingsItemList(listItems: List<ListItem>, navController: NavHostController) {
     LazyColumn {
         items(listItems) { item ->
-            ListItem(item, navController, context)
+            ListItem(item, navController)
         }
     }
 }
 
 @Composable
-fun ListItem(item: ListItem, navController: NavHostController, context: Context) {
+fun ListItem(item: ListItem, navController: NavHostController) {
     Button(
         onClick = {
 //            if (item.title == "Open Source License") {

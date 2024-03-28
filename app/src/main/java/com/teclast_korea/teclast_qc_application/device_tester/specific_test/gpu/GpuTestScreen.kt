@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.device_thermal.tester.checkDeviceThermalStatus
-
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.gpu.tester.gpu3DTest
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.gpu.tester.gpuTest1
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
@@ -51,7 +50,7 @@ fun GpuTestScreen(
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }

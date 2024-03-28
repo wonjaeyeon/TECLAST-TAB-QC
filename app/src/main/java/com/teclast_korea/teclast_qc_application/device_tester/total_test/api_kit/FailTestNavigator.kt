@@ -1,22 +1,17 @@
 package com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit
 
-import android.content.Context
 import android.util.Log
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 
 
 fun FailTestNavigator(
-    context: Context,
     onEvent: (TestResultEvent) -> Unit,
-    state: TestResultState,
     testMode: String,
     navController: NavController,
     navigateToNextTest: Boolean,
     nextTestRoute: MutableList<String>,
-    currentTestItem: String,
-    deviceSpec: List<Pair<String, String>>
+    currentTestItem: String
 ) {
     val endTestMode = listOf("FastMode", "TOrderMode","SCSPROMode")
     val nextTestMode = listOf("StandardMode")
@@ -26,23 +21,8 @@ fun FailTestNavigator(
 
     if (testMode in endTestMode) {
         onEvent(TestResultEvent.SaveTestResult)
-//        val testResult = state.testResults.filter { it.itemName.contains(currentTestItem) }
-//        while (testResult.isEmpty()){
-//
-//        AddTestResult(
-//            state = state,
-//            onEvent = onEvent,
-//            currentTestItem,
-//            "Fail",
-//            Date().toString()
-//        )
-//        onEvent(TestResultEvent.SaveTestResult)}
         onEvent(TestResultEvent.ClearPreviousTestResults)
-        // show me the current DB data
-//        Log.i(
-//            "FailTestNavigator_TestDB",
-//            TestReportList(context = context, state = state, onEvent = onEvent).toString()
-//        )
+
         var deviceNavID = ""
         when (testMode) {
             "FastMode" -> {
@@ -67,7 +47,7 @@ fun FailTestNavigator(
             Log.i("MyTag:$currentTestItem", "nextPath: $nextPath")
             Log.i("MyTag:$currentTestItem", "nextPathString: $nextPathString")
 
-            var nextRouteWithArguments = ""
+            var nextRouteWithArguments: String
             if (nextPathString.isNotEmpty()) {
                 nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
             } else {

@@ -32,7 +32,7 @@ fun deviceSpecReportList(
         "CPU Spec" to getCpuInfo(),
         "Resolution" to context.resources.displayMetrics.run { "${widthPixels}x${heightPixels}" },
         "RAM" to MemoryInfo(context),
-        //"GPU" to getGpuInfo(),
+        "GPU" to getGpuInfo(),
         "Internal Storage(without system)" to usedStorageInfo(context),
         //"Battery Spec" to getBatteryInfo(),
         "Battery Voltage" to getBatteryVoltage(context),

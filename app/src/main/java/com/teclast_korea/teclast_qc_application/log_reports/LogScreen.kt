@@ -1,6 +1,5 @@
 package com.teclast_korea.teclast_qc_application
 
-import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -27,7 +26,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 @Composable
-fun LogScreen(context: Context, navController: NavHostController) {
+fun LogScreen(navController: NavHostController) {
     val scrollState = rememberScrollState()
     var commandText by remember { mutableStateOf("") }
     val logText = remember { mutableStateOf(AnnotatedString("")) }
@@ -70,11 +69,8 @@ fun LogScreen(context: Context, navController: NavHostController) {
 
         // Buttons for predefined commands
         CommandButtons (
-            onCommandSelected = { command ->
-                //logText.value = executeCommand(command)
-                navController.navigate("sub_log_screen/$command")
-            }
-                    , navController = navController)
+            navController = navController
+        )
             //command -> logText.value = executeCommand(command), navController
 
 
@@ -86,8 +82,8 @@ fun LogScreen(context: Context, navController: NavHostController) {
 
 @Composable
 fun CommandButtons(
-    onCommandSelected: (String) -> Unit,
-    navController: NavHostController) {
+    navController: NavHostController
+) {
     val commands = listOf(
         CommandInfo("ps", "List processes"),
         CommandInfo("logcat -d", "Dump current logcat to console"),
@@ -106,7 +102,7 @@ fun CommandButtons(
 
     Column {
         commands.forEach { command ->
-            CommandItem(commandInfo = command, onCommandSelected = onCommandSelected, navController = navController)
+            CommandItem(commandInfo = command, navController = navController)
         }
 
     }
@@ -119,7 +115,7 @@ data class CommandInfo(
 )
 
 @Composable
-fun CommandItem(commandInfo: CommandInfo, onCommandSelected: (String) -> Unit, navController: NavHostController) {
+fun CommandItem(commandInfo: CommandInfo, navController: NavHostController) {
     Surface(
         color = MaterialTheme.colors.primary, // This sets the background color of the Surface
         modifier = Modifier

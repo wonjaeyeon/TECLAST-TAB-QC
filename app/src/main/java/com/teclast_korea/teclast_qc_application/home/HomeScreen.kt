@@ -76,10 +76,10 @@ fun ShowDeviceSpecs2(
 ) {
     val tableData_DeviceSpec = deviceSpecReportList(context)
 
-    val tableData_StateReport = TestReportList(state = state, context = context, onEvent = onEvent)
+    val tableData_StateReport = TestReportList(state = state)
     var selectedOption = "Device Specs"
-    var selectedTableData = tableData_DeviceSpec
-    var column2Text = "State Report"
+    var selectedTableData: List<Pair<String, String>>
+    var column2Text: String
 
     // Each cell of a column must have the same weight.
     val column1Weight = .3f // 30%
@@ -102,13 +102,11 @@ fun ShowDeviceSpecs2(
                     Toast.makeText(context, "Generating Report", Toast.LENGTH_SHORT).show()
                     try {
                         CoroutineScope(Dispatchers.IO).async {
-                            val testReportList =TestReportList(context = context, state = state, onEvent = onEvent)
+                            val testReportList =TestReportList(state = state)
 
                             generatePDF(
                                 context = context,
                                 directory = getDirectory(context),
-                                state = state,
-                                onEvent = onEvent,
                                 deviceSpec = DeviceSpec_for_pdf,
                                 testMode = "unknown",
                                 testReportList = testReportList,

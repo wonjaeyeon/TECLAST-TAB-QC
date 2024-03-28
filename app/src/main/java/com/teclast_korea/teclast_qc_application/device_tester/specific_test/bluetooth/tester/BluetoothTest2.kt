@@ -3,7 +3,6 @@ package com.teclast_korea.teclast_qc_application.device_tester.specific_test.blu
 import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothGatt
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
@@ -14,9 +13,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -27,7 +29,7 @@ import androidx.navigation.NavController
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun BluetoothTestT2(navController: NavController, context: Context) {
-    val connectedGattDevices = remember { mutableStateListOf<BluetoothGatt>() }
+//    val connectedGattDevices = remember { mutableStateListOf<BluetoothGatt>() }
 
     val bluetoothAdapter = context.getSystemService(BluetoothManager::class.java)?.adapter
     val devices = remember { mutableStateOf(listOf<BluetoothDevice>()) }
@@ -43,7 +45,7 @@ fun BluetoothTestT2(navController: NavController, context: Context) {
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }

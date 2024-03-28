@@ -4,9 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
-import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -72,33 +69,9 @@ fun GPSTestT1(
     var hasPermission = remember { context.hasLocationPermission() }
 
     val currentTestItem = "GPS Test 1"
-    val device_spec_pdf = deviceSpecReportList(context)
+    // val device_spec_pdf = deviceSpecReportList(context)
     val isLoading = remember { mutableStateOf(false) }
 
-    val locationListener: LocationListener = object : LocationListener {
-        override fun onLocationChanged(loc: Location) {
-            location.value = loc
-        }
-
-        // Implement other methods as needed
-        override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
-            // Called when the provider status changes. This method is called when
-            // a provider is unable to fetch a location or if the provider has recently
-            // become available after a period of unavailability.
-        }
-
-        override fun onProviderEnabled(provider: String) {
-            // Called when the provider is enabled by the user.
-            isGPSEnabled.value = true
-        }
-
-        override fun onProviderDisabled(provider: String) {
-            // Called when the provider is disabled by the user. If requestLocationUpdates
-            // is called on an already disabled provider, this method is called
-            // immediately.
-            isGPSEnabled.value = false
-        }
-    }
 
     LaunchedEffect(key1 = true) {
         if (!hasPermission) {
@@ -129,7 +102,7 @@ fun GPSTestT1(
 //        if (hasPermission.value) {
 //            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000L, 10f, locationListener)
 //        }
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        //val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         isGPSEnabled.value = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 
@@ -290,15 +263,12 @@ fun GPSTestT1(
                         )
                         onEvent(TestResultEvent.SaveTestResult)
                         FailTestNavigator(
-                            context = context,
                             onEvent = onEvent,
-                            state = state,
-                            navController = navController,
                             testMode = testMode,
+                            navController = navController,
                             navigateToNextTest = navigateToNextTest,
                             nextTestRoute = nextTestRoute,
-                            currentTestItem = currentTestItem,
-                            deviceSpec = device_spec_pdf
+                            currentTestItem = currentTestItem
                         )
 
                     }) {

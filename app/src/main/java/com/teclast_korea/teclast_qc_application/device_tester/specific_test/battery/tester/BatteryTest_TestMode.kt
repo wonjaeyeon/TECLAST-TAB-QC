@@ -75,7 +75,7 @@ fun BatteryTestTestMode(
                     Log.i("MyTag:BatteryTest", "nextPath: $nextPath")
                     Log.i("MyTag:BatteryTest", "nextPathString: $nextPathString")
 
-                    var nextRouteWithArguments = ""
+                    var nextRouteWithArguments: String
                     if (nextPathString.isNotEmpty()) {
                         nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                         Log.i("MyTag:BatteryTest", "nextRouteWithArguments: $nextRouteWithArguments")
@@ -186,7 +186,6 @@ fun BatteryTestTestMode(
 
         TestAPIDialog(
             testMode = testMode,
-            state = state,
             onEvent = onEvent,
             context = context,
             navController = navController,

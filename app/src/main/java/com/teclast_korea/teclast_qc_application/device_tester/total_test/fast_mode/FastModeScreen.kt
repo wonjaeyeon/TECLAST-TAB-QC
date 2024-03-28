@@ -11,7 +11,6 @@ import com.teclast_korea.teclast_qc_application.device_tester.specific_test.gpu.
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.ram.tester.ramTest1
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.fast_mode.sub_screen.FastModeTestScreenScaffold
-import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.CheckTestResultbyItem
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -68,7 +67,7 @@ fun FastModeScreen(
 
 
     val doneTests = listOf("CPU BUFFER TEST", "GPU TEST 1", "RAM TEST", "Battery TEST 1")
-    val device_spec_pdf = deviceSpecReportList(context = context)
+    // val device_spec_pdf = deviceSpecReportList(context = context)
     val isAnyTestFailed = remember { mutableStateOf(false) }
     val hasCheckedEveryTest = remember { mutableStateOf(false) }
 
@@ -96,7 +95,7 @@ fun FastModeScreen(
 
 
                 try {
-                    var gpuTestResult1 = ""
+                    var gpuTestResult1: String
                     runBlocking {
                         gpuTestResult1 = gpuTest1(state = state, onEvent = onEvent)
                     }
@@ -114,7 +113,7 @@ fun FastModeScreen(
                 delay(100L)
 
 
-                var ramTestResult1 = ""
+                var ramTestResult1: String
                 runBlocking {
                     ramTestResult1 = ramTest1(state = state, onEvent = onEvent)
                 }
@@ -128,7 +127,7 @@ fun FastModeScreen(
                 delay(100L)
 
 
-                var batteryTestResult1 = ""
+                var batteryTestResult1: String
                 batteryTestResult1 = batteryTestT1(state = state, onEvent = onEvent, context = context)
 
                 progress += 1f / (done.size + undone.size)
@@ -160,7 +159,6 @@ fun FastModeScreen(
             undone = undone,
             content = {},
             onEvent = onEvent,
-            state = state,
             context = context
         )
     }
@@ -170,18 +168,15 @@ fun FastModeScreen(
             doneTests.forEach { doneTest ->
                 run {
                     Log.i("FastModeScreen", "Done Test: $doneTest")
-                    if (CheckTestResultbyItem(state = state, onEvent = onEvent, itemName = doneTest) == "FAIL") {
+                    if (CheckTestResultbyItem(state = state, itemName = doneTest) == "FAIL") {
                         Log.i("FastModeScreen", "Done Test: $doneTest is Failed")
                         FailTestNavigator(
-                            context = context,
                             onEvent = onEvent,
-                            state = state,
                             testMode = "FastMode",
                             navController = navController,
                             navigateToNextTest = false,
                             nextTestRoute = tests,
-                            currentTestItem = doneTest,
-                            deviceSpec = device_spec_pdf
+                            currentTestItem = doneTest
                         )
                         isAnyTestFailed.value = true
                     } else {

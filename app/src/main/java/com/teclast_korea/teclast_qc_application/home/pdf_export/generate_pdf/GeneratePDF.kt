@@ -15,8 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.content.ContextCompat
 import com.teclast_korea.teclast_qc_application.R
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -120,8 +118,6 @@ enum class TitleSize {
 fun generatePDF(
     context: Context,
     directory: File,
-    state: TestResultState,
-    onEvent: (TestResultEvent) -> Unit,
     deviceSpec: List<Pair<String, String>>,
     testMode: String = "Not Found",
     showToast: Boolean = false,

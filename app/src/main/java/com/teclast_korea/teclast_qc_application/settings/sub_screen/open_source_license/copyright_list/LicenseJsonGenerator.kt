@@ -8,11 +8,11 @@ import java.io.InputStreamReader
 
 class LicenseJsonGenerator(private val context: Context) {
 
-    fun generateJsonFile() {
-        val licenseInfos = parseLicenseMetadata()
-        val json = Gson().toJson(licenseInfos)
-        writeToFile(json, "open_source_licenses.json")
-    }
+//    fun generateJsonFile() {
+//        val licenseInfos = parseLicenseMetadata()
+//        val json = Gson().toJson(licenseInfos)
+//        writeToFile(json, "open_source_licenses.json")
+//    }
 
     fun generateJson(): String {
         val licenseInfos = parseLicenseMetadata()
@@ -37,26 +37,12 @@ class LicenseJsonGenerator(private val context: Context) {
                 // Assuming you have a method to fetch the actual license text based on range
                 val licenseInfo = getLicenseInfo(index, libraryName)
                 licenseInfos.add(licenseInfo)
-//                licenseInfos.add(
-//                    OpenSourceLicenseInfo(
-//                        id = index,
-//                        Name = libraryName,
-//                        License = "Apache License", // You might need to fetch or define this better
-//                        copyright = "Google", // This information needs to be parsed or added manually
-//                        link = "" // Same as above, the link might be constructed or fetched based on the library
-//                    )
-//                )
             }
         }
 
         return licenseInfos
     }
 
-    private fun fetchLicenseText(start: Int, end: Int): String {
-        // This method should fetch the license text using the start and end positions
-        // For the sake of example, let's return a placeholder
-        return "License text for range $start to $end"
-    }
 
     private fun writeToFile(jsonString: String, fileName: String) {
         val fos: FileOutputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE)

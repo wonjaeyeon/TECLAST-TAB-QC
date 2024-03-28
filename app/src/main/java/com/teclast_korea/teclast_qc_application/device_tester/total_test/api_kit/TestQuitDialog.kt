@@ -16,17 +16,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.home.pdf_export.getDirectory
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.io.File
 
 @Composable
 fun QuitTestDialog(
     context: Context,
     navController: NavController,
-    state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     showDeleteAlertDialog: MutableState<Boolean>,
-    deviceSpec: List<Pair<String, String>>,
     testMode: String
 ) {
     AlertDialog(

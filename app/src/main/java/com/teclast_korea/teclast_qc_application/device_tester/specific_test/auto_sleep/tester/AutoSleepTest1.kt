@@ -2,12 +2,11 @@ package com.teclast_korea.teclast_qc_application.device_tester.specific_test.aut
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.view.WindowManager
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,7 +20,7 @@ import androidx.navigation.NavController
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun AutoSleepTestT1(context: Context, navController: NavController) {
+fun AutoSleepTestT1(navController: NavController) {
     // Get a reference to the current window.
     val window = LocalContext.current as Activity
 
@@ -40,7 +39,7 @@ fun AutoSleepTestT1(context: Context, navController: NavController) {
 
                     }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }

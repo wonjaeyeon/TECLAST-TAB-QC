@@ -18,7 +18,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Assignment
+import androidx.compose.material.icons.automirrored.filled.Assignment
 import androidx.compose.material.icons.filled.ChecklistRtl
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
@@ -159,7 +159,6 @@ class MainActivity : ComponentActivity() {
                     onEvent = viewModel::onEvent,
                     volumeUpPressed = VolumeUpPressed,
                     volumeDownPressed = VolumeDownPressed,
-                    openSettings = this::openSettings,
                     darkTheme = IsDarkTheme,
                     isBottomBarVisible = IsBottomBarVisible
                 )
@@ -269,7 +268,6 @@ fun MainScreenView(
     onEvent: KFunction1<TestResultEvent, Unit>,
     volumeUpPressed: MutableState<Boolean>,
     volumeDownPressed: MutableState<Boolean>,
-    openSettings: () -> Unit,
     darkTheme: MutableState<Boolean>,
     isBottomBarVisible: MutableState<Boolean>
 ) {
@@ -289,13 +287,12 @@ fun MainScreenView(
         Box(Modifier.padding(it)) {
 
             navigationGraph(
-                context = context,
                 navController = navController,
+                context = context,
                 state = state,
                 onEvent = onEvent,
                 volumeUpPressed = volumeUpPressed,
                 volumeDownPressed = volumeDownPressed,
-                openSettings = openSettings,
                 darkTheme = darkTheme,
                 isBottomBarVisible = isBottomBarVisible,
                 onExitApp = { context.finishAndRemoveTask() })
@@ -365,7 +362,7 @@ sealed class BottomNavItem(
 
     object Analysis : BottomNavItem(
         R.string.text_analysis,
-        Icons.Filled.Assignment,
+        Icons.AutoMirrored.Filled.Assignment,
         LOGREPORT
     )
 

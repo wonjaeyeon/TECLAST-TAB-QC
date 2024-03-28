@@ -1,12 +1,11 @@
 package com.teclast_korea.teclast_qc_application.log_reports
 
-import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -21,9 +20,9 @@ import java.nio.charset.StandardCharsets
 
 @Composable
 fun SubLogScreen(
-    context: Context,
     navController: NavController,
-    command: String) {
+    command: String
+) {
     // URL-decode the command string
     val decodedCommand = URLDecoder.decode(command, StandardCharsets.UTF_8.toString())
 
@@ -47,7 +46,7 @@ fun SubLogScreen(
                 title = { Text("$decodedCommand") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Filled.ArrowBack, "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
                     }
                 },
                 backgroundColor = MaterialTheme.colors.primary,

@@ -70,7 +70,7 @@ fun StandardModeScreen_2(
 
 
 
-                var romTestResult1 = ""
+                var romTestResult1: String
                 runBlocking {
                     romTestResult1 = romTest1(state = state, onEvent = onEvent)
                 }
@@ -82,7 +82,7 @@ fun StandardModeScreen_2(
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
 
-                var cpuTestResult3 = ""
+                var cpuTestResult3: String
                 progress += 1f / (done.size + undone.size)
                 done.add("2. CPU BURNIN")
                 undone.remove("2. CPU BURNIN")
@@ -96,7 +96,7 @@ fun StandardModeScreen_2(
 
 
 
-                var gpuTestResult2 = ""
+                var gpuTestResult2: String
                 runBlocking {
                     gpuTestResult2 = gpu3DTest(state = state, onEvent = onEvent)
                 }
@@ -116,7 +116,16 @@ fun StandardModeScreen_2(
     }
 
     if (testsCompleted == false) {
-        StandardModeTestScreenScaffold(navController = navController, nextTestRoute = nextTestRoute, progress = progress, done = done, undone = undone ,content = {}, onEvent= onEvent, state = state, context = context)
+        StandardModeTestScreenScaffold(
+            navController = navController,
+            nextTestRoute = nextTestRoute,
+            progress = progress,
+            done = done,
+            undone = undone,
+            content = {},
+            onEvent= onEvent,
+            context = context
+        )
     }
     if (testsCompleted) {
         BatteryTestTestMode(

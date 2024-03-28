@@ -36,7 +36,7 @@ suspend fun gpuTest1(state: TestResultState,
             egl.eglChooseConfig(display, configAttribs, configs, 1, numConfig)
 
             val contextAttribs = intArrayOf(EGL10.EGL_NONE)
-            val context = egl.eglCreateContext(display, configs[0], EGL10.EGL_NO_CONTEXT, contextAttribs)
+            egl.eglCreateContext(display, configs[0], EGL10.EGL_NO_CONTEXT, contextAttribs)
 
             val error = egl.eglGetError()
             if (error != EGL10.EGL_SUCCESS) {

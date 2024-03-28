@@ -1,6 +1,5 @@
 package com.teclast_korea.teclast_qc_application.device_tester.sub_screen
 
-import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -8,6 +7,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,7 +19,7 @@ import androidx.navigation.NavHostController
 import com.teclast_korea.teclast_qc_application.ui.theme.ButtonWithJYEffect
 
 @Composable
-fun SpecificTest(context: Context, navController: NavHostController) {
+fun SpecificTest(navController: NavHostController) {
     val buttons = listOf(
         Pair("CPU Test", Icons.Filled.Apps),
         Pair("GPU Test", Icons.Filled.DeveloperBoard),
@@ -34,7 +34,7 @@ fun SpecificTest(context: Context, navController: NavHostController) {
         Pair("Physical Button Test", Icons.Filled.Keyboard),
         Pair("Device Thermal Test", Icons.Filled.Thermostat),
         Pair("Camera Test", Icons.Filled.Camera),
-        Pair("Audio Test", Icons.Filled.VolumeUp),
+        Pair("Audio Test", Icons.AutoMirrored.Filled.VolumeUp),
         Pair("Vibration Test", Icons.Filled.Vibration),
         Pair("Flash Light Test", Icons.Filled.BrightnessHigh),
         Pair("GPS Test", Icons.Filled.GpsFixed),

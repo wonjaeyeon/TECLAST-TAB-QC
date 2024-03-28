@@ -9,8 +9,10 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.compose.material.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.geometry.Offset
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
@@ -85,8 +87,8 @@ fun TouchPanelTest4(
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
     val scaffoldState = rememberScaffoldState()
-    val pointerIds = remember { mutableStateListOf<Long>() }
-    val pointerPositions = remember { mutableStateMapOf<Long, Offset>() }
+    //val pointerIds = remember { mutableStateListOf<Long>() }
+    //val pointerPositions = remember { mutableStateMapOf<Long, Offset>() }
     val showDialog = remember { mutableStateOf(false) }
 
     // Initially set the test result to "Fail"
@@ -123,7 +125,6 @@ fun TouchPanelTest4(
     ) {
         TestAPIDialog(
             testMode = testMode,
-            state = state,
             onEvent = onEvent,
             context = context,
             navController = navController,
@@ -154,7 +155,7 @@ fun TouchPanelTest4(
                         Log.i("MyTag:TouchPanelTest4", "nextPath: $nextPath")
                         Log.i("MyTag:TouchPanelTest4", "nextPathString: $nextPathString")
 
-                        var nextRouteWithArguments = ""
+                        var nextRouteWithArguments: String
                         if (nextPathString.isNotEmpty()) {
                             nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                         } else {

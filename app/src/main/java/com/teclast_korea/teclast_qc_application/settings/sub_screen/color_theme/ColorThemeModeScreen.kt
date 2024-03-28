@@ -1,13 +1,12 @@
 package com.teclast_korea.teclast_qc_application.settings.sub_screen.color_theme
 
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
@@ -17,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun ColorThemeModeScreen(context: Context, navController: NavController,darkTheme: MutableState<Boolean>) {
+fun ColorThemeModeScreen(navController: NavController, darkTheme: MutableState<Boolean>) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -27,7 +26,7 @@ fun ColorThemeModeScreen(context: Context, navController: NavController,darkThem
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }

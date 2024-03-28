@@ -22,7 +22,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -46,7 +45,7 @@ fun LcdTest1(
     var colorIndex by remember { mutableStateOf(0) }
     val scaffoldState = rememberScaffoldState()
     val currentTestItem = "LCD Test 1"
-    val device_spec_pdf = deviceSpecReportList(context)
+    // val device_spec_pdf = deviceSpecReportList(context)
 
     val activity = context as? Activity
     val isNavigating = remember { mutableStateOf(false) }
@@ -56,9 +55,9 @@ fun LcdTest1(
         activity?.let {
             val windowInsetsController = WindowCompat.getInsetsController(it.window, it.window.decorView)
             // Hide both the system bars and navigation bars
-            windowInsetsController?.hide(WindowInsetsCompat.Type.systemBars())
+            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars())
             // Add the following line if you want to prevent the system bars from appearing when the user swipes from the edge.
-            windowInsetsController?.systemBarsBehavior =
+            windowInsetsController.systemBarsBehavior =
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
@@ -70,7 +69,7 @@ fun LcdTest1(
             activity?.let {
                 val windowInsetsController = WindowCompat.getInsetsController(it.window, it.window.decorView)
                 // Show system bars when leaving the composable
-                windowInsetsController?.show(WindowInsetsCompat.Type.systemBars())
+                windowInsetsController.show(WindowInsetsCompat.Type.systemBars())
             }
         }
     }
@@ -160,15 +159,12 @@ fun LcdTest1(
                         )
                         onEvent(TestResultEvent.SaveTestResult)
                         FailTestNavigator(
-                            context = context,
                             onEvent = onEvent,
-                            state = state,
-                            navController = navController,
                             testMode = testMode,
+                            navController = navController,
                             navigateToNextTest = navigateToNextTest,
                             nextTestRoute = nextTestRoute,
-                            currentTestItem = currentTestItem,
-                            deviceSpec = device_spec_pdf
+                            currentTestItem = currentTestItem
                         )
                     }) {
                     Text("Fail")

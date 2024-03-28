@@ -113,7 +113,7 @@ fun TouchPanelTest2(
                 Log.i("MyTag:TouchPanelTest2", "nextPath: $nextPath")
                 Log.i("MyTag:TouchPanelTest2", "nextPathString: $nextPathString")
 
-                var nextRouteWithArguments = ""
+                var nextRouteWithArguments: String
                 if (nextPathString.isNotEmpty()) {
                     nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                 } else {
@@ -164,7 +164,6 @@ fun TouchPanelTest2(
     ) {
         TestAPIDialog(
             testMode = testMode,
-            state = state,
             onEvent = onEvent,
             context = context,
             navController = navController,

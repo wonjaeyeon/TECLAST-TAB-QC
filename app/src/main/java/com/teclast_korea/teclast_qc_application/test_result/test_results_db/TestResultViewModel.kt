@@ -164,7 +164,6 @@ class TestResultViewModel(
                 }
             }
 
-            else -> {}
         }
     }
 }

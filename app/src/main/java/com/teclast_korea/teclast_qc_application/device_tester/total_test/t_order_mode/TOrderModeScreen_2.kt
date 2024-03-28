@@ -11,7 +11,6 @@ import com.teclast_korea.teclast_qc_application.device_tester.specific_test.gpu.
 import com.teclast_korea.teclast_qc_application.device_tester.specific_test.rom.tester.romTest1
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.t_order_mode.sub_screen.TOrderModeTestScreenScaffold
-import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.CheckTestResultbyItem
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
@@ -45,7 +44,7 @@ fun TOrderModeScreen_2(
     }
 
     val doneTests = listOf("CPU BURNIN TEST", "GPU TEST 2", "ROM TEST")
-    val device_spec_pdf = deviceSpecReportList(context = context)
+    //val device_spec_pdf = deviceSpecReportList(context = context)
     val isAnyTestFailed = remember { mutableStateOf(false) }
     val hasCheckedEveryTest = remember { mutableStateOf(false) }
     // 매우 긴 nextTestRoute를 던져주고 이걸 딱딱 나눠서 보도록 하면 된다. 즉 호출 함수는 그냥 첫 함수인 거고 나머지 뒤에 따라오는 함수들은 내가 정한 nextTestRoute에 따라 따라오는 것이다.
@@ -72,7 +71,7 @@ fun TOrderModeScreen_2(
 //                onEvent(TestResultEvent.SaveTestResult)
 //                delay(100L)
 
-                var romTestResult1 = ""
+                var romTestResult1: String
                 runBlocking {
                     romTestResult1 = romTest1(state = state, onEvent = onEvent)
                 }
@@ -84,7 +83,7 @@ fun TOrderModeScreen_2(
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
 
-                var cpuTestResult3 = ""
+                var cpuTestResult3: String
                 progress += 1f / (done.size + undone.size)
                 done.add("2. CPU BURNIN")
                 undone.remove("2. CPU BURNIN")
@@ -98,7 +97,7 @@ fun TOrderModeScreen_2(
                 delay(100L)
 
 
-                var gpuTestResult2 = ""
+                var gpuTestResult2: String
                 runBlocking {
                     gpuTestResult2 = gpu3DTest(state = state, onEvent = onEvent)
                 }
@@ -126,7 +125,6 @@ fun TOrderModeScreen_2(
             undone = undone,
             content = {},
             onEvent = onEvent,
-            state = state,
             context = context
         )
 
@@ -137,18 +135,15 @@ fun TOrderModeScreen_2(
             doneTests.forEach { doneTest ->
                 run {
                     Log.i("TOrderModeScreen", "Done Test: $doneTest")
-                    if (CheckTestResultbyItem(state = state, onEvent = onEvent, itemName = doneTest) == "FAIL") {
+                    if (CheckTestResultbyItem(state = state, itemName = doneTest) == "FAIL") {
                         Log.i("TOrderModeScreen", "Done Test: $doneTest is Failed")
                         FailTestNavigator(
-                            context = context,
                             onEvent = onEvent,
-                            state = state,
                             testMode = "TOrderMode",
                             navController = navController,
                             navigateToNextTest = false,
                             nextTestRoute = nextTestRoute,
-                            currentTestItem = doneTest,
-                            deviceSpec = device_spec_pdf
+                            currentTestItem = doneTest
                         )
                         isAnyTestFailed.value = true
                     } else {

@@ -63,7 +63,7 @@ fun PhysicalButtonTestT1(
                 Log.i("MyTag:PhysicalButtonTestT1", "nextPath: $nextPath")
                 Log.i("MyTag:PhysicalButtonTestT1", "nextPathString: $nextPathString")
 
-                var nextRouteWithArguments = ""
+                var nextRouteWithArguments: String
                 if (nextPathString.isNotEmpty()) {
                     nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                     Log.i("Check", "nextRouteWithArguments: $nextRouteWithArguments")
@@ -114,7 +114,6 @@ fun PhysicalButtonTestT1(
         ) {
         TestAPIDialog(
             testMode = testMode,
-            state = state,
             onEvent = onEvent,
             context = context,
             navController = navController,

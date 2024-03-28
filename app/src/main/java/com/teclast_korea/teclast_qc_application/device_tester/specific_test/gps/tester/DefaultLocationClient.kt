@@ -5,6 +5,7 @@ import android.content.Context
 import android.location.Location
 import android.location.LocationManager
 import android.os.Looper
+import android.util.Log
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -23,14 +24,16 @@ class DefaultLocationClient(
     override fun getLocationUpdates(interval: Long): Flow<Location> {
         return callbackFlow {
             if(!context.hasLocationPermission()) {
-                throw LocationClient.LocationException("Missing location permission")
+                //throw LocationClient.LocationException("Missing location permission")
+                Log.e("DefaultLocationClient", "Missing location permission")
             }
 
             val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
             val isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
             if(!isGpsEnabled && !isNetworkEnabled) {
-                throw LocationClient.LocationException("GPS is disabled")
+                //throw LocationClient.LocationException("GPS is disabled")
+                Log.e("DefaultLocationClient", "GPS is disabled")
             }
 
             val request = LocationRequest.create()

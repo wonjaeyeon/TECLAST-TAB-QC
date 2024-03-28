@@ -17,11 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.device_tester.total_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.AddTestResult
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 import java.util.*
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
@@ -35,9 +35,9 @@ fun VibrationTestTestMode(
     nextTestRoute: MutableList<String> = mutableListOf<String>()
 ) {
     val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-    var vibrationResult = remember { mutableStateOf("Ready for Test") }
+    val vibrationResult = remember { mutableStateOf("Ready for Test") }
     val currentTestItem = "Vibration Test 1"
-    val device_spec_pdf = deviceSpecReportList(context)
+    // val device_spec_pdf = deviceSpecReportList(context)
 
     Scaffold(
         topBar = {
@@ -106,37 +106,13 @@ fun VibrationTestTestMode(
                         )
                         onEvent(TestResultEvent.SaveTestResult)
                         FailTestNavigator(
-                            context = context,
                             onEvent = onEvent,
-                            state = state,
-                            navController = navController,
                             testMode = testMode,
+                            navController = navController,
                             navigateToNextTest = navigateToNextTest,
                             nextTestRoute = nextTestRoute,
-                            currentTestItem = currentTestItem,
-                            deviceSpec = device_spec_pdf
+                            currentTestItem = currentTestItem
                         )
-//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-//                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")
-//                            Log.i("MyTag:VibrationTest1", "nextTestRoute: $nextTestRoute")
-//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-//                            val nextPath = nextTestRoute.drop(1)
-//                            val nextPathString = nextPath.joinToString(separator = "->")
-//                            Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
-//                            Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
-//
-//                            var nextRouteWithArguments = ""
-//                            if (nextPathString.isNotEmpty()) {
-//                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
-//                            } else {
-//                                nextRouteWithArguments = nextRoute
-//                            }
-//
-//                            navController.navigate(nextRouteWithArguments)
-//                        }
-//                        else
-//                            navController.popBackStack()
                     }) {
                     Text("Fail")
                 }
@@ -174,40 +150,6 @@ fun VibrationTestTestMode(
                             Date().toString()
                         )
                         onEvent(TestResultEvent.SaveTestResult)
-//                        FailTestNavigator(
-//                            context = context,
-//                            onEvent = onEvent,
-//                            state = state,
-//                            navController = navController,
-//                            testMode = testMode,
-//                            navigateToNextTest = navigateToNextTest,
-//                            nextTestRoute = nextTestRoute,
-//                            currentTestItem = currentTestItem,
-//                            deviceSpec = device_spec_pdf
-//                        )
-
-
-//                        if (navigateToNextTest && nextTestRoute.isNotEmpty()) {
-//                            val pastRoute = nextTestRoute.removeAt(0) // pastRoute = LCDTest1
-//                            Log.i("MyTag:VibrationTest1", "pastRoute: $pastRoute")
-//                            Log.i("MyTag:VibrationTest1", "nextTestRoute: $nextTestRoute")
-//                            val nextRoute = nextTestRoute[0] // nextRoute = LCDTest2
-//                            val nextPath = nextTestRoute.drop(1)
-//                            val nextPathString = nextPath.joinToString(separator = "->")
-//                            Log.i("MyTag:VibrationTest1", "nextPath: $nextPath")
-//                            Log.i("MyTag:VibrationTest1", "nextPathString: $nextPathString")
-//
-//                            var nextRouteWithArguments = ""
-//                            if (nextPathString.isNotEmpty()) {
-//                                nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
-//                            } else {
-//                                nextRouteWithArguments = nextRoute
-//                            }
-//
-//                            navController.navigate(nextRouteWithArguments)
-//                        }
-//                        else
-//                            navController.popBackStack()
                     }
                 }) {
                     Text(text = "Vibrate")

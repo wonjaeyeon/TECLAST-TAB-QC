@@ -1,7 +1,6 @@
 package com.teclast_korea.teclast_qc_application.device_tester.specific_test.touch_panel.tester
 
 import android.annotation.SuppressLint
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
@@ -10,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -26,12 +25,7 @@ import androidx.navigation.NavController
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun TouchPanelTest3(
-    context: Context, navController: NavController,
-    
-    
-    navigateToNextTest: Boolean = false,
-    nextTestRoute: MutableList<String> = mutableListOf<String>(),
-    testMode: String = ""
+    navController: NavController
 ) {
     val scaffoldState = rememberScaffoldState()
     // set up all transformation states
@@ -69,7 +63,7 @@ fun TouchPanelTest3(
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
-                            imageVector = Icons.Filled.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }

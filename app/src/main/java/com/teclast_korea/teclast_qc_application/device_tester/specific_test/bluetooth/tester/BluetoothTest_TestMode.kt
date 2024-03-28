@@ -80,7 +80,7 @@ fun BluetoothTestTestMode(
                     Log.i("MyTag:BluetoothTest", "nextPath: $nextPath")
                     Log.i("MyTag:BluetoothTest", "nextPathString: $nextPathString")
 
-                    var nextRouteWithArguments = ""
+                    var nextRouteWithArguments: String
                     if (nextPathString.isNotEmpty()) {
                         nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                         Log.i("MyTag:BluetoothTest", "nextRouteWithArguments: $nextRouteWithArguments")
@@ -164,7 +164,6 @@ fun BluetoothTestTestMode(
     ) {
         TestAPIDialog(
             testMode = testMode,
-            state = state,
             onEvent = onEvent,
             context = context,
             navController = navController,

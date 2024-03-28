@@ -109,7 +109,7 @@ fun TOrderTestCompletedScreen(
                             // Pop back to the root of the navigation stack, effectively clearing it.
                             Log.i(
                                 "TOrderTestCompletedScreen_TestDB",
-                                TestReportList(context = context, state = state, onEvent = onEvent).toString()
+                                TestReportList(state = state).toString()
                             ) // TODO : this is the safest place and most logical place : 괜히 디스코드 인스타 꼼수 따라하지 말자.
 
                             currentLoadingPage.value += 1.0
@@ -124,15 +124,13 @@ fun TOrderTestCompletedScreen(
 
                                 currentLoadingPage.value += 1.0
 
-                                val testReportList = TestReportList(context = context, state = state, onEvent = onEvent)
+                                val testReportList = TestReportList(state = state)
 
                                 currentLoadingPage.value += 1.0
 
                                 generatePDF(
                                     context = context,
                                     directory = getDirectory(context),
-                                    state = state,
-                                    onEvent = onEvent,
                                     deviceSpec = device_spec_pdf,
                                     testMode = "TOrderMode",
                                     testReportList = testReportList,
@@ -162,7 +160,7 @@ fun TOrderTestCompletedScreen(
                             // Pop back to the root of the navigation stack, effectively clearing it.
                             Log.i(
                                 "TOrderTestFailScreen_TestDB",
-                                TestReportList(context = context, state = state, onEvent = onEvent).toString()
+                                TestReportList(state = state).toString()
                             ) // TODO : this is the safest place and most logical place : 괜히 디스코드 인스타 꼼수 따라하지 말자.
 
                             currentLoadingPage.value += 1.0
@@ -177,15 +175,13 @@ fun TOrderTestCompletedScreen(
 
                                 currentLoadingPage.value += 1.0
 
-                                val testReportList = TestReportList(context = context, state = state, onEvent = onEvent)
+                                val testReportList = TestReportList(state = state)
 
                                 currentLoadingPage.value += 1.0
 
                                 generatePDF(
                                     context = context,
                                     directory = getDirectory(context),
-                                    state = state,
-                                    onEvent = onEvent,
                                     deviceSpec = device_spec_pdf,
                                     testMode = "TOrderMode",
                                     testReportList = testReportList,

@@ -66,7 +66,7 @@ import android.hardware.camera2.CameraManager
 //
 fun toggleFlashLight(context: Context, isFlashOn: Boolean): String {
     val cameraManager = context.getSystemService(Context.CAMERA_SERVICE) as CameraManager
-    var testResult = ""
+    var testResult: String
     try {
         val cameraId = cameraManager.cameraIdList[0]
         cameraManager.setTorchMode(cameraId, isFlashOn)

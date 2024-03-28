@@ -16,17 +16,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 
 @Composable
 fun SkipToNextTestDialog(
     context: Context,
     navController: NavController,
-    nextTestRoute : MutableList<String>,
-    state: TestResultState,
+    nextTestRoute: MutableList<String>,
     onEvent: (TestResultEvent) -> Unit,
-    showDeleteAlertDialog : MutableState<Boolean>,
-    deviceSpec : List<Pair<String,String>>,
+    showDeleteAlertDialog: MutableState<Boolean>,
     testMode: String
 
 ) {
@@ -58,11 +55,11 @@ fun SkipToNextTestDialog(
                         // 바로 경로 : test1
                         // 다음 경로 : test2 -> test3
                         // nextPathString : test2 -> test3
-                        val pastRoute = nextTestRoute.removeAt(0)
+                        nextTestRoute.removeAt(0)
                         val nextRoute = nextTestRoute[0]
                         val nextPath = nextTestRoute.drop(1)
                         val nextPathString = nextPath.joinToString(separator = "->")
-                        var nextRouteWithArguments = ""
+                        var nextRouteWithArguments: String
                         if (nextPathString.isNotEmpty()) {
                             nextRouteWithArguments = "$nextRoute/$nextPathString/$testMode"
                             Log.i("JumpToNextTest", "nextRouteWithArguments: $nextRouteWithArguments")

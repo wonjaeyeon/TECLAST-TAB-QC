@@ -13,9 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.home.device_report.deviceSpecReportList
 import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
 
 
 @Composable
@@ -52,24 +50,21 @@ fun DialogAPIInterface(testMode: String, showDialog: MutableState<Boolean>) {
 @Composable
 fun TestAPIDialog(
     testMode: String,
-    state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
     navController: NavController,
     nextTestRoute: MutableList<String>,
     showDialog: MutableState<Boolean>,
 ) {
-    val deviceSpec = deviceSpecReportList(context = context)
+    // val deviceSpec = deviceSpecReportList(context = context)
     if (!showDialog.value) {
     }
     else if (testMode == "FastMode") {
         QuitTestDialog(
             context = context,
             navController = navController,
-            state = state,
             onEvent = onEvent,
             showDeleteAlertDialog = showDialog,
-            deviceSpec = deviceSpec,
             testMode = testMode,
         )
     } else if (testMode == "StandardMode") {
@@ -77,10 +72,8 @@ fun TestAPIDialog(
             context = context,
             navController = navController,
             nextTestRoute = nextTestRoute,
-            state = state,
             onEvent = onEvent,
             showDeleteAlertDialog = showDialog,
-            deviceSpec = deviceSpec,
             testMode = testMode
         )
     } else if (testMode.lowercase().contains("torder")
@@ -89,10 +82,8 @@ fun TestAPIDialog(
         QuitTestDialog(
             context = context,
             navController = navController,
-            state = state,
             onEvent = onEvent,
             showDeleteAlertDialog = showDialog,
-            deviceSpec = deviceSpec,
             testMode = testMode,
         )
     } else{
