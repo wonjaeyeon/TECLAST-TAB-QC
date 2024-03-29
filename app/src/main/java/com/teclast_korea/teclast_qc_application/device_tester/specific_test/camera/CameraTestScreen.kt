@@ -1,6 +1,6 @@
 package com.teclast_korea.teclast_qc_application.device_tester.specific_test.camera
 
-//make a screen for cpu test
+//make a screen for camera test
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,11 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun CameraTestScreen(
-    navController: NavController,
+    navController: NavController
 ) {
     Scaffold(
         topBar = {
@@ -66,17 +65,6 @@ fun CameraTestScreen(
                 }) {
                     Text(text = "Front Camera Test")
                 }
-
-//                Spacer(modifier = Modifier.height(16.dp))
-//
-//
-//                Button(onClick = {
-//                    navController.navigate("camera_zoom_screen") {
-//
-//                    }
-//                }){
-//                    Text(text = "Camera Zoom Test")
-//                }
             }
         }
     }

@@ -23,6 +23,6 @@ fun getCpuInfo(): String {
         }
         cpuInfo.toString()
     } catch (e: IOException) {
-        "Unable to read CPU info"
+        "unknown"
     }
 }

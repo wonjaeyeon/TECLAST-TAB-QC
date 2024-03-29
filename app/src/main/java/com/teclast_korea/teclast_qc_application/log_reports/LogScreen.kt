@@ -97,7 +97,8 @@ fun CommandButtons(
         CommandInfo("df", "Display file system space usage"),
         CommandInfo("top -n 1", "Display system processes, single snapshot"),
         CommandInfo("pm list packages", "Lists all installed packages"),
-    )
+        CommandInfo("monkey -p com.teclast_korea.teclast_qc_application -v 500", "Run monkey test on the app"),
+        )
 
 
     Column {
