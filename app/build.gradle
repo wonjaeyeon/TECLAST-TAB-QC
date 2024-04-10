@@ -6,14 +6,14 @@ plugins {
 }
 
 android {
-//    signingConfigs {
-//        debug {
-//            storeFile file(compose_version)
-//            storePassword compose_version
-//            keyAlias compose_version
-//            keyPassword compose_version
-//        }
-//    }
+    signingConfigs {
+        release{
+            keyAlias 'teclastKorea'
+            keyPassword '135135won'
+            storeFile file('teclastKoreaQCApplication.jks')
+            storePassword '135135won'
+        }
+    }
     namespace 'com.teclast_korea.teclast_qc_application'
     compileSdk 34
 
@@ -34,6 +34,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
