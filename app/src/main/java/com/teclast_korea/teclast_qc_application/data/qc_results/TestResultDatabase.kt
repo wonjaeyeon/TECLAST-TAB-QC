@@ -1,0 +1,21 @@
+package com.teclast_korea.teclast_qc_application.data.qc_results
+
+import androidx.room.Database
+import androidx.room.RoomDatabase
+
+@Database(
+    entities = [TestResult::class],
+    version = 1
+)
+abstract class TestResultDatabase: RoomDatabase() {
+
+    abstract val dao: TestResultDao
+}
+
+@Database(
+    entities = [DeviceSpec::class],
+    version = 1
+)
+abstract  class DeviceSpecDatabase: RoomDatabase() {
+    abstract val dao: DeviceSpecDao
+}

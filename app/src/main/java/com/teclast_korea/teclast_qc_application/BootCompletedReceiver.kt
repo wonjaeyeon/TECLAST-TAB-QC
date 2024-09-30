@@ -49,8 +49,8 @@ class BootCompletedReceiver : BroadcastReceiver() {
 
         // 알림에 PendingIntent 설정
         val notification = NotificationCompat.Builder(context, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("TECLAST QC APP")
+            .setSmallIcon(R.mipmap.ic_launcher_background)
+            .setContentTitle("TAB QC APP")
             .setContentText("테스트를 시작하시겠습니까?")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)

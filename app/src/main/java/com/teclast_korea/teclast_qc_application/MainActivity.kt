@@ -38,11 +38,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import com.teclast_korea.teclast_qc_application.navigation.navigationGraph
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultDatabase
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultState
-import com.teclast_korea.teclast_qc_application.test_result.test_results_db.TestResultViewModel
+import com.teclast_korea.teclast_qc_application.data.qc_results.TestResultDatabase
+import com.teclast_korea.teclast_qc_application.ui.navigation.navigationGraph
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultViewModel
 import com.teclast_korea.teclast_qc_application.ui.theme.MyApplicationTheme
 import kotlin.reflect.KFunction1
 
