@@ -17,7 +17,7 @@
 > 하루에 600대 이상의 태블릿을 공급하는 회사 태클라스트 코리아의 더 빠르고 효율적인 QC를 위한 어플리케이션
 > CPU, GPU, ... 모든 물리 QC가 가능한 앱
 > 작업자들을 위한 자동화 QC 프로세스 마련(실제 작업량을 총평균 30% 감소)
-<-- > PULL Architecture를 이용해 커스텀 QC를 진행 가능(서버에서 QC 결과를 DB에 저장하고 AI를 통한 분석으로 최적의 QC 검사 순서/기준을 QC APP에 제공) --!>
+> PULL Architecture를 이용해 커스텀 QC를 진행 가능(서버에서 QC 결과를 DB에 저장하고 AI를 통한 분석으로 최적의 QC 검사 순서/기준을 QC APP에 제공)
 
 - 개발 기간 : 2023.04.3 ~ 2023.07.3
 - 논문 작성 및 출판 기간 : 2023.11 ~ 2024.11 
@@ -27,66 +27,37 @@
 
 ### Features
 - 0. 안드로이드 디바이스에서 확인 가능한 모든 QC 검사 진행
-- 1. 집안일  
-- 2. 집안일 조회
-- 3. 집안일 삭제  
-- 4. 그룹 생성 , 카카오톡 초대 , 딥링크  
-- 5. 프로필 수정 
-- 6. 집안일 규칙 추가
-- 7. 푸쉬 알림
-- 8. 네트워크 연결 감지
+- 1. 일렬화된 자동 QC 프로세스 구축
+- 2. 각 상황을 위한 커스텀 QC 시나리오 구축(고객사별로 등록 가능)
+- 3. QC 결과 한눈에 보기 + PDF 출력
+- 4. 디바이스 관련 스팩사항 전부 볼 수 있음(총 전량, 전압, CPU Model...)  
 
 ### Technology Stack
-- Tools : Android Studio Dolphin
+- Tools : Intellij
 - Language : Kotlin
 - Architecture Pattern : MVVM Pattern
 - Android Architecture Components(AAC)
-  - Flow
   - ViewModel
   - Coroutine
-  - Data Binding
-  - Hilt
 - Naivgation Conponponent
-- FirebaseMessagingService
-- OKHTTP
 - RETROFIT
-- MOSHI
 - SERIALIZATION
-- KAKAO_SDK
-- GLIDE
-- FIREBASK_BOM
-- TIMBER 
 
 ### Foldering
 ```
 .
-├── base
+
 ├── data
-│   ├── dataSource
-│   ├── repository
-│   └── ApiService
-├── di
-│   ├── NetworkModule
-│   └── RepositoryModule
-├── model
-│   ├── enums
-│   ├── request
-│   └── response
-├── service
-│   ├── FairerFirebaseMessagingService
-│   └── InternetService
-├── ui (for features)
-└── util
+│   ├── qcResults
+│     ├── QCResults
+│     └── QCResultsDAO
+└── ui (for features)
 ```
 
-# WireFrame
-<img width="400" alt="스크린샷 2022-06-29 오전 12 58 34" src="https://user-images.githubusercontent.com/27774564/176225988-3c2a3b19-53a0-4627-89c8-1e808e2ec43b.png">
-<img width="400" alt="스크린샷 2022-06-29 오전 12 58 42" src="https://user-images.githubusercontent.com/27774564/176226010-fd300d9c-30dd-4da1-b278-7354ecffb6e4.png">
-<img width="400" alt="스크린샷 2022-06-29 오전 12 59 24" src="https://user-images.githubusercontent.com/27774564/176226122-5eb5603a-cfec-40e4-bed2-cd2d0c2167a4.png">
-<img width="400" alt="스크린샷 2022-06-29 오전 12 59 38" src="https://user-images.githubusercontent.com/27774564/176226168-12852d78-4506-4f09-9ef2-830a3ade38c4.png">
+# 프로젝트를 통해 이룬 부분
+- 애초에 기획한 모든 기능 구현 완성
+- RoomDB를 이용한 QC RESULTS의 CRUD를 깔끔하게 구현
 
 
-# ToDo
-- 메인 화면 개편
-- 룰렛 기능
-- 통계 기능
+# 프로젝트 이후 좀 아쉬웠던 부분
+- Android Hilt, Dagger를 사용하지 못함(잘 몰랐음) -> 추후에 20204.7월에 완벽한 MVVM의 추가적인 공부 진행
