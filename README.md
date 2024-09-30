@@ -1,5 +1,7 @@
 # TAB QC APP
 
+<img width="80" src="https://github.com/user-attachments/assets/d96e4a3a-c777-4027-9735-d07f26a15678">
+
 2023년 현재 B2B 태블릿 매출 1위 회사 태클라스트 코리아의 **TAB QC APP**입니다.(현재 실사용 되고 있음)
 
 <p align="center">
@@ -11,30 +13,21 @@
 </p>
 
 
-<img width="80" alt="스크린샷 2022-06-29 오전 12 32 29" src="https://user-images.githubusercontent.com/27774564/176220195-0d1bf1da-8e56-4142-88fc-0fc375b8b768.png">
-
-디프만. 11기에서 활동한 도와조 홈즈 팀의 **Fairer**입니다.
-
-[![Facebook](https://img.shields.io/badge/facebook-1877f2?style=flat-square&logo=facebook&logoColor=white&link=https://www.facebook.com/fairer.official/)](https://www.facebook.com/fairer.official)
-[![instagram](https://img.shields.io/badge/instagram-E4405F?style=flat-square&logo=Instagram&logoColor=white&link=https://www.instagram.com/fairer.official/)](https://www.instagram.com/fairer.official/)
-
 # OverView
-> Peacemaker for houseworker 모든 하우스워커를 위한 피스메이커, 페어러
-> 집안일 분담 서비스
+> 하루에 600대 이상의 태블릿을 공급하는 회사 태클라스트 코리아의 더 빠르고 효율적인 QC를 위한 어플리케이션
+> CPU, GPU, ... 모든 물리 QC가 가능한 앱
+> 작업자들을 위한 자동화 QC 프로세스 마련(실제 작업량을 총평균 30% 감소)
+<-- > PULL Architecture를 이용해 커스텀 QC를 진행 가능(서버에서 QC 결과를 DB에 저장하고 AI를 통한 분석으로 최적의 QC 검사 순서/기준을 QC APP에 제공) --!>
 
-- 개발 기간 : 2022.03.19 ~ ing 
+- 개발 기간 : 2023.04.3 ~ 2023.07.3
+- 논문 작성 및 출판 기간 : 2023.11 ~ 2024.11 
 - Android 개발자 : <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=Android&logoColor=white"> <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=Kotlin&logoColor=white">
-
-|<img width="200" height="200" src="https://user-images.githubusercontent.com/85485290/176230637-57e8041f-4a38-4ea3-a6f4-970f7bbf02c2.jpeg"/>|<img width="200" height="200" src="https://user-images.githubusercontent.com/85485290/176229713-86711288-ac57-4dd5-bf5d-f2ffc4889303.png"/>|<img width="200" height="200" src="https://user-images.githubusercontent.com/85485290/176229740-b23830e0-7bba-4966-bca4-c570a971d4d7.jpg"/>|<img width="200" height="200" src="https://user-images.githubusercontent.com/50831854/210321806-8ea1cf79-c758-44c4-900c-7138d1407c78.jpg"/>|
-|:------:|:---:|:---:|:---:|
-|[김수연](https://github.com/onemask)|[임수진](https://github.com/sujin-kk)|[박정준](https://github.com/wjdwns) | [김민주](https://github.com/kimchuu) |
-
 
 # About
 
 ### Features
-- 0. 구글 로그인 
-- 1. 집안일 생성 
+- 0. 안드로이드 디바이스에서 확인 가능한 모든 QC 검사 진행
+- 1. 집안일  
 - 2. 집안일 조회
 - 3. 집안일 삭제  
 - 4. 그룹 생성 , 카카오톡 초대 , 딥링크  
