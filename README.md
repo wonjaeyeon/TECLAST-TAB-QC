@@ -42,7 +42,7 @@
 - Android Architecture Components(AAC)
   - ViewModel
   - Coroutine
-- Naivgation Conponponent
+- Naivgation Component
 - RETROFIT
 - SERIALIZATION
 
