@@ -19,8 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.ram.tester.ramTest1
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")

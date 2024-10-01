@@ -2,7 +2,7 @@ package com.teclast_korea.teclast_qc_application.ui.device_tester.total_test.api
 
 import android.util.Log
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
 
 
 fun FailTestNavigator(

@@ -1,7 +1,7 @@
 package com.teclast_korea.teclast_qc_application.ui.home.test_report
 
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.CheckTestResultbyItem
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.CheckTestResultbyItem
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 
 
 fun TestReportList(

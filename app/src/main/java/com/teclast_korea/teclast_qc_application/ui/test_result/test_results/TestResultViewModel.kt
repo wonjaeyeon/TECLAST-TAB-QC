@@ -1,10 +1,10 @@
-package com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db
+package com.teclast_korea.teclast_qc_application.ui.test_result.test_results
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teclast_korea.teclast_qc_application.data.qc_results.SortType
-import com.teclast_korea.teclast_qc_application.data.qc_results.TestResult
-import com.teclast_korea.teclast_qc_application.data.qc_results.TestResultDao
+import com.teclast_korea.teclast_qc_application.data.qc_results.local.SortType
+import com.teclast_korea.teclast_qc_application.data.qc_results.local.TestResult
+import com.teclast_korea.teclast_qc_application.data.qc_results.local.TestResultDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

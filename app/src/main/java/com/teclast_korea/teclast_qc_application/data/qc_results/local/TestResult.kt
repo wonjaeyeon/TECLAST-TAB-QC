@@ -1,4 +1,4 @@
-package com.teclast_korea.teclast_qc_application.data.qc_results
+package com.teclast_korea.teclast_qc_application.data.qc_results.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

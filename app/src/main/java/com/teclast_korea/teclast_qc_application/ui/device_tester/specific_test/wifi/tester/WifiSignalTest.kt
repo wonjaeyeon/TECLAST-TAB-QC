@@ -4,9 +4,9 @@ import android.content.Context
 import android.net.wifi.WifiManager
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.AddTestResult
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.AddTestResult
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 import java.util.*
 
 @Suppress("DEPRECATION")

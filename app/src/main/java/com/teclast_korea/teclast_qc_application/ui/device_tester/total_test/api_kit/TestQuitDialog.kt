@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.ui.home.pdf_export.getDirectory
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
 import java.io.File
 
 @Composable

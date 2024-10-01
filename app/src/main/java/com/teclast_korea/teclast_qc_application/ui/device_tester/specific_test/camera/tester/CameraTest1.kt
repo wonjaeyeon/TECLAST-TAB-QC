@@ -31,9 +31,9 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.ui.device_tester.total_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.ui.device_tester.total_test.api_kit.NavigationPopButton
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.AddTestResult
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.AddTestResult
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 import java.util.*
 
 

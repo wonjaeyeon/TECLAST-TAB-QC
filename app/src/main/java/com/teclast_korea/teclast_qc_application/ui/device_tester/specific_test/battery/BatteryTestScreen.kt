@@ -26,8 +26,8 @@ import com.teclast_korea.teclast_qc_application.batteryTestT1
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.battery.tester.BatteryVoltageTest
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.battery.tester.batteryTestT2
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.battery.tester.getBatteryTemperatureInTest
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 
 
 @RequiresApi(Build.VERSION_CODES.Q)

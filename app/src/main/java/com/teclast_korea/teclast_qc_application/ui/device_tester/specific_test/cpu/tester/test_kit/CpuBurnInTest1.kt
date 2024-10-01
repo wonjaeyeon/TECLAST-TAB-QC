@@ -1,8 +1,8 @@
 package com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.cpu.tester.test_kit
 
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.AddTestResult
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.AddTestResult
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull

@@ -1,7 +1,7 @@
-package com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db
+package com.teclast_korea.teclast_qc_application.ui.test_result.test_results
 
-import com.teclast_korea.teclast_qc_application.data.qc_results.SortType
-import com.teclast_korea.teclast_qc_application.data.qc_results.TestResult
+import com.teclast_korea.teclast_qc_application.data.qc_results.local.SortType
+import com.teclast_korea.teclast_qc_application.data.qc_results.local.TestResult
 
 sealed interface TestResultEvent {
     object SaveTestResult: TestResultEvent

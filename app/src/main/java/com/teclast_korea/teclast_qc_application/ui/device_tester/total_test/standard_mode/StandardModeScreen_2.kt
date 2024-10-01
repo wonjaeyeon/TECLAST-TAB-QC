@@ -10,8 +10,8 @@ import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.c
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.gpu.tester.gpu3DTest
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.rom.tester.romTest1
 import com.teclast_korea.teclast_qc_application.ui.device_tester.total_test.standard_mode.sub_screen.StandardModeTestScreenScaffold
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking

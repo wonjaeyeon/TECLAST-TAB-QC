@@ -27,8 +27,8 @@ import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.w
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.wifi.tester.getWifiDataUsage
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.wifi.tester.wifiConnectionTest
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.wifi.tester.wifiSignalStrengthTest
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -11,9 +11,9 @@ import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.g
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.ram.tester.ramTest1
 import com.teclast_korea.teclast_qc_application.ui.device_tester.total_test.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.ui.device_tester.total_test.t_order_mode.sub_screen.TOrderModeTestScreenScaffold
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.CheckTestResultbyItem
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.CheckTestResultbyItem
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking

@@ -73,8 +73,8 @@ import com.teclast_korea.teclast_qc_application.ui.settings.sub_screen.app_versi
 import com.teclast_korea.teclast_qc_application.ui.settings.sub_screen.color_theme.ColorThemeModeScreen
 import com.teclast_korea.teclast_qc_application.ui.settings.sub_screen.open_source_license.OpenSourceLicenseScreen
 import com.teclast_korea.teclast_qc_application.ui.settings.sub_screen.test_result.TestResultDBScreen
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 import kotlin.reflect.KFunction1
 
 @RequiresApi(34)

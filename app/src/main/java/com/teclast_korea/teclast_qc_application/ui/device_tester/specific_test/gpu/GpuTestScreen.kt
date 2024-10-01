@@ -23,8 +23,8 @@ import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.device_thermal.tester.checkDeviceThermalStatus
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.gpu.tester.gpu3DTest
 import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.gpu.tester.gpuTest1
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results_db.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
