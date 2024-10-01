@@ -1,4 +1,4 @@
-package com.teclast_korea.teclast_qc_application.domain.qc_results
+package com.teclast_korea.teclast_qc_application.domain.qc_result
 
 import android.content.Context
 import android.widget.Toast

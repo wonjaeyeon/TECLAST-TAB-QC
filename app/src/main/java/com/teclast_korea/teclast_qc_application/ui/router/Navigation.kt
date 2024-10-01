@@ -14,12 +14,13 @@ import com.teclast_korea.teclast_qc_application.BottomNavItem
 import com.teclast_korea.teclast_qc_application.HomeScreen2
 import com.teclast_korea.teclast_qc_application.LogScreen
 import com.teclast_korea.teclast_qc_application.MainActivity
+import com.teclast_korea.teclast_qc_application.domain.qc_report.pdf_export.view_pdf.ComposePDFViewer
 import com.teclast_korea.teclast_qc_application.ui.device_tester.TesterScreen2
-import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.auto_sleep.tester.AutoSleepTestT1
-import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.auto_sleep.AutoSleepTestScreen
-import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.battery.BatteryTestScreen
-import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.audio.tester.AudioTestT1
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.audio.AudioTestScreen
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.audio.tester.AudioTestT1
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.auto_sleep.AutoSleepTestScreen
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.auto_sleep.tester.AutoSleepTestT1
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.battery.BatteryTestScreen
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.battery.tester.BatteryTestTestMode
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.bluetooth.BluetoothTestScreen
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.bluetooth.tester.BluetoothTestT2
@@ -58,7 +59,7 @@ import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_te
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.fast_mode.FastModeScreen
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.fast_mode.sub_screen.FastTestCompletedScreen
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.fast_mode.sub_screen.FastTestFailedScreen
-import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.scspro_mode.SCSPROModeScreen_2
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.scspro_mode.SCSPROModeScreen
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.scspro_mode.sub_screen.SCSPROTestCompletedScreen
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.scspro_mode.sub_screen.SCSPROTestFailedScreen
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.standard_mode.StandardModeScreen
@@ -66,7 +67,6 @@ import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.t_order_mode.TOrderModeScreen
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.t_order_mode.sub_screen.TOrderTestCompletedScreen
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.t_order_mode.sub_screen.TOrderTestFailedScreen
-import com.teclast_korea.teclast_qc_application.domain.qc_report.pdf_export.view_pdf.ComposePDFViewer
 import com.teclast_korea.teclast_qc_application.ui.log_reports.SubLogScreen
 import com.teclast_korea.teclast_qc_application.ui.settings.SettingsScreen
 import com.teclast_korea.teclast_qc_application.ui.settings.sub.app_version.AppVersionScreen

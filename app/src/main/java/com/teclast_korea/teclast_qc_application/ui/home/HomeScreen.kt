@@ -22,7 +22,7 @@ import com.teclast_korea.teclast_qc_application.domain.device_info.device_report
 import com.teclast_korea.teclast_qc_application.domain.qc_report.pdf_export.generate_pdf.generatePDF
 import com.teclast_korea.teclast_qc_application.domain.qc_report.pdf_export.getDirectory
 import com.teclast_korea.teclast_qc_application.domain.qc_report.test_report.TestReportList
-import com.teclast_korea.teclast_qc_application.domain.qc_results.DeleteAllTestResultDialog
+import com.teclast_korea.teclast_qc_application.domain.qc_result.DeleteAllTestResultDialog
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
 import kotlinx.coroutines.CoroutineScope

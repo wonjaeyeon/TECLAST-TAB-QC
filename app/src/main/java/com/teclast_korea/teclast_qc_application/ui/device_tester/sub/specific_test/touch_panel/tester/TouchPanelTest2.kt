@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.domain.qc_results.AddTestResult
+import com.teclast_korea.teclast_qc_application.domain.qc_result.AddTestResult
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.DialogAPIInterface
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.NavigationPopButton
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.TestAPIDialog

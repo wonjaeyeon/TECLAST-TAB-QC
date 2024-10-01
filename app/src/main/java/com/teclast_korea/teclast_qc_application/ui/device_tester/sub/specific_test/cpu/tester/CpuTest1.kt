@@ -5,7 +5,7 @@ import android.os.Build
 import android.os.PowerManager
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.teclast_korea.teclast_qc_application.domain.qc_results.AddTestResult
+import com.teclast_korea.teclast_qc_application.domain.qc_result.AddTestResult
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
 import java.util.*

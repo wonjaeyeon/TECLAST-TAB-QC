@@ -3,7 +3,6 @@ package com.teclast_korea.teclast_qc_application.data.device_info
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Upsert
-import com.teclast_korea.teclast_qc_application.data.qc_result.local.DeviceSpec
 
 @Dao
 interface DeviceSpecDao {

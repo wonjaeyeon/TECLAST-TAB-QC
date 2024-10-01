@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.R
-import com.teclast_korea.teclast_qc_application.domain.qc_results.AddTestResult
+import com.teclast_korea.teclast_qc_application.domain.qc_result.AddTestResult
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.audio.tester.tablet_ui.TabletUI
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.NavigationPopButton

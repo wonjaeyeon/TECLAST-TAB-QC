@@ -16,7 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.domain.qc_results.AddTestResult
+import com.teclast_korea.teclast_qc_application.domain.qc_result.AddTestResult
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.DialogAPIInterface
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.TestAPIDialog
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent

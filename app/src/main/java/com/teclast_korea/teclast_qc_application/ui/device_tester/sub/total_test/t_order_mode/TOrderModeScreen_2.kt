@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
 
-import com.teclast_korea.teclast_qc_application.domain.qc_results.CheckTestResultbyItem
+import com.teclast_korea.teclast_qc_application.domain.qc_result.CheckTestResultbyItem
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.battery.tester.BatteryTestTestMode
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.cpu.tester.CpuBurnInTest
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.gpu.tester.gpu3DTest

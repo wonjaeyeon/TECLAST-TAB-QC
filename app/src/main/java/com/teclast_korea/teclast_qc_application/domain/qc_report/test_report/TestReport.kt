@@ -1,6 +1,6 @@
 package com.teclast_korea.teclast_qc_application.domain.qc_report.test_report
 
-import com.teclast_korea.teclast_qc_application.domain.qc_results.CheckTestResultbyItem
+import com.teclast_korea.teclast_qc_application.domain.qc_result.CheckTestResultbyItem
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
 
 

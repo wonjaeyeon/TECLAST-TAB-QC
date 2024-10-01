@@ -1,4 +1,4 @@
-package com.teclast_korea.teclast_qc_application.ui.device_tester.total_test.fast_mode
+package com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.fast_mode
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,6 +15,7 @@ import com.teclast_korea.teclast_qc_application.ui.router.api_kit.FailTestNaviga
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
 import kotlinx.coroutines.Dispatchers
+
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -202,5 +203,3 @@ fun FastModeScreen(
         }
     }
 }
-
-

@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
-import com.teclast_korea.teclast_qc_application.domain.qc_results.AddTestResult
+import com.teclast_korea.teclast_qc_application.domain.qc_result.AddTestResult
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.DialogAPIInterface
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.NavigationPopButton
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.TestAPIDialog

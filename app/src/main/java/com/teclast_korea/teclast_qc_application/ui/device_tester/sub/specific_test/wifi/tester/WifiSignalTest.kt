@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.wifi.WifiManager
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableIntStateOf
-import com.teclast_korea.teclast_qc_application.domain.qc_results.AddTestResult
+import com.teclast_korea.teclast_qc_application.domain.qc_result.AddTestResult
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
 import java.util.*

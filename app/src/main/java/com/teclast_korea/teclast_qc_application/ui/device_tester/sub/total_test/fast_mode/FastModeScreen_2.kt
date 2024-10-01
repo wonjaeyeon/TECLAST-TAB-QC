@@ -1,4 +1,4 @@
-package com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.scspro_mode
+package com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.fast_mode
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,7 +10,7 @@ import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_te
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.cpu.tester.CpuBurnInTest
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.gpu.tester.gpu3DTest
 import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.rom.tester.romTest1
-import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.scspro_mode.sub_screen.SCSPROModeTestScreenScaffold
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.fast_mode.sub_screen.FastModeTestScreenScaffold
 import com.teclast_korea.teclast_qc_application.ui.router.api_kit.FailTestNavigator
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
@@ -19,10 +19,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-
 @SuppressLint("CoroutineCreationDuringComposition", "UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun SCSPROModeScreen_2(
+fun FastModeScreen_2(
     state: TestResultState,
     onEvent: (TestResultEvent) -> Unit,
     context: Context,
@@ -34,7 +33,7 @@ fun SCSPROModeScreen_2(
 
     // var done is empty list
     val done =
-        remember { mutableStateListOf<String>("1. CPU Buffer", "3. GPU test 1", "5. RAM test 1", "8. battery test 1") }
+        remember { mutableStateListOf<String>("1. CPU Buffer", "3. GPU test 1", "5. RAM test 1", "7. battery test 1") }
     val undone = remember {
         mutableStateListOf(
             "2. CPU BURNIN",
@@ -54,13 +53,22 @@ fun SCSPROModeScreen_2(
     if (!testsCompleted) {
         LaunchedEffect(key1 = testsCompleted) {
             withContext(Dispatchers.IO) {
-                Log.i("SCSPROModeScreen", "Test Started")
+                Log.i("FastModeScreen_2", "Test Started")
                 onEvent(TestResultEvent.StartTest)
-                Log.i("SCSPROModeScreen", "Test DataBase is Ready")
+                Log.i("FastModeScreen_2", "Test DataBase is Ready")
 
                 // Cpu Test
                 delay(100L)
 
+
+//                val cpuTestResult2 = cpuTest1(state = state, onEvent = onEvent)
+//                progress += 1f / (done.size + undone.size)
+//                done.add("2. CPU TEST 1")
+//                undone.remove("2. CPU TEST 1")
+//                Log.i("FastModeScreen_2", "2. cpuTest1() is called : $cpuTestResult2 : Percentage : $progress")
+//                delay(100L)
+//                onEvent(TestResultEvent.SaveTestResult)
+//                delay(100L)
 
                 var romTestResult1: String
                 runBlocking {
@@ -69,7 +77,7 @@ fun SCSPROModeScreen_2(
                 progress += 1f / (done.size + undone.size)
                 done.add("6. ROM test 1")
                 undone.remove("6. ROM test 1")
-                Log.i("SCSPROModeScreen", "6. ROM test 1 is called : $romTestResult1 : Percentage : $progress")
+                Log.i("FastModeScreen_2", "6. ROM test 1 is called : $romTestResult1 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
@@ -79,10 +87,15 @@ fun SCSPROModeScreen_2(
                 done.add("2. CPU BURNIN")
                 undone.remove("2. CPU BURNIN")
                 runBlocking {
-                    cpuTestResult3 =
-                        CpuBurnInTest(state = state, onEvent = onEvent, 500L, 16600, this) // fail when 500L/16800
+                    cpuTestResult3 = CpuBurnInTest(
+                        state = state,
+                        onEvent = onEvent,
+                        500L,
+                        16700,
+                        this
+                    ) // fail when 500L/16800 // pass when 500L/16700
                 }
-                Log.i("SCSPROModeScreen", "3. CpuBurnInTest() is called : $cpuTestResult3 : Percentage : $progress")
+                Log.i("FastModeScreen_2", "3. CpuBurnInTest() is called : $cpuTestResult3 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
@@ -95,7 +108,7 @@ fun SCSPROModeScreen_2(
                 progress += 1f / (done.size + undone.size)
                 done.add("4. GPU test 2")
                 undone.remove("4. GPU test 2")
-                Log.i("SCSPROModeScreen", "4. GPU test 2 is called : $gpuTestResult2 : Percentage : $progress")
+                Log.i("FastModeScreen_2", "4. GPU test 2 is called : $gpuTestResult2 : Percentage : $progress")
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
@@ -108,7 +121,7 @@ fun SCSPROModeScreen_2(
     }
 
     if (testsCompleted == false) {
-        SCSPROModeTestScreenScaffold(
+        FastModeTestScreenScaffold(
             navController = navController,
             nextTestRoute = nextTestRoute,
             progress = progress,
@@ -122,15 +135,16 @@ fun SCSPROModeScreen_2(
     }
     if (testsCompleted) {
 
+
         if (!isAnyTestFailed.value && !hasCheckedEveryTest.value) {
             doneTests.forEach { doneTest ->
                 run {
-                    Log.i("SCSPROModeScreen", "Done Test: $doneTest")
+                    Log.i("FastModeScreen_2", "Done Test: $doneTest")
                     if (CheckTestResultbyItem(state = state, itemName = doneTest) == "FAIL") {
-                        Log.i("SCSPROModeScreen", "Done Test: $doneTest is Failed")
+                        Log.i("FastModeScreen_2", "Done Test: $doneTest is Failed")
                         FailTestNavigator(
                             onEvent = onEvent,
-                            testMode = "SCSPROMode",
+                            testMode = "FastMode",
                             navController = navController,
                             navigateToNextTest = false,
                             nextTestRoute = nextTestRoute,
@@ -138,14 +152,16 @@ fun SCSPROModeScreen_2(
                         )
                         isAnyTestFailed.value = true
                     } else {
-                        Log.i("SCSPROModeScreen", "Done Test: $doneTest is Passed")
+                        Log.i("FastModeScreen_2", "Done Test: $doneTest is Passed")
 
                     }
                 }
             }
             hasCheckedEveryTest.value = true
         }
+
         if (!isAnyTestFailed.value) {
+            //Log.i("FastModeScreen_2", "every test in FastModeScreen_2 is passed")
             BatteryTestTestMode(
                 state = state,
                 onEvent = onEvent,
@@ -153,10 +169,13 @@ fun SCSPROModeScreen_2(
                 navController = navController,
                 navigateToNextTest = true,
                 nextTestRoute = nextTestRoute,
-                testMode = "SCSPROMode"
+                testMode = "FastMode"
             )
         }
+
+//        BatteryTestTestMode(
+//            state = state, onEvent = onEvent,
+//            context = context, navController = navController, navigateToNextTest = true, nextTestRoute = nextTestRoute, testMode = "FastMode"
+//        )
     }
 }
-
-

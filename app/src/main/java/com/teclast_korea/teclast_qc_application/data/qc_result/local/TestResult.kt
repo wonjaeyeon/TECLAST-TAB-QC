@@ -14,10 +14,3 @@ data class TestResult(
     val id: Int = 0
 )
 
-@Entity(tableName = "DeviceSpec")
-data class DeviceSpec(
-    val deviceItem : String,
-    val SpecValue : String,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0
-)
