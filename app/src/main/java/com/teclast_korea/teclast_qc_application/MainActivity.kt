@@ -38,11 +38,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import com.teclast_korea.teclast_qc_application.data.qc_results.local.TestResultDatabase
-import com.teclast_korea.teclast_qc_application.ui.navigationGraph
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultViewModel
+import com.teclast_korea.teclast_qc_application.data.qc_result.local.TestResultDatabase
+import com.teclast_korea.teclast_qc_application.ui.router.*
+import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
+import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultViewModel
 import com.teclast_korea.teclast_qc_application.ui.theme.MyApplicationTheme
 import kotlin.reflect.KFunction1
 
@@ -218,45 +218,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-
-    //read external storage 권한 요청
-//    private fun requestReadExternalStoragePermission() {
-//        when {
-//            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
-//                // 권한이 이미 허용되어 있는 경우
-//                println("read external storage granted")
-//            }
-//            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE) -> {
-//                // 권한 요청에 대한 설명이 필요한 경우
-//                // 사용자에게 권한 요청 이유를 설명한 후 권한 요청을 수행하세요
-//                requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-//            }
-//            else -> {
-//                // 권한 요청
-//                requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-//                println("read external storage granted")
-//            }
-//        }
-//    }
-    //read
-//    private fun requestReadLogsPermission() {
-//        when {
-//            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_LOGS) == PackageManager.PERMISSION_GRANTED -> {
-//                // Permission is already granted
-//            }
-//            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_LOGS) -> {
-//                // An explanation is needed for the permission request
-//                // Explain the reason for the permission request to the user, and then request the permission
-//                requestPermissionLauncher.launch(Manifest.permission.READ_LOGS)
-//            }
-//            else -> {
-//                // Request permission
-//                requestPermissionLauncher.launch(Manifest.permission.READ_LOGS)
-//            }
-//        }
-//    }
-
 }
 
 
@@ -372,21 +333,3 @@ sealed class BottomNavItem(
         SETTINGS
     )
 }
-
-
-//
-//fun isDeviceRooted(): Boolean {
-//    val command = "echo \"checking root\""
-//    return try {
-//        val process = Runtime.getRuntime().exec(arrayOf("su", "-c", command))
-//        val reader = BufferedReader(InputStreamReader(process.inputStream))
-//        val output = reader.readLine()
-//        reader.close()
-//        process.waitFor()
-//        output == "checking root"
-//
-//    } catch (e: Exception) {
-//        Log.e("isDeviceRooted", "Error checking for root", e)
-//        false
-//    }
-//}

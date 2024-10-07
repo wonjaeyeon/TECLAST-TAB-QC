@@ -14,8 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.teclast_korea.teclast_qc_application.ui.device_tester.sub_screen.SpecificTest
-import com.teclast_korea.teclast_qc_application.ui.device_tester.sub_screen.TotalTest
+import com.teclast_korea.teclast_qc_application.ui.device_tester.main.sub.SpecificTest
+import com.teclast_korea.teclast_qc_application.ui.device_tester.main.sub.TotalTest
 
 @Composable
 fun TesterScreen2(context: Context, navController: NavHostController) {

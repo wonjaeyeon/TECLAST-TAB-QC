@@ -5,15 +5,16 @@ import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.*
 import androidx.navigation.NavHostController
-import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.battery.tester.BatteryTestTestMode
-import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.cpu.tester.test_kit.CpuBurnInTest
-import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.gpu.tester.gpu3DTest
-import com.teclast_korea.teclast_qc_application.ui.device_tester.specific_test.rom.tester.romTest1
-import com.teclast_korea.teclast_qc_application.ui.device_tester.total_test.api_kit.FailTestNavigator
-import com.teclast_korea.teclast_qc_application.ui.device_tester.total_test.fast_mode.sub_screen.FastModeTestScreenScaffold
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.CheckTestResultbyItem
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultEvent
-import com.teclast_korea.teclast_qc_application.ui.test_result.test_results.TestResultState
+import com.teclast_korea.teclast_qc_application.domain.qc_result.CheckTestResultbyItem
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.battery.tester.BatteryTestTestMode
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.cpu.tester.CpuBurnInTest
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.gpu.tester.gpu3DTest
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.specific_test.rom.tester.romTest1
+import com.teclast_korea.teclast_qc_application.ui.device_tester.sub.total_test.fast_mode.sub_screen.FastModeTestScreenScaffold
+import com.teclast_korea.teclast_qc_application.ui.router.api_kit.FailTestNavigator
+import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent
+import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
