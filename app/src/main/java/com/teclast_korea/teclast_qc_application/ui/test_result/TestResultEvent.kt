@@ -1,7 +1,7 @@
 package com.teclast_korea.teclast_qc_application.ui.test_result
 
-import com.teclast_korea.teclast_qc_application.data.qc_result.local.SortType
-import com.teclast_korea.teclast_qc_application.data.qc_result.local.TestResult
+import com.teclast_korea.teclast_qc_application.data.qc_result.datasource.local.SortType
+import com.teclast_korea.teclast_qc_application.data.qc_result.datasource.local.TotalQCResult
 
 sealed interface TestResultEvent {
     object SaveTestResult: TestResultEvent
@@ -18,7 +18,7 @@ sealed interface TestResultEvent {
     object StartTest: TestResultEvent
     object EndTest: TestResultEvent
     data class SortContacts(val sortType: SortType): TestResultEvent
-    data class DeleteTestResult(val contact: TestResult): TestResultEvent
+    data class DeleteTestResult(val contact: TotalQCResult): TestResultEvent
 
     object DeleteAllTestResults: TestResultEvent
 

@@ -82,6 +82,8 @@ fun StandardModeScreen_2(
                 delay(100L)
                 onEvent(TestResultEvent.SaveTestResult)
                 delay(100L)
+                onEvent(TestResultEvent.SaveTestResult)
+
 
                 var cpuTestResult3: String
                 progress += 1f / (done.size + undone.size)

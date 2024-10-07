@@ -1,4 +1,4 @@
-package com.teclast_korea.teclast_qc_application.data.qc_result.local
+package com.teclast_korea.teclast_qc_application.data.qc_result.datasource.local
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -7,31 +7,31 @@ import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TestResultDao {
+interface TotalQCResultDao {
 
     @Upsert
-    suspend fun upsertTestResult(contact: TestResult)
+    suspend fun upsertTestResult(contact: TotalQCResult)
 
     @Delete
-    suspend fun deleteTestResult(contact: TestResult)
+    suspend fun deleteTestResult(contact: TotalQCResult)
 
     @Query("DELETE FROM testResult")
     suspend fun deleteAllTestResults()
 
     @Query("SELECT * FROM testResult ORDER BY itemName ASC")
-    fun getTestResultsOrderedByFirstName(): Flow<List<TestResult>>
+    fun getTestResultsOrderedByFirstName(): Flow<List<TotalQCResult>>
 
     @Query("SELECT * FROM testResult ORDER BY testResult ASC")
-    fun getTestResultsOrderedByLastName(): Flow<List<TestResult>>
+    fun getTestResultsOrderedByLastName(): Flow<List<TotalQCResult>>
 
     @Query("SELECT * FROM testResult ORDER BY testDate ASC")
-    fun getTestResultsOrderedByPhoneNumber(): Flow<List<TestResult>>
+    fun getTestResultsOrderedByPhoneNumber(): Flow<List<TotalQCResult>>
 
     @Query("SELECT COUNT(*) FROM testResult WHERE itemName = :itemName")
     suspend fun countTestResultByItemName(itemName: String): Int
 
     @Query("SELECT * FROM testResult WHERE itemName = :itemName LIMIT 1")
-    suspend fun getTestResultByItemName(itemName: String): TestResult?
+    suspend fun getTestResultByItemName(itemName: String): TotalQCResult?
 
 
     @Query("SELECT itemName FROM testResult GROUP BY itemName HAVING COUNT(*) >= 2")

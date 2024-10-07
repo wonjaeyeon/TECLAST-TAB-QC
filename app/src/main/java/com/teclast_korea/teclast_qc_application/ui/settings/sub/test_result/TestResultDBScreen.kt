@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.teclast_korea.teclast_qc_application.ui.test_result.AddTestResultDialog
-import com.teclast_korea.teclast_qc_application.data.qc_result.local.SortType
+import com.teclast_korea.teclast_qc_application.data.qc_result.datasource.local.SortType
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
 
@@ -118,7 +118,7 @@ fun TestResultDBScreen(
                     }
                 }
             }
-            items(state.testResults) { contact ->
+            items(state.totalQCResults) { contact ->
                 Row(
                     modifier = Modifier.fillMaxWidth()
                 ) {

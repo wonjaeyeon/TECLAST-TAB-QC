@@ -131,6 +131,18 @@ dependencies {
     implementation("io.ktor:ktor-client-serialization-jvm:1.6.0")
 
 
+    // HILT
+    implementation "com.google.dagger:hilt-android:2.38.1"
+    kapt "com.google.dagger:hilt-compiler:2.38.1"
+    implementation 'androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03'
+    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-alpha03'
+    testImplementation 'com.google.dagger:hilt-android-testing:2.38.1'
+
+
     //GSON - JSON Parser Library In Google
     implementation 'com.google.code.gson:gson:2.8.8'
+    //Retrofit - HTTP Client Library
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //Retrofit Gson Converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }

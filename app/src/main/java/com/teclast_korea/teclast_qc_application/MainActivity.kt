@@ -38,7 +38,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
-import com.teclast_korea.teclast_qc_application.data.qc_result.local.TestResultDatabase
+import com.teclast_korea.teclast_qc_application.data.qc_result.datasource.local.TestResultDatabase
 import com.teclast_korea.teclast_qc_application.ui.router.*
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultEvent
 import com.teclast_korea.teclast_qc_application.ui.test_result.TestResultState
