@@ -42,7 +42,7 @@ fun DeleteAllTestResultDialog(
                 onClick = {
                     val file = File(getDirectory(context), "Test_Report.pdf")
 
-                    if (state.testResults.isEmpty()) {
+                    if (state.totalQCResults.isEmpty()) {
                         Toast.makeText(context, "No Test Results to delete", Toast.LENGTH_SHORT).show()
                         showDeleteAlertDialog.value = false
                     } else {

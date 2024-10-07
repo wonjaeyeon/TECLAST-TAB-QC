@@ -6,7 +6,7 @@ fun CheckTestResultbyItem (
     state: TestResultState,
     itemName: String = ""
 ): String {
-    val testResult = state.testResults.filter { it.itemName.contains(itemName) }
+    val testResult = state.totalQCResults.filter { it.itemName.contains(itemName) }
     if (testResult.isEmpty()) {
         return "No Test Result"
     }

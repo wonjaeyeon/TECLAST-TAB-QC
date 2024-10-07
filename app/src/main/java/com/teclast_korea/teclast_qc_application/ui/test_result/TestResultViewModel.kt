@@ -2,16 +2,16 @@ package com.teclast_korea.teclast_qc_application.ui.test_result
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teclast_korea.teclast_qc_application.data.qc_result.local.SortType
-import com.teclast_korea.teclast_qc_application.data.qc_result.local.TestResult
-import com.teclast_korea.teclast_qc_application.data.qc_result.local.TestResultDao
+import com.teclast_korea.teclast_qc_application.data.qc_result.datasource.local.SortType
+import com.teclast_korea.teclast_qc_application.data.qc_result.datasource.local.TotalQCResult
+import com.teclast_korea.teclast_qc_application.data.qc_result.datasource.local.TotalQCResultDao
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TestResultViewModel(
-    private val dao: TestResultDao
+    private val dao: TotalQCResultDao
 ) : ViewModel() {
 
     private val _sortType = MutableStateFlow(SortType.ITEM_NAME)
@@ -28,7 +28,7 @@ class TestResultViewModel(
     private val _state = MutableStateFlow(TestResultState())
     val state = combine(_state, _sortType, _contacts) { state, sortType, testResults ->
         state.copy(
-            testResults = testResults,
+            totalQCResults = testResults,
             sortType = sortType
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TestResultState())
@@ -61,7 +61,7 @@ class TestResultViewModel(
                 }
 
 
-                val contact = TestResult(
+                val contact = TotalQCResult(
                     itemName = firstName,
                     testResult = lastName,
                     testDate = phoneNumber
