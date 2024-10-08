@@ -12,6 +12,12 @@
 <img src="https://github.com/user-attachments/assets/ae6cb789-5cc4-407d-aae5-f6c794b81a07" width="16%" height="30%">
 </p>
 
+# How to Install
+>현재 프로덕션을 위한 테스트 중입니다.
+>많은 참여 부탁드립니다.
+>
+- Android 참여 : https://play.google.com/store/apps/details?id=com.teclast_korea.teclast_qc_application
+- Web 참여 : https://play.google.com/apps/testing/com.teclast_korea.teclast_qc_application
 
 # OverView
 > 하루에 600대 이상의 태블릿을 공급하는 회사 태클라스트 코리아의 더 빠르고 효율적인 QC를 위한 어플리케이션
